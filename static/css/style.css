@@ -372,3 +372,23 @@ body.access-locked .epic-entry{opacity:0!important;visibility:hidden!important;p
     white-space:nowrap!important;
   }
 }
+
+/* V19: identidad pública nombre + país en el portal de entrada */
+.access-country-live{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px;margin-top:10px;padding:9px 11px;border:1px solid rgba(82,214,255,.16);background:#030a0b;color:#7fa49b;font:700 8px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.access-country-live small{font:inherit;color:#52756d}.access-country-live strong{justify-self:end;color:#c8fff0;font:800 9px var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}.access-country-dot{width:7px;height:7px;border-radius:50%;background:#52d6ff;box-shadow:0 0 14px #52d6ff;animation:pulse 1.2s infinite}
+.access-country-live[data-geo="ok"]{border-color:rgba(104,255,184,.32);background:rgba(104,255,184,.035)}.access-country-live[data-geo="ok"] .access-country-dot{background:#68ffb8;box-shadow:0 0 14px #68ffb8}.access-country-live[data-geo="fallback"]{border-color:rgba(82,214,255,.28)}.access-country-live[data-geo="error"]{border-color:rgba(255,204,95,.28)}.access-country-live[data-geo="error"] .access-country-dot{background:#ffcc5f;box-shadow:0 0 12px #ffcc5f}
+@media(max-width:520px){.access-country-live{grid-template-columns:auto 1fr;gap:7px}.access-country-live small{display:none}.access-country-live strong{max-width:100%;font-size:8px}}
+
+
+/* === V22 GLOBAL: idioma + moneda local === */
+.locale-panel{display:flex;align-items:center;gap:7px;margin-left:auto;margin-right:8px}
+.locale-control{height:38px;display:flex;align-items:center;gap:5px;padding:0 8px;border:1px solid rgba(104,255,184,.14);background:#030708;color:#94b7ac}
+.locale-control iconify-icon{font-size:14px;color:#68ffb8}
+.locale-control select{border:0;outline:0;background:transparent;color:#cffff0;font:800 9px var(--mono);cursor:pointer;appearance:auto}
+.locale-control option{background:#07100e;color:#dffff3}
+.access-locale-live{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.access-locale-live>span{display:flex;align-items:center;justify-content:center;gap:7px;padding:8px 10px;border:1px solid rgba(82,214,255,.14);background:#020809;color:#7da89e;font:700 8px var(--mono)}
+.access-locale-live iconify-icon{font-size:13px;color:#52d6ff}.access-locale-live b{color:#d6fff2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price-wrap strong,.plan-select option{font-variant-numeric:tabular-nums}.local-price-note{display:block;margin-top:2px;color:#5f8076;font:600 7px var(--mono)}
+@media(max-width:900px){.locale-panel{margin-left:0}.locale-control{height:36px;padding:0 6px}.locale-control iconify-icon{display:none}}
+@media(max-width:640px){.locale-panel{order:3;width:100%;justify-content:flex-end;margin:0;padding-bottom:8px}.topbar-inner{flex-wrap:wrap}.locale-control{height:32px}.access-locale-live{grid-template-columns:1fr}.access-locale-live>span{font-size:7px}}

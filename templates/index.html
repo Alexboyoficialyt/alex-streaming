@@ -24,20 +24,29 @@
         <b><i></i> ONLINE</b>
       </div>
       <div class="access-copy">
-        <p class="access-kicker">// STREAMING · IA · SOFTWARE · REDES</p>
+        <p class="access-kicker" id="accessKicker">// STREAMING · IA · SOFTWARE · REDES</p>
         <h1 id="accessTitle">ENTRA AL <span>UNIVERSO DIGITAL</span></h1>
-        <p>Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.</p>
+        <p id="accessDescription">Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.</p>
       </div>
       <div class="access-input-wrap">
-        <label for="accessAlias">TU NOMBRE O ALIAS</label>
+        <label for="accessAlias" id="accessNameLabel">TU NOMBRE</label>
         <div class="access-input-line">
           <iconify-icon icon="lucide:user-round"></iconify-icon>
           <input id="accessAlias" maxlength="24" autocomplete="nickname" placeholder="Ej.: Alex" value="">
           <span>READY</span>
         </div>
       </div>
+      <div class="access-country-live" id="accessCountryLine">
+        <span class="access-country-dot"></span>
+        <small id="accessCountryLabel">PAÍS DETECTADO</small>
+        <strong id="accessCountryValue">DETECTANDO...</strong>
+      </div>
+      <div class="access-locale-live" id="accessLocaleLine">
+        <span><iconify-icon icon="lucide:languages"></iconify-icon><b id="accessLanguageValue">ESPAÑOL</b></span>
+        <span><iconify-icon icon="lucide:coins"></iconify-icon><b id="accessCurrencyValue">PEN · S/</b></span>
+      </div>
       <button class="access-enter" id="accessEnter" type="button">
-        <span>INICIAR EXPERIENCIA</span><b>ENTER ↗</b>
+        <span id="accessEnterText">INICIAR EXPERIENCIA</span><b>ENTER ↗</b>
       </button>
       <div class="access-features">
         <span><iconify-icon icon="lucide:play-circle"></iconify-icon> STREAMING</span>
@@ -45,7 +54,7 @@
         <span><iconify-icon icon="lucide:badge-check"></iconify-icon> CATÁLOGO</span>
         <span><iconify-icon icon="simple-icons:whatsapp"></iconify-icon> SOPORTE</span>
       </div>
-      <div class="access-status"><i></i><span id="accessStatus">SISTEMA LISTO · PULSA ENTRAR PARA ACTIVAR LA EXPERIENCIA</span></div>
+      <div class="access-status"><i></i><span id="accessStatus">AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING</span></div>
     </div>
   </div>
 
@@ -109,12 +118,49 @@
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
-        <a href="#catalogo">CATÁLOGO</a>
-        <a href="#redes">REDES</a>
-        <a href="#pagos">PAGOS</a>
-        <a href="#como-comprar">CÓMO COMPRAR</a>
+        <a href="#catalogo" data-i18n="nav_catalog">CATÁLOGO</a>
+        <a href="#redes" data-i18n="nav_social">REDES</a>
+        <a href="#pagos" data-i18n="nav_payments">PAGOS</a>
+        <a href="#como-comprar" data-i18n="nav_how">CÓMO COMPRAR</a>
       </nav>
 
+      <div class="locale-panel" aria-label="Idioma y moneda">
+        <label class="locale-control" title="Idioma preferido">
+          <iconify-icon icon="lucide:languages"></iconify-icon>
+          <select id="languageSelect" aria-label="Idioma">
+            <option value="auto">AUTO</option>
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+            <option value="pt">PT</option>
+            <option value="fr">FR</option>
+            <option value="de">DE</option>
+            <option value="it">IT</option>
+            <option value="vi">VI</option>
+          </select>
+        </label>
+        <label class="locale-control" title="Moneda local">
+          <iconify-icon icon="lucide:circle-dollar-sign"></iconify-icon>
+          <select id="currencySelect" aria-label="Moneda">
+            <option value="PEN">PEN</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="MXN">MXN</option>
+            <option value="COP">COP</option>
+            <option value="CLP">CLP</option>
+            <option value="ARS">ARS</option>
+            <option value="BRL">BRL</option>
+            <option value="BOB">BOB</option>
+            <option value="PYG">PYG</option>
+            <option value="UYU">UYU</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="JPY">JPY</option>
+            <option value="KRW">KRW</option>
+            <option value="VND">VND</option>
+          </select>
+        </label>
+      </div>
       <a class="wa-header" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20información." target="_blank" rel="noopener">
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
         <span>WHATSAPP</span>
@@ -127,11 +173,11 @@
       <div class="hero-copy">
         <div class="eyebrow"><span class="status-dot"></span> ALEX STREAMING // {{ store.edition_text|default("ELITE ACCESS") }} ACTIVE</div>
         <h1 class="glitch" data-text="ALEX STREAMING">ALEX <span>STREAMING</span></h1>
-        <p class="hero-lead">Tu catálogo digital con una <b>experiencia premium de alto impacto</b>. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.</p>
+        <p class="hero-lead" id="heroLead">Tu catálogo digital con una <b>experiencia premium de alto impacto</b>. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.</p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#catalogo"><span>ENTRAR AL CATÁLOGO</span><b>↗</b></a>
-          <a class="btn btn-ghost" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">HABLAR CON ALEX</a>
+          <a class="btn btn-primary" href="#catalogo"><span id="heroCatalogButton">ENTRAR AL CATÁLOGO</span><b>↗</b></a>
+          <a class="btn btn-ghost" id="heroTalkButton" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">HABLAR CON ALEX</a>
         </div>
 
         <div class="stats-strip stats-live">
@@ -164,7 +210,7 @@
             <p><span>04</span> PAYMENT_NODES .... <b>04 ACTIVE</b></p>
           </div>
           <div class="visitor-feed-mini">
-            <div class="visitor-feed-head"><span>VISITANTES EN TIEMPO REAL</span><b>PAÍS POR IP</b></div>
+            <div class="visitor-feed-head"><span>VISITANTES EN TIEMPO REAL</span><b>NOMBRE + PAÍS</b></div>
             <div id="visitorFeedMini" class="visitor-feed-list"><span class="visitor-feed-empty">Esperando conexiones...</span></div>
           </div>
           <div class="console-access">ALEX STREAMING <strong>ONLINE</strong><i></i></div>
@@ -194,17 +240,17 @@
         <div class="section-heading">
           <div>
             <p class="kicker">// ALEX STREAMING ELITE CATALOG</p>
-            <h2>Catálogo completo</h2>
-            <p class="section-subtitle">Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.</p>
+            <h2 data-i18n="catalog_title">Catálogo completo</h2>
+            <p class="section-subtitle" data-i18n="catalog_subtitle">Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.</p>
           </div>
           <div class="search-box">
             <iconify-icon icon="lucide:search"></iconify-icon>
-            <input id="searchInput" type="search" placeholder="Buscar HBO Max, Gamma, Canva, Office..." autocomplete="off">
+            <input id="searchInput" type="search" placeholder="Buscar HBO Max, Gamma, Canva, Office..." data-i18n-placeholder="search_placeholder" autocomplete="off">
                       </div>
         </div>
 
         <div class="filter-row" id="filters">
-          <button class="filter active" data-filter="all">TODO</button>
+          <button class="filter active" data-filter="all" data-i18n="filter_all">TODO</button>
           {% for category in categories %}
           <button class="filter" data-filter="{{ category }}">{{ category|upper }}</button>
           {% endfor %}
@@ -254,9 +300,9 @@
               <select id="plan-{{ product.id }}" class="plan-select">
                 {% for plan in product.plans %}
                   {% if plan.price is not none %}
-                  <option value="{{ loop.index0 }}" data-price="{{ '%.2f'|format(plan.price) }}" data-price-label="{{ store.currency }} {{ '%.2f'|format(plan.price) }}">{{ plan.name }} · {{ store.currency }} {{ '%.2f'|format(plan.price) }}</option>
+                  <option value="{{ loop.index0 }}" data-price="{{ '%.2f'|format(plan.price) }}" data-base-price="{{ '%.2f'|format(plan.price) }}" data-plan-name="{{ plan.name }}" data-price-label="{{ store.currency }} {{ '%.2f'|format(plan.price) }}">{{ plan.name }} · {{ store.currency }} {{ '%.2f'|format(plan.price) }}</option>
                   {% else %}
-                  <option value="{{ loop.index0 }}" data-price="" data-price-label="Consultar">{{ plan.name }} · Consultar</option>
+                  <option value="{{ loop.index0 }}" data-price="" data-base-price="" data-plan-name="{{ plan.name }}" data-price-label="Consultar">{{ plan.name }} · Consultar</option>
                   {% endif %}
                 {% endfor %}
               </select>
@@ -336,9 +382,9 @@
         <div class="section-heading compact">
           <div>
             <p class="kicker">// PAYMENT GATEWAYS</p>
-            <h2>Métodos de pago</h2>
+            <h2 data-i18n="payment_title">Métodos de pago</h2>
           </div>
-          <p class="section-note">Elige el método al comprar. La confirmación final se coordina por WhatsApp.</p>
+          <p class="section-note" data-i18n="payment_note">Elige el método al comprar. La confirmación final se coordina por WhatsApp.</p>
         </div>
 
         <div class="payment-grid">
@@ -357,12 +403,12 @@
     <section id="como-comprar" class="steps-section">
       <div class="shell">
         <div class="section-heading compact">
-          <div><p class="kicker">// RAPID FLOW</p><h2>Compra en 3 pasos</h2></div>
+          <div><p class="kicker">// RAPID FLOW</p><h2 data-i18n="steps_title">Compra en 3 pasos</h2></div>
         </div>
         <div class="steps-grid">
-          <div class="step"><span>01</span><div class="step-icon"><iconify-icon icon="lucide:monitor-play"></iconify-icon></div><h3>Elige plataforma</h3><p>Busca el servicio y selecciona el plan que quieres.</p></div>
-          <div class="step"><span>02</span><div class="step-icon"><iconify-icon icon="lucide:wallet-cards"></iconify-icon></div><h3>Elige el pago</h3><p>Selecciona Yape, Plin, BCP o Binance.</p></div>
-          <div class="step"><span>03</span><div class="step-icon"><iconify-icon icon="simple-icons:whatsapp"></iconify-icon></div><h3>Confirma por WhatsApp</h3><p>Tu pedido se arma automáticamente y queda listo para enviar.</p></div>
+          <div class="step"><span>01</span><div class="step-icon"><iconify-icon icon="lucide:monitor-play"></iconify-icon></div><h3 data-i18n="step1_title">Elige plataforma</h3><p data-i18n="step1_text">Busca el servicio y selecciona el plan que quieres.</p></div>
+          <div class="step"><span>02</span><div class="step-icon"><iconify-icon icon="lucide:wallet-cards"></iconify-icon></div><h3 data-i18n="step2_title">Elige el pago</h3><p data-i18n="step2_text">Selecciona Yape, Plin, BCP o Binance.</p></div>
+          <div class="step"><span>03</span><div class="step-icon"><iconify-icon icon="simple-icons:whatsapp"></iconify-icon></div><h3 data-i18n="step3_title">Confirma por WhatsApp</h3><p data-i18n="step3_text">Tu pedido se arma automáticamente y queda listo para enviar.</p></div>
         </div>
       </div>
     </section>
@@ -379,7 +425,7 @@
   </footer>
 
   <a class="floating-whatsapp" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20información." target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
-    <iconify-icon icon="simple-icons:whatsapp"></iconify-icon><span>CONTACTAR</span>
+    <iconify-icon icon="simple-icons:whatsapp"></iconify-icon><span data-i18n="contact">CONTACTAR</span>
   </a>
 
   <div class="modal" id="checkoutModal" aria-hidden="true">
@@ -388,7 +434,7 @@
       <div class="modal-corners"><i></i><i></i><i></i><i></i></div>
       <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
       <p class="kicker">// SECURE ORDER</p>
-      <h2 id="checkoutTitle">Finalizar pedido</h2>
+      <h2 id="checkoutTitle" data-i18n="checkout_title">Finalizar pedido</h2>
 
       <div class="order-summary">
         <div><span>PRODUCTO</span><strong id="modalProduct">—</strong></div>
@@ -396,7 +442,7 @@
         <div><span>TOTAL</span><strong id="modalPrice">—</strong></div>
       </div>
 
-      <p class="modal-label">SELECCIONA MÉTODO DE PAGO</p>
+      <p class="modal-label" data-i18n="select_payment">SELECCIONA MÉTODO DE PAGO</p>
       <div class="modal-payments" id="modalPayments">
         {% for method in payment_methods %}
         <button class="modal-payment" data-method="{{ method.name }}" style="--payment: {{ method.brand_color }}">
@@ -409,7 +455,7 @@
 
       <button id="continueWhatsapp" class="checkout-whatsapp" disabled>
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
-        CONTINUAR POR WHATSAPP <span>↗</span>
+        <span data-i18n="continue_whatsapp">CONTINUAR POR WHATSAPP</span> <span>↗</span>
       </button>
       <p class="checkout-note">No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.</p>
     </div>
@@ -428,7 +474,7 @@
       <div id="detailsNotes" class="details-notes"></div>
       <button id="detailsWhatsapp" class="checkout-whatsapp">
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
-        CONSULTAR POR WHATSAPP <span>↗</span>
+        <span data-i18n="consult_whatsapp">CONSULTAR POR WHATSAPP</span> <span>↗</span>
       </button>
     </div>
   </div>
@@ -439,7 +485,7 @@
       <div class="modal-corners"><i></i><i></i><i></i><i></i></div>
       <button class="modal-close" data-close-social aria-label="Cerrar">×</button>
       <p class="kicker">// SOCIAL ORDER</p>
-      <h2 id="socialModalTitle">Preparar campaña</h2>
+      <h2 id="socialModalTitle" data-i18n="social_prepare">Preparar campaña</h2>
       <div class="order-summary social-summary">
         <div><span>RED</span><strong id="socialModalNetwork">—</strong></div>
         <div><span>OBJETIVO</span><strong id="socialModalService">—</strong></div>
@@ -450,7 +496,7 @@
       </label>
       <button id="socialWhatsapp" class="checkout-whatsapp">
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
-        ENVIAR COTIZACIÓN POR WHATSAPP <span>↗</span>
+        <span data-i18n="send_quote">ENVIAR COTIZACIÓN POR WHATSAPP</span> <span>↗</span>
       </button>
       <p class="checkout-note">No ingreses contraseñas ni códigos de acceso. Solo coloca el enlace público o nombre de usuario necesario para cotizar.</p>
     </div>
@@ -487,8 +533,10 @@
     window.ALEX_STORE = {
       whatsapp: "{{ store.whatsapp }}",
       currency: "{{ store.currency }}",
+      baseCurrencyCode: "{{ store.currency_code|default('PEN') }}",
       statsUrl: "/api/stats",
       trackOrderUrl: "/api/track-order",
+      trackEventUrl: "/api/track-event",
       presenceUrl: "/api/presence",
       visitorFeedUrl: "/api/visitor-feed"
     };

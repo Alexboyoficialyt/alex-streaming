@@ -1,5 +1,5 @@
 # ============================================================
-# ALEX STREAMING — V16
+# ALEX STREAMING — V22 GLOBAL
 # Edita este archivo para cambiar productos, precios y datos.
 # ============================================================
 
@@ -7,6 +7,7 @@ STORE = {'name': 'ALEX STREAMING',
  'domain': 'https://alex-streaming.onrender.com',
  'whatsapp': '51984933571',
  'currency': 'S/',
+ 'currency_code': 'PEN',
  'support_text': 'Atención directa por WhatsApp',
  'status_text': 'ALEX STREAMING // PREMIUM ACCESS ONLINE',
  'edition_text': 'PREMIUM ACCESS',
