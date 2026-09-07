@@ -1,0 +1,11 @@
+ALEX STREAMING V13 — AUDIO
+
+El proyecto no incluye canciones comerciales.
+Si tienes una pista que posees o tienes autorización para usar, guárdala aquí con este nombre exacto:
+
+    background.mp3
+
+Ruta final:
+    static/audio/background.mp3
+
+El botón de música de la página la reproducirá en bucle.

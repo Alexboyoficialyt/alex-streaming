@@ -1,121 +1,32 @@
-# ALEX STREAMING // DIGITAL HUB
+# ALEX STREAMING V16
 
-Plantilla profesional en **Python + Flask**, pensada para editarse en **Visual Studio Code**. Incluye estilo cyber/hacker visual, catálogo responsive, logos de plataformas mediante Iconify/Simple Icons, selector de planes, checkout rápido, Yape/Plin/BCP/Binance y WhatsApp configurado al **+51 984 933 571**.
+Cambios V16:
+- Precios corregidos para que `S/` y el monto siempre aparezcan en una sola línea.
+- Añadido YouTube Premium: Activación a TV por 30 días — S/ 7.
 
-> Los precios incluidos son de demostración. Cambia el catálogo por tus productos, precios y condiciones reales. Usa el sitio únicamente para servicios que estés autorizado a comercializar.
+# ALEX STREAMING V14 — Visual Studio Code
 
-## 1. Abrir en Visual Studio Code
+Versión con portal de acceso, música original ALEX PULSE generada por el navegador y ALEX GUIDE con movimiento al navegar en computadora.
 
-1. Descomprime la carpeta.
-2. Abre Visual Studio Code.
-3. Ve a **Archivo > Abrir carpeta** y selecciona `alex-streaming-digital-hub`.
+## Abrir localmente
+1. Abre esta carpeta en Visual Studio Code.
+2. Ejecuta `INICIAR_WINDOWS.bat` o instala dependencias con `pip install -r requirements.txt`.
+3. Ejecuta `python app.py`.
+4. Abre `http://127.0.0.1:5000`.
 
-## 2. Forma fácil en Windows
+## Actualizar GitHub / Railway / Render
+Reemplaza los archivos del repositorio por los de esta carpeta y haz Commit. El hosting conectado a GitHub volverá a desplegar la web.
 
-Haz doble clic en:
+## Portal de acceso
+Es una pantalla de bienvenida visual con nombre/alias. No es un sistema de autenticación con contraseña ni protege contenido privado. Para cuentas reales de clientes se requiere autenticación del lado del servidor.
 
-`INICIAR_WINDOWS.bat`
+## Música
+ALEX PULSE es una pista procedimental original creada con Web Audio API. Empieza al pulsar INICIAR EXPERIENCIA, ya que los navegadores bloquean el audio automático antes de una interacción del usuario.
 
-La primera vez instalará las dependencias y abrirá la web en:
+## Mascota
+ALEX GUIDE aparece solo en escritorio y se desplaza por la parte inferior siguiendo el progreso de navegación.
 
-`http://127.0.0.1:5000`
-
-## 3. Forma manual
-
-En la terminal de VS Code:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python app.py
-```
-
-Luego abre `http://127.0.0.1:5000`.
-
-Si PowerShell no permite activar el entorno, también puedes ejecutar:
-
-```powershell
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-.venv\Scripts\python.exe app.py
-```
-
-## 4. Cambiar nombre, WhatsApp, dominio, productos y precios
-
-Abre **`store_config.py`**.
-
-La parte principal es:
-
-```python
-STORE = {
-    "name": "ALEX STREAMING",
-    "tagline": "DIGITAL HUB",
-    "domain": "https://tudominio.com",
-    "whatsapp": "51984933571",
-    "currency": "S/",
-}
-```
-
-Todos los productos y planes también se editan en ese mismo archivo.
-
-## 5. Pagos
-
-La web muestra:
-
-- Yape
-- Plin
-- BCP
-- Binance
-
-Al pulsar **Comprar**, el cliente elige un método y luego **Continuar por WhatsApp**. Se genera automáticamente un mensaje con plataforma, plan, precio y método de pago.
-
-No se solicitan tarjetas, claves ni contraseñas dentro de la web.
-
-## 6. Logos originales de plataformas
-
-Los iconos de marcas se cargan con **Iconify + Simple Icons** desde Internet. Por eso, para ver los logos la PC o el servidor debe tener conexión a Internet.
-
-## 7. Poner tu dominio
-
-Este proyecto necesita un hosting que ejecute **Python/Flask**.
-
-Configuración típica del hosting:
-
-- **Build / instalación:** `pip install -r requirements.txt`
-- **Start / inicio:** `gunicorn app:app`
-- **Puerto:** el proveedor lo configura con la variable `PORT`; `app.py` ya está preparado para eso.
-
-Después, en el panel de tu hosting busca **Custom Domain / Dominio personalizado** y agrega tu dominio. El hosting te dará un registro DNS, normalmente **CNAME** o **A**, que debes copiar en el panel de la empresa donde compraste el dominio.
-
-Finalmente cambia en `store_config.py`:
-
-```python
-"domain": "https://www.tudominio.com"
-```
-
-### Estructura
-
-```text
-alex-streaming-digital-hub/
-├─ app.py
-├─ store_config.py
-├─ requirements.txt
-├─ Procfile
-├─ INICIAR_WINDOWS.bat
-├─ templates/
-│  └─ index.html
-└─ static/
-   ├─ css/style.css
-   ├─ js/app.js
-   └─ img/favicon.svg
-```
-
-## 8. Si no abre
-
-Comprueba en la terminal:
-
-```powershell
-python --version
-```
-
-Si Windows dice que no reconoce `python`, instala Python y marca la opción **Add Python to PATH** durante la instalación.
+## V15 — alineación de botones
+- Los botones **DETALLES** y **COMPRAR** ahora tienen exactamente la misma altura.
+- Se mantienen en la misma línea y con el texto centrado.
+- En móvil también quedan alineados uno al lado del otro.
