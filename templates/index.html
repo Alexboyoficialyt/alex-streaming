@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05080b">
+  <meta name="description" content="{{ store.name }} {{ store.tagline }} - catálogo digital y atención rápida por WhatsApp.">
+  <title>{{ store.name }} // {{ store.tagline }}</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="scanlines"></div>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark">A<span>X</span></span>
+        <span class="brand-copy">
+          <strong>{{ store.name }}</strong>
+          <small>// {{ store.tagline }}</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#pagos">Pagos</a>
+        <a href="#como-comprar">Cómo comprar</a>
+      </nav>
+
+      <a class="mini-whatsapp" href="https://wa.me/{{ store.whatsapp }}" target="_blank" rel="noopener">
+        <span class="pulse-dot"></span> WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="status-dot"></span> SYSTEM ONLINE · PEDIDOS ABIERTOS</div>
+        <h1>Tu entretenimiento.<br><span>Sin vueltas.</span></h1>
+        <p class="hero-text">Una tienda digital con estilo cyber, compra rápida y atención directa. Elige tu plataforma, selecciona un plan y continúa el pedido por WhatsApp.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#catalogo"><span>VER CATÁLOGO</span><b>→</b></a>
+          <a class="btn btn-ghost" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">CONTACTAR</a>
+        </div>
+
+        <div class="trust-row">
+          <div><strong>01</strong><span>Elige</span></div>
+          <div><strong>02</strong><span>Paga</span></div>
+          <div><strong>03</strong><span>Confirma</span></div>
+        </div>
+      </div>
+
+      <div class="terminal-card" aria-label="Panel visual de estado">
+        <div class="terminal-head">
+          <div class="terminal-dots"><i></i><i></i><i></i></div>
+          <span>alex_streaming.exe</span>
+          <span class="terminal-state">LIVE</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="cmd">$</span> boot digital_hub</p>
+          <p><span class="muted">[OK]</span> catálogo cargado</p>
+          <p><span class="muted">[OK]</span> whatsapp conectado</p>
+          <p><span class="muted">[OK]</span> pagos disponibles: 4</p>
+          <p><span class="muted">[OK]</span> interfaz responsive</p>
+          <div class="terminal-line"></div>
+          <p class="terminal-big">ACCESS_<span>READY</span></p>
+          <div class="code-grid">
+            <span>LATENCY</span><b>FAST</b>
+            <span>STATUS</span><b>ONLINE</b>
+            <span>CHANNEL</span><b>WHATSAPP</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo" class="catalog-section">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">// CATÁLOGO DIGITAL</p>
+            <h2>Elige tu plataforma</h2>
+          </div>
+          <div class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="Buscar plataforma..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="filter-row" id="filters">
+          <button class="filter active" data-filter="all">TODAS</button>
+          <button class="filter" data-filter="Series y películas">SERIES + PELÍCULAS</button>
+          <button class="filter" data-filter="Anime">ANIME</button>
+          <button class="filter" data-filter="Música">MÚSICA</button>
+          <button class="filter" data-filter="Video y música">VIDEO + MÚSICA</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+          {% for product in products %}
+          <article class="product-card" data-name="{{ product.name|lower }}" data-category="{{ product.category }}" style="--accent: {{ product.accent }};">
+            <div class="card-glow"></div>
+            <div class="card-top">
+              <span class="badge">{{ product.badge }}</span>
+              <span class="availability"><i></i> DISPONIBLE</span>
+            </div>
+
+            <div class="logo-orb">
+              <iconify-icon icon="{{ product.icon }}" aria-label="Logo de {{ product.name }}"></iconify-icon>
+            </div>
+
+            <div class="product-copy">
+              <p class="category">{{ product.category }}</p>
+              <h3>{{ product.name }}</h3>
+              <p class="description">{{ product.description }}</p>
+            </div>
+
+            <div class="plan-selector">
+              <label for="plan-{{ product.id }}">PLAN</label>
+              <select id="plan-{{ product.id }}" class="plan-select">
+                {% for plan in product.plans %}
+                  <option value="{{ loop.index0 }}" data-price="{{ '%.2f'|format(plan.price) }}">{{ plan.name }} · {{ store.currency }} {{ '%.2f'|format(plan.price) }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-wrap">
+                <span>DESDE</span>
+                <strong>{{ store.currency }} {{ '%.2f'|format(product.plans[0].price) }}</strong>
+              </div>
+              <button class="buy-btn"
+                data-product="{{ product.name }}"
+                data-product-id="{{ product.id }}"
+                data-currency="{{ store.currency }}">
+                COMPRAR <b>→</b>
+              </button>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        <p id="emptyState" class="empty-state" hidden>No encontramos una plataforma con esa búsqueda.</p>
+      </div>
+    </section>
+
+    <section id="pagos" class="payment-section shell">
+      <div class="section-heading compact">
+        <div>
+          <p class="kicker">// CHECKOUT RÁPIDO</p>
+          <h2>Métodos de pago</h2>
+        </div>
+        <p class="section-note">Selecciona el método al comprar. Los datos finales se coordinan por WhatsApp.</p>
+      </div>
+
+      <div class="payment-grid">
+        {% for method in payment_methods %}
+        <div class="payment-card">
+          <div class="payment-logo payment-{{ method.id }}">{{ method.short }}</div>
+          <div>
+            <strong>{{ method.name }}</strong>
+            <span>{{ method.detail }}</span>
+          </div>
+          <b class="payment-check">✓</b>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id="como-comprar" class="steps-section">
+      <div class="shell">
+        <div class="section-heading compact">
+          <div>
+            <p class="kicker">// 3 PASOS</p>
+            <h2>Compra al toque</h2>
+          </div>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step"><span>01</span><h3>Elige tu servicio</h3><p>Busca la plataforma y selecciona el plan que necesitas.</p></div>
+          <div class="step"><span>02</span><h3>Selecciona pago</h3><p>Yape, Plin, BCP o Binance desde la ventana de compra.</p></div>
+          <div class="step"><span>03</span><h3>Confirma por WhatsApp</h3><p>Se abrirá un mensaje con tu pedido listo para enviar.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark small">A<span>X</span></span>
+        <div><strong>{{ store.name }} // {{ store.tagline }}</strong><p>Diseño cyber · rápido · responsive</p></div>
+      </div>
+      <p>© <span id="year"></span> {{ store.name }}. Usa este sitio únicamente para ofertas que estés autorizado a comercializar.</p>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20información." target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    <span>WA</span><b>¿Necesitas ayuda?</b>
+  </a>
+
+  <div class="modal" id="checkoutModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <p class="kicker">// FINALIZAR PEDIDO</p>
+      <h2 id="checkoutTitle">Compra rápida</h2>
+
+      <div class="order-summary">
+        <div><span>PRODUCTO</span><strong id="modalProduct">—</strong></div>
+        <div><span>PLAN</span><strong id="modalPlan">—</strong></div>
+        <div><span>TOTAL</span><strong id="modalPrice">—</strong></div>
+      </div>
+
+      <p class="modal-label">ELIGE CÓMO PAGAR</p>
+      <div class="modal-payments" id="modalPayments">
+        {% for method in payment_methods %}
+        <button class="modal-payment" data-method="{{ method.name }}">
+          <span class="payment-logo payment-{{ method.id }}">{{ method.short }}</span>
+          <strong>{{ method.name }}</strong>
+          <i>○</i>
+        </button>
+        {% endfor %}
+      </div>
+
+      <button id="continueWhatsapp" class="checkout-whatsapp" disabled>
+        CONTINUAR POR WHATSAPP <span>→</span>
+      </button>
+      <p class="checkout-note">No ingreses contraseñas ni datos bancarios en esta web. El pedido se confirma directamente por WhatsApp.</p>
+    </div>
+  </div>
+
+  <script>
+    window.ALEX_STORE = {
+      whatsapp: "{{ store.whatsapp }}",
+      currency: "{{ store.currency }}"
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
