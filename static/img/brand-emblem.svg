@@ -1,17 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Alex Streaming">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Alex Streaming Matrix">
   <defs>
-    <linearGradient id="edge" x1="26" y1="18" x2="154" y2="162" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#8dffd8"/><stop offset=".48" stop-color="#38f5b9"/><stop offset="1" stop-color="#00c8ff"/>
+    <linearGradient id="edge" x1="20" y1="20" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#cfffef"/><stop offset=".3" stop-color="#57ffb3"/><stop offset="1" stop-color="#0aa85f"/>
     </linearGradient>
-    <linearGradient id="core" x1="42" y1="34" x2="135" y2="145" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#eafff8"/><stop offset="1" stop-color="#69ffd0"/>
+    <linearGradient id="core" x1="45" y1="38" x2="135" y2="142" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eafff2"/><stop offset="1" stop-color="#6cffb7"/>
     </linearGradient>
-    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  <path d="M90 8 151 43v70l-61 59-61-59V43z" fill="#020707" stroke="url(#edge)" stroke-width="4"/>
-  <path d="M90 22 139 50v55l-49 48-49-48V50z" fill="none" stroke="#16483a" stroke-width="2"/>
-  <path d="M52 116 86 48h14l30 68h-18l-7-17H77l-8 17H52Zm31-32h17L92 64z" fill="url(#core)" filter="url(#glow)"/>
-  <path d="M117 58 99 78h14L94 110l34-38h-15l14-14z" fill="#00d9ff" opacity=".92"/>
-  <path d="M71 128h38" stroke="#62ffca" stroke-width="4" stroke-linecap="square"/>
-  <circle cx="40" cy="76" r="3" fill="#68ffb8"/><circle cx="140" cy="76" r="3" fill="#00d9ff"/>
+  <rect x="10" y="10" width="160" height="160" rx="28" fill="#020604" stroke="url(#edge)" stroke-width="4"/>
+  <path d="M35 38h110" stroke="#164b2f" stroke-width="2"/>
+  <path d="M35 142h110" stroke="#164b2f" stroke-width="2"/>
+  <path d="M44 52h92l-46 76z" fill="none" stroke="url(#edge)" stroke-width="7" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M90 71v44" stroke="url(#core)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M67 95h46" stroke="url(#core)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+  <g fill="#6cffb7" opacity=".85" font-family="monospace" font-size="10">
+    <text x="26" y="30">0101</text><text x="123" y="30">AXS</text>
+    <text x="22" y="156">SYS</text><text x="119" y="156">2026</text>
+  </g>
+  <circle cx="32" cy="90" r="3" fill="#6cffb7"/>
+  <circle cx="148" cy="90" r="3" fill="#6cffb7"/>
 </svg>

@@ -4,32 +4,49 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#020505">
-  <title>ALEX STREAMING | Servicios digitales, IA y entretenimiento</title>
-  <meta name="description" content="ALEX STREAMING ofrece un catálogo de servicios digitales, herramientas de inteligencia artificial, software, entretenimiento y atención directa por WhatsApp.">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="application-name" content="ALEX STREAMING">
+  <meta name="apple-mobile-web-app-title" content="ALEX STREAMING">
+
+  <title>ALEX STREAMING | Matrix Style · Servicios digitales</title>
+  <meta name="description" content="Catálogo de servicios digitales, herramientas de inteligencia artificial, software y entretenimiento en ALEXSTREAMING.STORE. Consulta disponibilidad y condiciones.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Oxanium:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="canonical" href="https://alexstreaming.store/">
+
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon-48.png') }}" type="image/png" sizes="48x48">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/favicon-180.png') }}" sizes="180x180">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ALEX STREAMING">
-  <meta property="og:title" content="ALEX STREAMING | Servicios digitales, IA y entretenimiento">
-  <meta property="og:description" content="Catálogo de servicios digitales, IA, software y entretenimiento con atención directa.">
+  <meta property="og:title" content="ALEX STREAMING | Matrix Style · Servicios digitales">
+  <meta property="og:description" content="Experiencia Matrix con servicios digitales, IA, software y entretenimiento en ALEXSTREAMING.STORE.">
   <meta property="og:url" content="https://alexstreaming.store/">
   <meta property="og:locale" content="es_PE">
+  <meta property="og:image" content="https://alexstreaming.store/static/img/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ALEX STREAMING">
 
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ALEX STREAMING">
-  <meta name="twitter:description" content="Servicios digitales, IA, software y entretenimiento.">
+  <meta name="twitter:description" content="Experiencia Matrix con servicios digitales, IA, software y entretenimiento.">
+  <meta name="twitter:image" content="https://alexstreaming.store/static/img/social-preview.png">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "ALEX STREAMING",
+    "alternateName": "ALEXSTREAMING.STORE",
     "url": "https://alexstreaming.store/",
-    "inLanguage": "es"
+    "inLanguage": "es-PE"
   }
   </script>
-  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -39,17 +56,36 @@
 <body class="access-locked">
   <div class="access-gate" id="accessGate" role="dialog" aria-modal="true" aria-labelledby="accessTitle">
     <div class="access-gate-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="access-card">
+    <div class="access-card access-card-apex">
+      <div class="access-visual-panel" aria-hidden="true">
+        <div class="access-visual-grid"></div>
+        <div class="access-visual-orb orb-a"></div>
+        <div class="access-visual-orb orb-b"></div>
+        <div class="access-visual-ring ring-a"></div>
+        <div class="access-visual-ring ring-b"></div>
+        <div class="access-visual-mark"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></div>
+        <div class="access-visual-copy">
+          <small>SYSTEM READY</small>
+          <strong>ALEX</strong>
+          <span>STREAMING</span>
+          <p>DATA · STREAMING · IA · ACCESS</p>
+        </div>
+        <div class="access-visual-cards">
+          <span><iconify-icon icon="lucide:play"></iconify-icon> STREAMING</span>
+          <span><iconify-icon icon="lucide:sparkles"></iconify-icon> IA</span>
+          <span><iconify-icon icon="lucide:blocks"></iconify-icon> SOFTWARE</span>
+        </div>
+      </div>
       <div class="access-card-glow" aria-hidden="true"></div>
       <div class="access-brand">
         <span class="access-logo"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></span>
-        <div><small>ALEX STREAMING</small><strong id="accessPortalLabel">ACCESS PORTAL</strong></div>
+        <div><small>ALEX STREAMING</small><strong id="accessPortalLabel">MATRIX ACCESS</strong></div>
         <b><i></i> ONLINE</b>
       </div>
       <div class="access-copy">
         <p class="access-kicker" id="accessKicker">// STREAMING · IA · SOFTWARE · REDES</p>
-        <h1 id="accessTitle">ENTRA AL <span>UNIVERSO DIGITAL</span></h1>
-        <p id="accessDescription">Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.</p>
+        <h1 id="accessTitle">ENTRA A LA <span>MATRIX DIGITAL</span></h1>
+        <p id="accessDescription">Explora una interfaz tipo Matrix con streaming, IA, software y acceso premium por WhatsApp.</p>
       </div>
       <div class="access-input-wrap">
         <label for="accessAlias" id="accessNameLabel">TU NOMBRE</label>
@@ -78,7 +114,7 @@
         <span><iconify-icon icon="simple-icons:whatsapp"></iconify-icon> <b data-i18n="feature_support">SOPORTE</b></span>
       </div>
       <div class="access-name-error" id="accessNameError" role="alert" aria-live="polite"></div>
-      <div class="access-status"><i></i><span id="accessStatus">REGISTRO OBLIGATORIO: ESCRIBE TU NOMBRE PARA INGRESAR. TU NOMBRE + PAÍS APARECERÁN EN ALEX STREAMING.</span></div>
+      <div class="access-status"><i></i><span id="accessStatus">ACCESO OBLIGATORIO: ESCRIBE TU NOMBRE REAL PARA ENTRAR A LA MATRIX DE ALEX STREAMING.</span></div>
     </div>
   </div>
 
@@ -106,15 +142,15 @@
       </div>
       <p class="epic-kicker">{{ store.name }} // PREMIUM ACCESS</p>
       <div class="entry-v12-title">
-        <span>TODO TU ENTRETENIMIENTO</span>
-        <strong>Y SERVICIOS DIGITALES</strong>
-        <em>EN UN SOLO LUGAR</em>
+        <span>ACCESO A TODO TU</span>
+        <strong>UNIVERSO DIGITAL</strong>
+        <em>DESDE LA MATRIX</em>
       </div>
       <p class="entry-subtitle">Streaming, inteligencia artificial, software, productividad y redes con atención directa por WhatsApp.</p>
       <div class="entry-service-rail"><span>STREAMING</span><i></i><span>IA</span><i></i><span>SOFTWARE</span><i></i><span>REDES</span></div>
-      <div class="entry-country" id="entryCountry"><b></b><span>DETECTANDO PAÍS POR IP...</span></div>
+      <div class="entry-country" id="entryCountry"><b></b><span>LOCALIZANDO USUARIO...</span></div>
       <div class="epic-progress"><i id="entryProgressBar"></i></div>
-      <div class="entry-progress-meta"><span id="entryStatusText">CARGANDO CATÁLOGO PREMIUM</span><strong id="entryProgressText">0%</strong></div>
+      <div class="entry-progress-meta"><span id="entryStatusText">INICIALIZANDO ALEXSTREAMING.STORE</span><strong id="entryProgressText">0%</strong></div>
       <small>{{ products|length }} SERVICIOS // {{ social_platforms|length }} REDES // 04 MÉTODOS DE PAGO</small>
     </div>
   </div>
@@ -126,7 +162,6 @@
   <div class="top-alert">
     <div class="shell alert-inner">
       <span><i></i> {{ store.status_text }}</span>
-      <div class="ticker"><b id="liveVisitorTicker">VISITOR_SCAN: DETECTANDO...</b><em>•</em><b>WHATSAPP_ONLINE</b><em>•</em><b>ELITE_CATALOG</b><em>•</em><b>PAYMENT_READY</b></div>
       <span class="clock" id="liveClock">--:--:--</span>
     </div>
   </div>
@@ -214,13 +249,60 @@
   <main id="inicio">
     <section class="hero shell">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="status-dot"></span> ALEX STREAMING // {{ store.edition_text|default("ELITE ACCESS") }} ACTIVE</div>
-        <h1 class="glitch" data-text="ALEX STREAMING">ALEX <span>STREAMING</span></h1>
-        <p class="hero-lead" id="heroLead">Tu catálogo digital con una <b>experiencia premium de alto impacto</b>. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.</p>
+        <div class="eyebrow"><span class="status-dot"></span> ⌬ ALEX STREAMING ⟦ ALEXSTREAMING.STORE ⟧</div>
+        <div class="hero-superline"><span>MATRIX EXPERIENCE // NEXT LEVEL</span><b>2026</b></div>
+        <div class="matrix-symbol-row matrix-symbol-row-top" aria-hidden="true">
+          <span>⌁</span><span>∆</span><span>01</span><span>⟦</span><span>⧉</span><span>⫷</span><span>AX</span><span>⫸</span><span>⧈</span><span>101</span>
+        </div>
+        <div class="matrix-title-wrap">
+          <span class="matrix-corner mc-tl" aria-hidden="true">⌜</span>
+          <span class="matrix-corner mc-tr" aria-hidden="true">⌝</span>
+          <span class="matrix-corner mc-bl" aria-hidden="true">⌞</span>
+          <span class="matrix-corner mc-br" aria-hidden="true">⌟</span>
+
+          <span class="matrix-side-code left" aria-hidden="true">0110 // AXS // SYS</span>
+          <span class="matrix-side-code right" aria-hidden="true">STORE // LIVE // 2026</span>
+
+          <h1 class="glitch hero-matrix-title" data-text="ALEX STREAMING">
+            <span class="hero-word-alex"><i class="name-symbol">⌬</i>ALEX<i class="name-symbol name-symbol-small">∆</i></span>
+            <span class="hero-word-streaming"><i class="name-bracket">⟦</i>STREAMING<i class="name-bracket">⟧</i></span>
+          </h1>
+        </div>
+        <div class="matrix-symbol-row matrix-symbol-row-bottom" aria-hidden="true">
+          <span>⟨/⟩</span><span>◇</span><span>SYS</span><span>⌬</span><span>∞</span><span>⟡</span><span>LIVE</span><span>⌁</span><span>0101</span>
+        </div>
+        <p class="hero-lead" id="heroLead">Una experiencia <b>Matrix, intensa y futurista</b> para explorar streaming, inteligencia artificial, software, productividad y servicios digitales.</p>
+
+        <div class="matrix-mini-status" aria-hidden="true">
+          <span><b>◉</b> SYSTEM ONLINE</span>
+          <span><b>◇</b> SECURE ACCESS</span>
+          <span><b>⌬</b> DIGITAL HUB</span>
+          <span><b>∞</b> ALWAYS ACTIVE</span>
+        </div>
 
         <div class="hero-actions">
           <a class="btn btn-primary" href="#catalogo"><span id="heroCatalogButton">ENTRAR AL CATÁLOGO</span><b>↗</b></a>
           <a class="btn btn-ghost" id="heroTalkButton" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">HABLAR CON ALEX</a>
+        </div>
+        <div class="hero-service-deck">
+          <a href="#catalogo" class="deck-card deck-streaming">
+            <span class="deck-index">01</span>
+            <iconify-icon icon="lucide:clapperboard"></iconify-icon>
+            <div><small>ENTRETENIMIENTO</small><strong>Streaming</strong></div>
+            <b>↗</b>
+          </a>
+          <a href="#catalogo" class="deck-card deck-ai">
+            <span class="deck-index">02</span>
+            <iconify-icon icon="lucide:bot"></iconify-icon>
+            <div><small>NUEVA GENERACIÓN</small><strong>Inteligencia IA</strong></div>
+            <b>↗</b>
+          </a>
+          <a href="#catalogo" class="deck-card deck-tools">
+            <span class="deck-index">03</span>
+            <iconify-icon icon="lucide:boxes"></iconify-icon>
+            <div><small>PRODUCTIVIDAD</small><strong>Software & Tools</strong></div>
+            <b>↗</b>
+          </a>
         </div>
 
         <div class="stats-strip stats-live">
@@ -233,31 +315,73 @@
         <p class="stats-note"><span></span> Contadores en vivo. El país del visitante se estima por su IP pública; mostramos solo el país, no la IP, ciudad ni ubicación exacta. “Pedidos enviados” no significa pago confirmado.</p>
       </div>
 
-      <div class="hero-console" aria-label="Panel visual de sistema">
-        <div class="console-corner c1"></div><div class="console-corner c2"></div><div class="console-corner c3"></div><div class="console-corner c4"></div>
-        <div class="console-head">
-          <span class="console-id">ROOT@ALEX_STREAMING</span>
-          <span class="console-live"><i></i> LIVE</span>
+      <div class="stream-feature" aria-label="Contenido destacado">
+        <div class="stream-feature-backdrop"></div>
+        <div class="neon-orbit orbit-one"></div>
+        <div class="neon-orbit orbit-two"></div>
+        <div class="neon-shard shard-one"></div>
+        <div class="neon-shard shard-two"></div>
+        <div class="neon-shard shard-three"></div>
+        <div class="stream-feature-overlay"></div>
+
+        <div class="feature-hud-lines"><i></i><i></i><i></i></div>
+        <div class="feature-side-code">ALEX // DIGITAL // 2026</div>
+        <div class="feature-symbols" aria-hidden="true">
+          <span>⌬</span><span>∆</span><span>0110</span><span>⧉</span><span>∞</span>
         </div>
-        <div class="console-screen">
-          <div class="visitor-signal-card">
-            <span class="visitor-signal-dot"></span>
-            <div><small>CONEXIÓN ACTUAL</small><strong id="currentVisitorCountry">DETECTANDO PAÍS POR IP...</strong></div>
-            <b id="visitorSessionLabel">LIVE</b>
-          </div>
-          <div class="radar"><span></span><i></i><img class="radar-brand" src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt="ALEX STREAMING"></div>
-          <div class="console-log">
-            <p><span>01</span> LOAD_PRODUCTS ... <b>OK</b></p>
-            <p><span>02</span> WA_GATEWAY ....... <b>ONLINE</b></p>
-            <p><span>03</span> SOCIAL_NODES ..... <b>{{ social_platforms|length }} ACTIVE</b></p>
-            <p><span>04</span> PAYMENT_NODES .... <b>04 ACTIVE</b></p>
-          </div>
-          <div class="visitor-feed-mini">
-            <div class="visitor-feed-head"><span>VISITANTES EN TIEMPO REAL</span><b>NOMBRE + PAÍS</b></div>
-            <div id="visitorFeedMini" class="visitor-feed-list"><span class="visitor-feed-empty">Esperando conexiones...</span></div>
-          </div>
-          <div class="console-access">ALEX STREAMING <strong>ONLINE</strong><i></i></div>
+        <div class="stream-feature-top">
+          <span class="stream-feature-badge">DESTACADO</span>
+          <span class="stream-feature-status"><i></i> DISPONIBLE</span>
         </div>
+
+        <div class="stream-feature-logo">
+          <img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt="ALEX STREAMING">
+        </div>
+
+        <div class="stream-feature-copy">
+          <p>ALEX STREAMING</p>
+          <h2><i class="feature-name-symbol">⌬</i>ALEX <span>⟦STREAMING⟧</span></h2>
+          <div class="stream-meta">
+            <span>Streaming</span><b>•</b><span>IA</span><b>•</b><span>Software</span><b>•</b><span>Redes</span>
+          </div>
+          <p class="stream-feature-text">Potencia tu experiencia digital con un catálogo visual, rápido y directo.</p>
+          <div class="stream-feature-actions">
+            <a href="#catalogo" class="stream-play"><iconify-icon icon="lucide:play"></iconify-icon> EXPLORAR</a>
+            <a href="#pagos" class="stream-info"><iconify-icon icon="lucide:info"></iconify-icon> MÁS INFO</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="apex-spotlight shell" aria-label="Experiencia destacada">
+      <div class="spotlight-heading">
+        <span>01</span>
+        <div>
+          <small>EXPLORE THE MATRIX</small>
+          <strong>Todo tu ecosistema digital dentro de una estética Matrix.</strong>
+        </div>
+      </div>
+      <div class="spotlight-grid">
+        <a href="#catalogo" class="spotlight-main">
+          <div class="spotlight-number">01</div>
+          <div class="spotlight-icon"><iconify-icon icon="lucide:play"></iconify-icon></div>
+          <small>STREAMING</small>
+          <strong>Entretenimiento</strong>
+          <p>Explora plataformas y planes disponibles desde un solo catálogo.</p>
+          <b>DESCUBRIR ↗</b>
+        </a>
+        <a href="#catalogo" class="spotlight-mini">
+          <span>02</span><iconify-icon icon="lucide:sparkles"></iconify-icon>
+          <div><small>IA</small><strong>Herramientas en la red</strong></div>
+        </a>
+        <a href="#catalogo" class="spotlight-mini">
+          <span>03</span><iconify-icon icon="lucide:laptop"></iconify-icon>
+          <div><small>SOFTWARE</small><strong>Productividad avanzada</strong></div>
+        </a>
+        <a href="#redes" class="spotlight-mini">
+          <span>04</span><iconify-icon icon="lucide:radio-tower"></iconify-icon>
+          <div><small>REDES</small><strong>Servicios conectados</strong></div>
+        </a>
       </div>
     </section>
 
@@ -282,9 +406,9 @@
       <div class="shell">
         <div class="section-heading">
           <div>
-            <p class="kicker">// ALEX STREAMING ELITE CATALOG</p>
-            <h2 data-i18n="catalog_title">Catálogo completo</h2>
-            <p class="section-subtitle" data-i18n="catalog_subtitle">Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.</p>
+            <p class="kicker">ALEX STREAMING · EXPLORA</p>
+            <h2 data-i18n="catalog_title">Explora el catálogo</h2>
+            <p class="section-subtitle" data-i18n="catalog_subtitle">Encuentra tus servicios por categoría y revisa cada plan antes de continuar.</p>
           </div>
           <div class="search-box">
             <iconify-icon icon="lucide:search"></iconify-icon>

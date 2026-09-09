@@ -609,7 +609,6 @@
     }
     if (accessCountryValueMain) accessCountryValueMain.textContent = label.toUpperCase();
     if (accessCountryLineMain) accessCountryLineMain.dataset.geo = resolved === 'País no disponible' ? 'error' : (source === 'locale' ? 'fallback' : 'ok');
-    if (liveVisitorTicker) liveVisitorTicker.textContent = `VISITOR_LIVE: ${label.toUpperCase()}`;
     if (code) autoLocaleFromCountry(code);
   }
 
@@ -1388,7 +1387,7 @@
   const canvas = document.getElementById('matrixCanvas');
   const ctx = canvas?.getContext('2d');
   let drops = [];
-  const chars = '01AXSTREAMING<>/{}[]$#';
+  const chars = '01アイウエオカキクケコサシスセソナニヌネノマトリックス<>/{}[]$#';
   const fontSize = 14;
   function resizeMatrix(){
     if (!canvas || !ctx) return;
@@ -1400,9 +1399,9 @@
   }
   function drawMatrix(){
     if (!ctx || !canvas) return;
-    ctx.fillStyle = 'rgba(2,4,5,.075)'; ctx.fillRect(0,0,innerWidth,innerHeight);
+    ctx.fillStyle = 'rgba(1,5,2,.085)'; ctx.fillRect(0,0,innerWidth,innerHeight);
     ctx.font = `${fontSize}px JetBrains Mono`;
-    ctx.fillStyle = '#68ffb8';
+    ctx.fillStyle = '#7cffab';
     drops.forEach((y,i) => {
       const text = chars[Math.floor(Math.random()*chars.length)];
       ctx.fillText(text, i*fontSize, y*fontSize);

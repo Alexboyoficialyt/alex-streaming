@@ -1,3 +1,162 @@
+# ALEX STREAMING V63 — NOMBRE CON SÍMBOLOS
+
+Ahora los símbolos forman parte del propio nombre:
+
+- `⌬ ALEX ∆`
+- `⟦ STREAMING ⟧`
+
+También se aplicó una versión similar en el cuadro destacado de la derecha.
+
+# ALEX STREAMING V62 — MATRIX SYMBOLS
+
+Se agregaron símbolos y elementos visuales alrededor del título:
+- ∆
+- ⌬
+- ⧉
+- ◇
+- ∞
+- 0101 / 101
+- ⟨/⟩
+- esquinas tipo HUD
+- códigos laterales
+- chips SYSTEM ONLINE / SECURE ACCESS / DIGITAL HUB / ALWAYS ACTIVE
+- símbolos en el panel destacado de la derecha
+
+El diseño sigue manteniendo la estética Matrix y todas las funciones anteriores.
+
+# ALEX STREAMING V61 — TIPOGRAFÍA MATRIX REALMENTE CAMBIADA
+
+Esta vez el cambio es muy visible:
+
+- `ALEX` usa una tipografía más inclinada, ancha y agresiva.
+- `STREAMING` usa una tipografía monoespaciada tipo terminal/Matrix.
+- Se eliminó el efecto que podía hacer que la fuente anterior siguiera viéndose igual.
+- El resto del diseño y funciones se mantienen.
+
+# ALEX STREAMING V60 — NUEVA TIPOGRAFÍA DEL HERO
+
+Corrección:
+- Se cambió realmente la tipografía del `ALEX STREAMING` grande del lado izquierdo.
+- Ahora usa **Oxanium**, una fuente tecnológica más estilizada y diferente a la anterior.
+- El cuadro derecho mantiene `ALEX / STREAMING`.
+
+# ALEX STREAMING V59
+
+Cambios solicitados:
+- En el cuadro destacado de la derecha ahora aparece:
+  **ALEX**
+  **STREAMING**
+- Se eliminó `ALEXSTREAMING.STORE` de ese cuadro.
+- Se cambió la tipografía del `ALEX STREAMING` principal por una fuente Orbitron más futurista.
+
+# ALEX STREAMING V56 — MATRIX CORE
+
+Versión estilo Matrix:
+- nuevo look verde Matrix
+- fondo de código digital más visible
+- inicio estilo terminal futurista
+- hero y tarjetas con estética cyber / hacker / Matrix
+- mantiene catálogo, compras, WhatsApp, chat, juego y funciones previas
+
+# ALEX STREAMING V55 — APEX CINEMA
+
+Esta versión NO es solo un cambio de colores.
+
+Rediseño estructural:
+- Inicio/login completamente nuevo con panel visual dividido en dos columnas.
+- Animación orbital, profundidad y panel cinematográfico.
+- Hero editorial de gran formato.
+- Nuevo bloque de servicios interactivos bajo el hero.
+- Nueva sección APEX SPOTLIGHT con jerarquía editorial.
+- Header renovado.
+- Tarjetas y catálogo refinados.
+- Mejor composición visual en desktop y móvil.
+- Se mantienen todas las funciones de ALEX STREAMING.
+
+También conserva:
+catálogo, precios, detalles, WhatsApp, redes, pagos, chat, juego,
+idiomas, moneda, SEO, sitemap.xml y robots.txt.
+
+# ALEX STREAMING V53 — NEON IMPACT
+
+Versión más llamativa que V52:
+- Fondo aurora animado.
+- Hero con degradados premium.
+- ALEX STREAMING con tipografía de alto impacto.
+- Panel destacado con órbitas, destellos y elementos holográficos.
+- Tarjetas con hover más fuerte.
+- Brillos cian, rosa y violeta.
+- Botones con reflejos animados.
+- Diseño profesional, moderno y responsive.
+- Sin volver a agregar la barra VISITOR_LIVE / WHATSAPP_ONLINE / ELITE_CATALOG / PAYMENT_READY.
+
+Se mantienen catálogo, precios, detalles, WhatsApp, redes, pagos, chat, juego,
+idiomas, moneda, SEO, sitemap.xml y robots.txt.
+
+# ALEX STREAMING V52 — OBSIDIAN PULSE
+
+Nuevo diseño:
+- Más agresivo, profesional y llamativo.
+- Paleta negro obsidiana con acentos rojo, cian y violeta.
+- Hero de alto impacto.
+- Tarjetas angulares premium.
+- Bordes luminosos sutiles.
+- Efectos visuales modernos sin saturar la interfaz.
+- Header más elegante.
+- Botones y filtros con identidad premium.
+- Diseño responsive para PC, tablet y celular.
+
+Se mantienen todas las funciones de la versión anterior:
+catálogo, precios, detalles, WhatsApp, redes, pagos, chat, juego,
+idiomas, moneda, SEO, sitemap.xml y robots.txt.
+
+# ALEX STREAMING V51 — STREAMING STYLE
+
+Nuevo diseño elegido: **opción 3 — estilo plataforma de streaming**.
+
+Cambios visuales:
+- Hero cinematográfico con contenido destacado.
+- Header oscuro y limpio.
+- Botones redondeados y estilo premium.
+- Catálogo con tarjetas tipo plataforma digital.
+- Filtros en formato pill.
+- Secciones de redes, pagos y pasos con el mismo lenguaje visual.
+- Diseño responsive para PC, tablet y celular.
+- Menos elementos "hacker" y una apariencia más parecida a una plataforma de entretenimiento moderna.
+- Se mantienen las funciones existentes: catálogo, precios, detalles, WhatsApp, redes, pagos, chat, juego, idiomas, moneda, SEO, sitemap y robots.txt.
+
+No se ha copiado la interfaz exacta de Netflix ni de otra plataforma; es un diseño original inspirado en el estilo general de servicios de streaming.
+
+# ALEX STREAMING V50 — SIN BARRA SUPERIOR
+
+Cambio solicitado:
+- Se eliminó por completo la barra con:
+  `VISITOR_LIVE`, `WHATSAPP_ONLINE`, `ELITE_CATALOG` y `PAYMENT_READY`.
+- El resto del diseño, catálogo, SEO, sitemap, robots.txt y funciones se mantienen.
+
+# ALEX STREAMING V49 — SEO GOOGLE PRO
+
+Mejoras sobre V48:
+- Favicon SVG + PNG 48x48 + favicon.ico.
+- Icono 180x180 para Apple y 192/512 para manifest.
+- `manifest.webmanifest`.
+- Nombre de sitio `ALEX STREAMING` y nombre alternativo `ALEXSTREAMING.STORE`.
+- Meta description mejorada.
+- Canonical.
+- Robots meta completos.
+- Open Graph para WhatsApp/Facebook.
+- Twitter/X Card.
+- Imagen social `social-preview.png` (1200x630).
+- Datos estructurados `WebSite`.
+- Sitemap con `lastmod`.
+- `/favicon.ico` disponible directamente.
+
+Después de subir a GitHub/Railway:
+1. Comprueba https://alexstreaming.store/favicon.ico
+2. Comprueba https://alexstreaming.store/static/img/social-preview.png
+3. No necesitas volver a enviar el sitemap si ya figura como correcto en Search Console.
+4. Google puede elegir un título o fragmento distinto según la búsqueda; estas etiquetas sirven como señales.
+
 # ALEX STREAMING V48 — SEO PARA GOOGLE
 
 Incluye:
@@ -327,3 +486,16 @@ No se incluyen productos cuya descripción implique doxxing/reconocimiento facia
 Reemplaza los archivos de tu repositorio `alex-streaming` con los de esta carpeta y haz **Commit changes**. Railway desplegará la actualización automáticamente en `https://alexstreaming.store`.
 
 No subas `venv/` ni `__pycache__/`.
+
+
+ACTUALIZACIÓN V57
+- texto de tarjeta destacada cambiado
+- “SYSTEM BOOT // DIGITAL ACCESS” -> “CYBER ACCESS // ELITE MODE”
+- “MATRIX CORE” -> “MATRIX DOMINION”
+- también se ajustó el texto de estado para que todo quede consistente
+
+
+ACTUALIZACIÓN V58
+- se reemplazó “Matrix Dominion” por la marca del sitio
+- en la tarjeta destacada ahora aparece “ALEX STREAMING” y “ALEXSTREAMING.STORE”
+- se cambió la tipografía del bloque destacado por Orbitron para que se vea más fuerte y premium
