@@ -1,3 +1,111 @@
+# ALEX STREAMING V48 — SEO PARA GOOGLE
+
+Incluye:
+- `/sitemap.xml`
+- `/robots.txt`
+- título SEO
+- meta descripción
+- canonical
+- Open Graph
+- Twitter Card
+- datos estructurados básicos `WebSite`
+
+## Después de subirlo a GitHub / Railway
+
+Comprueba en el navegador:
+- https://alexstreaming.store/sitemap.xml
+- https://alexstreaming.store/robots.txt
+
+Cuando ambos abran correctamente, entra a Google Search Console → **Sitemaps** y escribe:
+
+`sitemap.xml`
+
+Luego pulsa **ENVIAR**.
+
+No borres el registro TXT de verificación de Google que ya añadiste al DNS.
+
+
+# ALEX STREAMING V45 — NETFLIX
+
+Cambios:
+- Activación a TV · acceso autorizado · 30 días — S/12
+- Activación a TV · acceso autorizado · 7 días — S/6
+- Instalación app oficial Netflix · Android / Android TV — S/10
+- Netflix Perfil · 1 mes — S/15
+- Cuenta completa · 1 mes — S/48
+- El botón DETALLES ahora muestra la información del plan que el cliente tenga seleccionado.
+- No se incluyen accesos tipo “hit”, cuentas ajenas ni APK modificadas.
+
+# ALEX STREAMING V44 — PRECIOS GAMMA CORREGIDOS
+
+Cambios:
+- Cuenta completa · 1 mes · 4,000 créditos IA — S/30
+- Gamma · 1 mes — S/15
+
+Se mantiene todo lo demás de la V43 sin cambios.
+
+# ALEX STREAMING V43 — SIN “CONSULTAR” EN LAS TARJETAS
+
+Corrección visual:
+- Se eliminó el texto grande **Consultar** debajo de los productos.
+- Los planes sin precio ya no muestran `· Consultar` en el selector.
+- Si un producto tiene al menos un plan con precio, el bloque **DESDE** muestra el precio mínimo disponible.
+- Ejemplo: Gamma ya no inicia mostrando “Consultar”; muestra el menor precio disponible.
+- Si un producto no tiene ningún precio configurado, el bloque **DESDE** simplemente no aparece.
+- Si el usuario selecciona un plan sin precio, el bloque de precio se oculta.
+- Dentro del checkout, cuando un plan no tiene precio definido, se muestra **POR CONFIRMAR**, no “Consultar”.
+
+# ALEX STREAMING V42 — REDES CORREGIDAS
+
+Corrección aplicada:
+- Ya no aparecen "Campañas publicitarias", "Alcance mundial", "Gestión de comunidad", etc.
+- En el selector **OBJETIVO** de cada red aparecen exactamente:
+  **Seguidores, Likes, Comentarios, Compartidas, Vistas, Espectadores en vivo y Guardados**.
+- El botón **DETALLES** conserva exactamente esas mismas opciones.
+- El botón **COMPRAR** sigue al costado de DETALLES.
+- Se mantienen los nombres normales de Instagram, Facebook, TikTok, YouTube, X / Twitter, etc.
+- El contenido del modal de DETALLES continúa usando el idioma detectado del navegador/dispositivo.
+
+La interfaz no automatiza bots ni cuentas falsas; presenta estas opciones como tipos de servicio/objetivo.
+
+# ALEX STREAMING V41 — MÉTRICAS DE REDES
+
+En todas las redes sociales, dentro de **DETALLES**, ahora aparece exactamente:
+
+**Seguidores, Likes, Comentarios, Compartidas, Vistas, Espectadores en vivo y Guardados.**
+
+Se mantienen:
+- Botón DETALLES.
+- Botón COMPRAR.
+- Traducción automática del modal según el idioma preferido del navegador/dispositivo.
+- Nombres normales de las plataformas, sin la etiqueta MUNDIAL.
+
+Nota: esta sección se presenta como información de servicios/promoción y no automatiza métricas falsas.
+
+# ALEX STREAMING V40 — REDES NORMALES + DETALLES
+
+Cambios:
+- Los nombres de las redes vuelven a verse normales: Instagram, Facebook, TikTok, YouTube, etc.
+- Se eliminó la etiqueta visual **MUNDIAL** de las tarjetas y del modal.
+- Se mantienen los botones **DETALLES** y **COMPRAR**.
+- Dentro de **DETALLES** se conserva el comunicado solicitado sobre seguidores, likes,
+  comentarios, compartidas, vistas, espectadores en vivo y demás interacciones.
+- También se mantienen las métricas específicas de cada plataforma.
+- El contenido de DETALLES continúa usando el sistema multidioma automático del sitio.
+
+# ALEX STREAMING V39 — REDES CON DETALLES MUNDIALES
+
+Cambios:
+- En cada tarjeta de redes aparecen **DETALLES** y **COMPRAR**.
+- DETALLES abre un comunicado que indica que seguidores, likes, comentarios,
+  compartidas, vistas, espectadores en vivo y otras interacciones son **MUNDIALES**,
+  no de un país específico.
+- El modal lista las interacciones/métricas correspondientes a cada plataforma.
+- El comunicado y las métricas se muestran en el idioma preferido detectado del navegador/dispositivo.
+- El botón COMPRAR conserva el flujo existente por WhatsApp.
+
+La sección mantiene el enfoque de campañas/promoción y no automatiza bots o cuentas falsas.
+
 # ALEX STREAMING V38 — NEON RUSH
 
 Se añadió un minijuego original llamado **ALEX NEON RUSH**.

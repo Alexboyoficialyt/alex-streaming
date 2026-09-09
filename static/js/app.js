@@ -43,6 +43,10 @@
   const socialModalQuantity = document.getElementById('socialModalQuantity');
   const socialTarget = document.getElementById('socialTarget');
   const socialWhatsapp = document.getElementById('socialWhatsapp');
+  const socialDetailsModal = document.getElementById('socialDetailsModal');
+  const socialDetailsTitle = document.getElementById('socialDetailsTitle');
+  const socialDetailsNotice = document.getElementById('socialDetailsNotice');
+  const socialDetailsMetrics = document.getElementById('socialDetailsMetrics');
   const detailsModal = document.getElementById('detailsModal');
   const detailsTitle = document.getElementById('detailsTitle');
   const detailsDescription = document.getElementById('detailsDescription');
@@ -72,11 +76,11 @@
 
   const LANGUAGE_NAMES = {es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS',fr:'FRANÇAIS',de:'DEUTSCH',it:'ITALIANO',vi:'TIẾNG VIỆT',ru:'РУССКИЙ',tr:'TÜRKÇE',ar:'العربية',zh:'中文',ja:'日本語',ko:'한국어',hi:'हिन्दी',id:'BAHASA INDONESIA',th:'ไทย',nl:'NEDERLANDS',pl:'POLSKI'};
   const I18N = {
-    es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'CONTINUAR COMPRA POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COMPRAR',online:'ONLINE',consult:'Consultar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX'},
-    en:{nav_catalog:'CATALOG',nav_social:'SOCIAL',nav_payments:'PAYMENTS',nav_how:'HOW TO BUY',catalog_title:'Full catalog',catalog_subtitle:'Streaming, AI, productivity, software, education, VPN, authorized services and bundles.',search_placeholder:'Search HBO Max, Gamma, Canva, Office...',filter_all:'ALL',payment_title:'Payment methods',payment_note:'Choose a payment method when ordering. Final confirmation is handled on WhatsApp.',steps_title:'Buy in 3 steps',step1_title:'Choose a platform',step1_text:'Find the service and select the plan you want.',step2_title:'Choose payment',step2_text:'Select Yape, Plin, BCP or Binance.',step3_title:'Confirm on WhatsApp',step3_text:'Your order is prepared automatically and ready to send.',checkout_title:'Complete order',select_payment:'SELECT PAYMENT METHOD',continue_whatsapp:'CONTINUE ON WHATSAPP',consult_whatsapp:'ASK ON WHATSAPP',social_prepare:'Prepare campaign',send_quote:'SEND QUOTE ON WHATSAPP',contact:'CONTACT',choose_plan:'SELECT PLAN',from:'FROM',details:'DETAILS',buy:'BUY',quote:'QUOTE',online:'ONLINE',consult:'Ask',product:'PRODUCT',plan:'PLAN',total:'TOTAL',includes:'INCLUDES',conditions:'TERMS',price_approx:'approx. price',access_title:'ENTER THE DIGITAL UNIVERSE',access_desc:'Premium catalog, AI tools, productivity, social services and direct WhatsApp support.',your_name:'YOUR NAME',start_experience:'START EXPERIENCE',country_detected:'DETECTED COUNTRY',enter_status:'WHEN YOU ENTER, YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING',hero_lead:'Your digital catalog with a high-impact premium experience. Streaming, AI, productivity, software and bundles in one place. Choose a plan and finish the order on WhatsApp.',enter_catalog:'OPEN CATALOG',talk_alex:'TALK TO ALEX'},
-    pt:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGAMENTOS',nav_how:'COMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, produtividade, software, educação, VPN, serviços autorizados e combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TUDO',payment_title:'Métodos de pagamento',payment_note:'Escolha o método ao comprar. A confirmação final é feita pelo WhatsApp.',steps_title:'Compre em 3 passos',step1_title:'Escolha a plataforma',step1_text:'Procure o serviço e selecione o plano desejado.',step2_title:'Escolha o pagamento',step2_text:'Selecione Yape, Plin, BCP ou Binance.',step3_title:'Confirme no WhatsApp',step3_text:'Seu pedido é preparado automaticamente e fica pronto para envio.',checkout_title:'Finalizar pedido',select_payment:'SELECIONE O MÉTODO DE PAGAMENTO',continue_whatsapp:'CONTINUAR NO WHATSAPP',consult_whatsapp:'CONSULTAR NO WHATSAPP',social_prepare:'Preparar campanha',send_quote:'ENVIAR COTAÇÃO PELO WHATSAPP',contact:'CONTATO',choose_plan:'SELECIONAR PLANO',from:'A PARTIR DE',details:'DETALHES',buy:'COMPRAR',quote:'COTAR',online:'ONLINE',consult:'Consultar',product:'PRODUTO',plan:'PLANO',total:'TOTAL',includes:'INCLUI',conditions:'CONDIÇÕES',price_approx:'preço aproximado',access_title:'ENTRE NO UNIVERSO DIGITAL',access_desc:'Catálogo premium, ferramentas de IA, produtividade, redes e atendimento direto pelo WhatsApp.',your_name:'SEU NOME',start_experience:'INICIAR EXPERIÊNCIA',country_detected:'PAÍS DETECTADO',enter_status:'AO ENTRAR, SEU NOME + PAÍS APARECERÃO NO ALEX STREAMING',hero_lead:'Seu catálogo digital com uma experiência premium de alto impacto. Streaming, IA, produtividade, software e combos em um só lugar. Escolha um plano e finalize pelo WhatsApp.',enter_catalog:'ABRIR CATÁLOGO',talk_alex:'FALAR COM ALEX'},
-    fr:{nav_catalog:'CATALOGUE',nav_social:'RÉSEAUX',nav_payments:'PAIEMENTS',nav_how:'COMMENT ACHETER',catalog_title:'Catalogue complet',catalog_subtitle:'Streaming, IA, productivité, logiciels, éducation, VPN, services autorisés et packs.',search_placeholder:'Rechercher HBO Max, Gamma, Canva, Office...',filter_all:'TOUT',payment_title:'Modes de paiement',payment_note:'Choisissez le mode de paiement. La confirmation finale se fait sur WhatsApp.',steps_title:'Achetez en 3 étapes',step1_title:'Choisissez la plateforme',step1_text:'Trouvez le service et sélectionnez le forfait souhaité.',step2_title:'Choisissez le paiement',step2_text:'Sélectionnez Yape, Plin, BCP ou Binance.',step3_title:'Confirmez sur WhatsApp',step3_text:'Votre commande est préparée automatiquement.',checkout_title:'Finaliser la commande',select_payment:'SÉLECTIONNEZ LE MODE DE PAIEMENT',continue_whatsapp:'CONTINUER SUR WHATSAPP',consult_whatsapp:'DEMANDER SUR WHATSAPP',social_prepare:'Préparer la campagne',send_quote:'ENVOYER LE DEVIS SUR WHATSAPP',contact:'CONTACT',choose_plan:'CHOISIR LE FORFAIT',from:'À PARTIR DE',details:'DÉTAILS',buy:'ACHETER',quote:'DEVIS',online:'EN LIGNE',consult:'Consulter',product:'PRODUIT',plan:'FORFAIT',total:'TOTAL',includes:'INCLUS',conditions:'CONDITIONS',price_approx:'prix approximatif',access_title:'ENTREZ DANS L’UNIVERS NUMÉRIQUE',access_desc:'Catalogue premium, outils IA, productivité, réseaux et assistance directe sur WhatsApp.',your_name:'VOTRE NOM',start_experience:'DÉMARRER L’EXPÉRIENCE',country_detected:'PAYS DÉTECTÉ',enter_status:'À L’ENTRÉE, VOTRE NOM + PAYS APPARAÎTRONT DANS ALEX STREAMING',hero_lead:'Votre catalogue numérique avec une expérience premium à fort impact. Streaming, IA, productivité, logiciels et packs en un seul endroit.',enter_catalog:'OUVRIR LE CATALOGUE',talk_alex:'PARLER À ALEX'},
-    de:{nav_catalog:'KATALOG',nav_social:'SOCIAL',nav_payments:'ZAHLUNGEN',nav_how:'SO KAUFST DU',catalog_title:'Vollständiger Katalog',catalog_subtitle:'Streaming, KI, Produktivität, Software, Bildung, VPN, autorisierte Dienste und Bundles.',search_placeholder:'HBO Max, Gamma, Canva, Office suchen...',filter_all:'ALLE',payment_title:'Zahlungsmethoden',payment_note:'Wähle beim Kauf die Zahlungsmethode. Die Bestätigung erfolgt über WhatsApp.',steps_title:'Kaufen in 3 Schritten',step1_title:'Plattform wählen',step1_text:'Suche den Dienst und wähle deinen Plan.',step2_title:'Zahlung wählen',step2_text:'Wähle Yape, Plin, BCP oder Binance.',step3_title:'Über WhatsApp bestätigen',step3_text:'Deine Bestellung wird automatisch vorbereitet.',checkout_title:'Bestellung abschließen',select_payment:'ZAHLUNGSMETHODE WÄHLEN',continue_whatsapp:'WEITER ÜBER WHATSAPP',consult_whatsapp:'ÜBER WHATSAPP ANFRAGEN',social_prepare:'Kampagne vorbereiten',send_quote:'ANGEBOT ÜBER WHATSAPP SENDEN',contact:'KONTAKT',choose_plan:'PLAN WÄHLEN',from:'AB',details:'DETAILS',buy:'KAUFEN',quote:'ANGEBOT',online:'ONLINE',consult:'Anfragen',product:'PRODUKT',plan:'PLAN',total:'GESAMT',includes:'ENTHÄLT',conditions:'BEDINGUNGEN',price_approx:'ungefährer Preis',access_title:'BETRITT DAS DIGITALE UNIVERSUM',access_desc:'Premium-Katalog, KI-Tools, Produktivität, soziale Dienste und direkter WhatsApp-Support.',your_name:'DEIN NAME',start_experience:'ERLEBNIS STARTEN',country_detected:'ERKANNTES LAND',enter_status:'BEIM EINTRITT WERDEN DEIN NAME + LAND IN ALEX STREAMING ANGEZEIGT',hero_lead:'Dein digitaler Katalog mit Premium-Erlebnis: Streaming, KI, Produktivität, Software und Bundles an einem Ort.',enter_catalog:'KATALOG ÖFFNEN',talk_alex:'MIT ALEX SPRECHEN'},
+    es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'CONTINUAR COMPRA POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COMPRAR',online:'ONLINE',consult:'Por confirmar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX'},
+    en:{nav_catalog:'CATALOG',nav_social:'SOCIAL',nav_payments:'PAYMENTS',nav_how:'HOW TO BUY',catalog_title:'Full catalog',catalog_subtitle:'Streaming, AI, productivity, software, education, VPN, authorized services and bundles.',search_placeholder:'Search HBO Max, Gamma, Canva, Office...',filter_all:'ALL',payment_title:'Payment methods',payment_note:'Choose a payment method when ordering. Final confirmation is handled on WhatsApp.',steps_title:'Buy in 3 steps',step1_title:'Choose a platform',step1_text:'Find the service and select the plan you want.',step2_title:'Choose payment',step2_text:'Select Yape, Plin, BCP or Binance.',step3_title:'Confirm on WhatsApp',step3_text:'Your order is prepared automatically and ready to send.',checkout_title:'Complete order',select_payment:'SELECT PAYMENT METHOD',continue_whatsapp:'CONTINUE ON WHATSAPP',consult_whatsapp:'ASK ON WHATSAPP',social_prepare:'Prepare campaign',send_quote:'SEND QUOTE ON WHATSAPP',contact:'CONTACT',choose_plan:'SELECT PLAN',from:'FROM',details:'DETAILS',buy:'BUY',quote:'QUOTE',online:'ONLINE',consult:'To confirm',product:'PRODUCT',plan:'PLAN',total:'TOTAL',includes:'INCLUDES',conditions:'TERMS',price_approx:'approx. price',access_title:'ENTER THE DIGITAL UNIVERSE',access_desc:'Premium catalog, AI tools, productivity, social services and direct WhatsApp support.',your_name:'YOUR NAME',start_experience:'START EXPERIENCE',country_detected:'DETECTED COUNTRY',enter_status:'WHEN YOU ENTER, YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING',hero_lead:'Your digital catalog with a high-impact premium experience. Streaming, AI, productivity, software and bundles in one place. Choose a plan and finish the order on WhatsApp.',enter_catalog:'OPEN CATALOG',talk_alex:'TALK TO ALEX'},
+    pt:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGAMENTOS',nav_how:'COMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, produtividade, software, educação, VPN, serviços autorizados e combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TUDO',payment_title:'Métodos de pagamento',payment_note:'Escolha o método ao comprar. A confirmação final é feita pelo WhatsApp.',steps_title:'Compre em 3 passos',step1_title:'Escolha a plataforma',step1_text:'Procure o serviço e selecione o plano desejado.',step2_title:'Escolha o pagamento',step2_text:'Selecione Yape, Plin, BCP ou Binance.',step3_title:'Confirme no WhatsApp',step3_text:'Seu pedido é preparado automaticamente e fica pronto para envio.',checkout_title:'Finalizar pedido',select_payment:'SELECIONE O MÉTODO DE PAGAMENTO',continue_whatsapp:'CONTINUAR NO WHATSAPP',consult_whatsapp:'CONSULTAR NO WHATSAPP',social_prepare:'Preparar campanha',send_quote:'ENVIAR COTAÇÃO PELO WHATSAPP',contact:'CONTATO',choose_plan:'SELECIONAR PLANO',from:'A PARTIR DE',details:'DETALHES',buy:'COMPRAR',quote:'COTAR',online:'ONLINE',consult:'A confirmar',product:'PRODUTO',plan:'PLANO',total:'TOTAL',includes:'INCLUI',conditions:'CONDIÇÕES',price_approx:'preço aproximado',access_title:'ENTRE NO UNIVERSO DIGITAL',access_desc:'Catálogo premium, ferramentas de IA, produtividade, redes e atendimento direto pelo WhatsApp.',your_name:'SEU NOME',start_experience:'INICIAR EXPERIÊNCIA',country_detected:'PAÍS DETECTADO',enter_status:'AO ENTRAR, SEU NOME + PAÍS APARECERÃO NO ALEX STREAMING',hero_lead:'Seu catálogo digital com uma experiência premium de alto impacto. Streaming, IA, produtividade, software e combos em um só lugar. Escolha um plano e finalize pelo WhatsApp.',enter_catalog:'ABRIR CATÁLOGO',talk_alex:'FALAR COM ALEX'},
+    fr:{nav_catalog:'CATALOGUE',nav_social:'RÉSEAUX',nav_payments:'PAIEMENTS',nav_how:'COMMENT ACHETER',catalog_title:'Catalogue complet',catalog_subtitle:'Streaming, IA, productivité, logiciels, éducation, VPN, services autorisés et packs.',search_placeholder:'Rechercher HBO Max, Gamma, Canva, Office...',filter_all:'TOUT',payment_title:'Modes de paiement',payment_note:'Choisissez le mode de paiement. La confirmation finale se fait sur WhatsApp.',steps_title:'Achetez en 3 étapes',step1_title:'Choisissez la plateforme',step1_text:'Trouvez le service et sélectionnez le forfait souhaité.',step2_title:'Choisissez le paiement',step2_text:'Sélectionnez Yape, Plin, BCP ou Binance.',step3_title:'Confirmez sur WhatsApp',step3_text:'Votre commande est préparée automatiquement.',checkout_title:'Finaliser la commande',select_payment:'SÉLECTIONNEZ LE MODE DE PAIEMENT',continue_whatsapp:'CONTINUER SUR WHATSAPP',consult_whatsapp:'DEMANDER SUR WHATSAPP',social_prepare:'Préparer la campagne',send_quote:'ENVOYER LE DEVIS SUR WHATSAPP',contact:'CONTACT',choose_plan:'CHOISIR LE FORFAIT',from:'À PARTIR DE',details:'DÉTAILS',buy:'ACHETER',quote:'DEVIS',online:'EN LIGNE',consult:'À confirmer',product:'PRODUIT',plan:'FORFAIT',total:'TOTAL',includes:'INCLUS',conditions:'CONDITIONS',price_approx:'prix approximatif',access_title:'ENTREZ DANS L’UNIVERS NUMÉRIQUE',access_desc:'Catalogue premium, outils IA, productivité, réseaux et assistance directe sur WhatsApp.',your_name:'VOTRE NOM',start_experience:'DÉMARRER L’EXPÉRIENCE',country_detected:'PAYS DÉTECTÉ',enter_status:'À L’ENTRÉE, VOTRE NOM + PAYS APPARAÎTRONT DANS ALEX STREAMING',hero_lead:'Votre catalogue numérique avec une expérience premium à fort impact. Streaming, IA, productivité, logiciels et packs en un seul endroit.',enter_catalog:'OUVRIR LE CATALOGUE',talk_alex:'PARLER À ALEX'},
+    de:{nav_catalog:'KATALOG',nav_social:'SOCIAL',nav_payments:'ZAHLUNGEN',nav_how:'SO KAUFST DU',catalog_title:'Vollständiger Katalog',catalog_subtitle:'Streaming, KI, Produktivität, Software, Bildung, VPN, autorisierte Dienste und Bundles.',search_placeholder:'HBO Max, Gamma, Canva, Office suchen...',filter_all:'ALLE',payment_title:'Zahlungsmethoden',payment_note:'Wähle beim Kauf die Zahlungsmethode. Die Bestätigung erfolgt über WhatsApp.',steps_title:'Kaufen in 3 Schritten',step1_title:'Plattform wählen',step1_text:'Suche den Dienst und wähle deinen Plan.',step2_title:'Zahlung wählen',step2_text:'Wähle Yape, Plin, BCP oder Binance.',step3_title:'Über WhatsApp bestätigen',step3_text:'Deine Bestellung wird automatisch vorbereitet.',checkout_title:'Bestellung abschließen',select_payment:'ZAHLUNGSMETHODE WÄHLEN',continue_whatsapp:'WEITER ÜBER WHATSAPP',consult_whatsapp:'ÜBER WHATSAPP ANFRAGEN',social_prepare:'Kampagne vorbereiten',send_quote:'ANGEBOT ÜBER WHATSAPP SENDEN',contact:'KONTAKT',choose_plan:'PLAN WÄHLEN',from:'AB',details:'DETAILS',buy:'KAUFEN',quote:'ANGEBOT',online:'ONLINE',consult:'Zu bestätigen',product:'PRODUKT',plan:'PLAN',total:'GESAMT',includes:'ENTHÄLT',conditions:'BEDINGUNGEN',price_approx:'ungefährer Preis',access_title:'BETRITT DAS DIGITALE UNIVERSUM',access_desc:'Premium-Katalog, KI-Tools, Produktivität, soziale Dienste und direkter WhatsApp-Support.',your_name:'DEIN NAME',start_experience:'ERLEBNIS STARTEN',country_detected:'ERKANNTES LAND',enter_status:'BEIM EINTRITT WERDEN DEIN NAME + LAND IN ALEX STREAMING ANGEZEIGT',hero_lead:'Dein digitaler Katalog mit Premium-Erlebnis: Streaming, KI, Produktivität, Software und Bundles an einem Ort.',enter_catalog:'KATALOG ÖFFNEN',talk_alex:'MIT ALEX SPRECHEN'},
     it:{nav_catalog:'CATALOGO',nav_social:'SOCIAL',nav_payments:'PAGAMENTI',nav_how:'COME ACQUISTARE',catalog_title:'Catalogo completo',catalog_subtitle:'Streaming, IA, produttività, software, istruzione, VPN, servizi autorizzati e bundle.',search_placeholder:'Cerca HBO Max, Gamma, Canva, Office...',filter_all:'TUTTO',payment_title:'Metodi di pagamento',payment_note:'Scegli il metodo di pagamento. La conferma finale avviene su WhatsApp.',steps_title:'Acquista in 3 passaggi',step1_title:'Scegli la piattaforma',step1_text:'Trova il servizio e seleziona il piano desiderato.',step2_title:'Scegli il pagamento',step2_text:'Seleziona Yape, Plin, BCP o Binance.',step3_title:'Conferma su WhatsApp',step3_text:'Il tuo ordine viene preparato automaticamente.',checkout_title:'Completa ordine',select_payment:'SELEZIONA METODO DI PAGAMENTO',continue_whatsapp:'CONTINUA SU WHATSAPP',consult_whatsapp:'CHIEDI SU WHATSAPP',social_prepare:'Prepara campagna',send_quote:'INVIA PREVENTIVO SU WHATSAPP',contact:'CONTATTO',choose_plan:'SELEZIONA PIANO',from:'DA',details:'DETTAGLI',buy:'ACQUISTA',quote:'PREVENTIVO',online:'ONLINE',consult:'Chiedi',product:'PRODOTTO',plan:'PIANO',total:'TOTALE',includes:'INCLUDE',conditions:'CONDIZIONI',price_approx:'prezzo approssimativo',access_title:'ENTRA NELL’UNIVERSO DIGITALE',access_desc:'Catalogo premium, strumenti IA, produttività, social e supporto diretto su WhatsApp.',your_name:'IL TUO NOME',start_experience:'AVVIA ESPERIENZA',country_detected:'PAESE RILEVATO',enter_status:'ENTRANDO VEDRAI IL TUO NOME + PAESE IN ALEX STREAMING',hero_lead:'Il tuo catalogo digitale con un’esperienza premium ad alto impatto. Streaming, IA, produttività, software e bundle in un unico posto.',enter_catalog:'APRI CATALOGO',talk_alex:'PARLA CON ALEX'},
     vi:{nav_catalog:'DANH MỤC',nav_social:'MẠNG XÃ HỘI',nav_payments:'THANH TOÁN',nav_how:'CÁCH MUA',catalog_title:'Danh mục đầy đủ',catalog_subtitle:'Streaming, AI, năng suất, phần mềm, giáo dục, VPN, dịch vụ được phép và combo.',search_placeholder:'Tìm HBO Max, Gamma, Canva, Office...',filter_all:'TẤT CẢ',payment_title:'Phương thức thanh toán',payment_note:'Chọn phương thức thanh toán khi mua. Xác nhận cuối cùng qua WhatsApp.',steps_title:'Mua trong 3 bước',step1_title:'Chọn nền tảng',step1_text:'Tìm dịch vụ và chọn gói bạn muốn.',step2_title:'Chọn thanh toán',step2_text:'Chọn Yape, Plin, BCP hoặc Binance.',step3_title:'Xác nhận qua WhatsApp',step3_text:'Đơn hàng được chuẩn bị tự động.',checkout_title:'Hoàn tất đơn hàng',select_payment:'CHỌN PHƯƠNG THỨC THANH TOÁN',continue_whatsapp:'TIẾP TỤC QUA WHATSAPP',consult_whatsapp:'HỎI QUA WHATSAPP',social_prepare:'Chuẩn bị chiến dịch',send_quote:'GỬI BÁO GIÁ QUA WHATSAPP',contact:'LIÊN HỆ',choose_plan:'CHỌN GÓI',from:'TỪ',details:'CHI TIẾT',buy:'MUA',quote:'BÁO GIÁ',online:'TRỰC TUYẾN',consult:'Liên hệ',product:'SẢN PHẨM',plan:'GÓI',total:'TỔNG',includes:'BAO GỒM',conditions:'ĐIỀU KIỆN',price_approx:'giá xấp xỉ',access_title:'BƯỚC VÀO THẾ GIỚI SỐ',access_desc:'Danh mục premium, công cụ AI, năng suất, mạng xã hội và hỗ trợ trực tiếp qua WhatsApp.',your_name:'TÊN CỦA BẠN',start_experience:'BẮT ĐẦU TRẢI NGHIỆM',country_detected:'QUỐC GIA ĐÃ PHÁT HIỆN',enter_status:'KHI VÀO, TÊN + QUỐC GIA CỦA BẠN SẼ HIỂN THỊ TRONG ALEX STREAMING',hero_lead:'Danh mục kỹ thuật số với trải nghiệm premium mạnh mẽ. Streaming, AI, năng suất, phần mềm và combo trong một nơi.',enter_catalog:'MỞ DANH MỤC',talk_alex:'CHAT VỚI ALEX'}
   };
@@ -135,7 +139,7 @@
     payment_base_amount:'Monto base a pagar',
     payment_local_amount:'Equivalente aproximado en tu moneda',
     payment_method_help:'Coordina los datos de pago por WhatsApp.',
-    checkout_note:'No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.',whatsapp_language_note:'Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor.',accept_terms:'Acepto los términos y condiciones del servicio.',terms_required:'Debes aceptar los términos para continuar.',customer_language:'Idioma del cliente',chat_open:'CHAT GLOBAL',chat_community:'COMUNIDAD ALEX STREAMING',chat_title:'CHAT GLOBAL',chat_safety:'Chat público. No compartas teléfono, correo, contraseñas, enlaces ni datos personales.',chat_empty:'Todavía no hay mensajes. Inicia la conversación.',chat_placeholder:'Escribe un mensaje...',chat_send:'ENVIAR',chat_registration_required:'Debes registrarte con tu nombre para escribir en el chat.',chat_private_contact:'Por seguridad, no compartas teléfonos, correos ni enlaces en el chat público.',chat_slow_down:'Espera unos segundos antes de enviar otro mensaje.',chat_send_error:'No se pudo enviar el mensaje. Inténtalo nuevamente.',chat_as:'CHATEANDO COMO',game_open:'JUGAR NEON RUSH',game_title:'NEON RUSH',game_explain:'Atrapa los núcleos de energía antes de que desaparezcan. Los verdes dan +10 puntos, los azules +20 y los rojos quitan 15 puntos. Tienes 30 segundos para conseguir la mayor puntuación posible.',game_start:'EMPEZAR PARTIDA',game_player:'JUGADOR',game_score:'PUNTOS',game_best:'RÉCORD',game_time:'TIEMPO',game_ready:'LISTO PARA JUGAR',game_ready_hint:'Pulsa empezar y toca los núcleos que aparezcan.',game_combo:'COMBO',game_restart:'JUGAR OTRA VEZ',game_finished:'PARTIDA TERMINADA',game_new_record:'¡NUEVO RÉCORD!'
+    checkout_note:'No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.',whatsapp_language_note:'Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor.',accept_terms:'Acepto los términos y condiciones del servicio.',terms_required:'Debes aceptar los términos para continuar.',customer_language:'Idioma del cliente',chat_open:'CHAT GLOBAL',chat_community:'COMUNIDAD ALEX STREAMING',chat_title:'CHAT GLOBAL',chat_safety:'Chat público. No compartas teléfono, correo, contraseñas, enlaces ni datos personales.',chat_empty:'Todavía no hay mensajes. Inicia la conversación.',chat_placeholder:'Escribe un mensaje...',chat_send:'ENVIAR',chat_registration_required:'Debes registrarte con tu nombre para escribir en el chat.',chat_private_contact:'Por seguridad, no compartas teléfonos, correos ni enlaces en el chat público.',chat_slow_down:'Espera unos segundos antes de enviar otro mensaje.',chat_send_error:'No se pudo enviar el mensaje. Inténtalo nuevamente.',chat_as:'CHATEANDO COMO',game_open:'JUGAR NEON RUSH',game_title:'NEON RUSH',game_explain:'Atrapa los núcleos de energía antes de que desaparezcan. Los verdes dan +10 puntos, los azules +20 y los rojos quitan 15 puntos. Tienes 30 segundos para conseguir la mayor puntuación posible.',game_start:'EMPEZAR PARTIDA',game_player:'JUGADOR',game_score:'PUNTOS',game_best:'RÉCORD',game_time:'TIEMPO',game_ready:'LISTO PARA JUGAR',game_ready_hint:'Pulsa empezar y toca los núcleos que aparezcan.',game_combo:'COMBO',game_restart:'JUGAR OTRA VEZ',game_finished:'PARTIDA TERMINADA',game_new_record:'¡NUEVO RÉCORD!',social_worldwide:'MUNDIAL',social_not_country:'NO ES DE UN PAÍS EN ESPECÍFICO',social_notice_title:'INFORMACIÓN IMPORTANTE',social_metrics_title:'INTERACCIONES / MÉTRICAS DISPONIBLES',social_details_note:'La disponibilidad depende de la plataforma seleccionada y de las condiciones del servicio. Cada solicitud debe respetar las reglas de la plataforma.',social_worldwide_notice:'IMPORTANTE: Los servicios relacionados con seguidores, likes, comentarios, compartidas, vistas, espectadores en vivo y otras interacciones son MUNDIALES. No corresponden a un país específico. La disponibilidad de cada tipo de interacción depende de la plataforma seleccionada.'
   });
   Object.assign(I18N.en, {
     access_portal:'ACCESS PORTAL',
@@ -156,7 +160,7 @@
     payment_base_amount:'Base amount to pay',
     payment_local_amount:'Approximate equivalent in your currency',
     payment_method_help:'Coordinate payment details on WhatsApp.',
-    checkout_note:'Do not enter passwords, banking codes or sensitive information on this website. The order is coordinated on WhatsApp.',whatsapp_language_note:'You can use a translator so you and the seller can understand each other. Tell the seller your language so they can assist you better.',accept_terms:'I accept the service terms and conditions.',terms_required:'You must accept the terms to continue.',customer_language:'Customer language',chat_open:'GLOBAL CHAT',chat_community:'ALEX STREAMING COMMUNITY',chat_title:'GLOBAL CHAT',chat_safety:'Public chat. Do not share phone numbers, email, passwords, links or personal information.',chat_empty:'No messages yet. Start the conversation.',chat_placeholder:'Write a message...',chat_send:'SEND',chat_registration_required:'Register with your name before writing in the chat.',chat_private_contact:'For safety, do not share phone numbers, email addresses or links in the public chat.',chat_slow_down:'Wait a few seconds before sending another message.',chat_send_error:'The message could not be sent. Try again.',chat_as:'CHATTING AS',game_open:'PLAY NEON RUSH',game_title:'NEON RUSH',game_explain:'Catch the energy cores before they disappear. Green gives +10 points, blue +20, and red removes 15 points. You have 30 seconds to get the highest score possible.',game_start:'START GAME',game_player:'PLAYER',game_score:'SCORE',game_best:'BEST',game_time:'TIME',game_ready:'READY TO PLAY',game_ready_hint:'Press start and tap the cores that appear.',game_combo:'COMBO',game_restart:'PLAY AGAIN',game_finished:'GAME OVER',game_new_record:'NEW HIGH SCORE!'
+    checkout_note:'Do not enter passwords, banking codes or sensitive information on this website. The order is coordinated on WhatsApp.',whatsapp_language_note:'You can use a translator so you and the seller can understand each other. Tell the seller your language so they can assist you better.',accept_terms:'I accept the service terms and conditions.',terms_required:'You must accept the terms to continue.',customer_language:'Customer language',chat_open:'GLOBAL CHAT',chat_community:'ALEX STREAMING COMMUNITY',chat_title:'GLOBAL CHAT',chat_safety:'Public chat. Do not share phone numbers, email, passwords, links or personal information.',chat_empty:'No messages yet. Start the conversation.',chat_placeholder:'Write a message...',chat_send:'SEND',chat_registration_required:'Register with your name before writing in the chat.',chat_private_contact:'For safety, do not share phone numbers, email addresses or links in the public chat.',chat_slow_down:'Wait a few seconds before sending another message.',chat_send_error:'The message could not be sent. Try again.',chat_as:'CHATTING AS',game_open:'PLAY NEON RUSH',game_title:'NEON RUSH',game_explain:'Catch the energy cores before they disappear. Green gives +10 points, blue +20, and red removes 15 points. You have 30 seconds to get the highest score possible.',game_start:'START GAME',game_player:'PLAYER',game_score:'SCORE',game_best:'BEST',game_time:'TIME',game_ready:'READY TO PLAY',game_ready_hint:'Press start and tap the cores that appear.',game_combo:'COMBO',game_restart:'PLAY AGAIN',game_finished:'GAME OVER',game_new_record:'NEW HIGH SCORE!',social_worldwide:'WORLDWIDE',social_not_country:'NOT LIMITED TO A SPECIFIC COUNTRY',social_notice_title:'IMPORTANT INFORMATION',social_metrics_title:'AVAILABLE INTERACTIONS / METRICS',social_details_note:'Availability depends on the selected platform and service conditions. Each request must follow the platform’s rules.',social_worldwide_notice:'IMPORTANT: Services related to followers, likes, comments, shares, views, live viewers and other interactions are WORLDWIDE. They are not tied to a specific country. Availability of each interaction type depends on the selected platform.'
   });
 
   function normalizeLanguageCode(raw){
@@ -266,7 +270,7 @@
     'feature_streaming','feature_ai','feature_catalog','feature_support',
     'payment_title','payment_note','checkout_title','select_payment','continue_whatsapp',
     'payment_ready','payment_data','pay_with','payment_choose','payment_base_amount',
-    'payment_local_amount','payment_method_help','checkout_note','whatsapp_language_note','accept_terms','terms_required','customer_language','chat_open','chat_community','chat_title','chat_safety','chat_empty','chat_placeholder','chat_send','chat_registration_required','chat_private_contact','chat_slow_down','chat_send_error','chat_as','game_open','game_title','game_explain','game_start','game_player','game_score','game_best','game_time','game_ready','game_ready_hint','game_combo','game_restart','game_finished','game_new_record'
+    'payment_local_amount','payment_method_help','checkout_note','whatsapp_language_note','accept_terms','terms_required','customer_language','chat_open','chat_community','chat_title','chat_safety','chat_empty','chat_placeholder','chat_send','chat_registration_required','chat_private_contact','chat_slow_down','chat_send_error','chat_as','game_open','game_title','game_explain','game_start','game_player','game_score','game_best','game_time','game_ready','game_ready_hint','game_combo','game_restart','game_finished','game_new_record','social_worldwide','social_not_country','social_notice_title','social_metrics_title','social_details_note','social_worldwide_notice'
   ];
 
   async function hydrateCriticalTranslations(lang){
@@ -391,7 +395,7 @@
 
   function formatMoney(amount, currency=activeCurrency){
     const value = Number(amount);
-    if (!Number.isFinite(value)) return t('consult');
+    if (!Number.isFinite(value)) return '';
     const locale = localeForLanguage(activeLanguage);
     try { return new Intl.NumberFormat(locale,{style:'currency',currency,maximumFractionDigits:['JPY','KRW','VND','CLP','PYG'].includes(currency)?0:2}).format(value); }
     catch (_) { return `${currency} ${value.toFixed(2)}`; }
@@ -451,7 +455,7 @@
 
   function localPriceFromBase(base){ return Number(base) * currencyRate; }
   function priceLabelFromBase(base){
-    if (base === '' || base == null || !Number.isFinite(Number(base))) return t('consult');
+    if (base === '' || base == null || !Number.isFinite(Number(base))) return '';
     return formatMoney(localPriceFromBase(Number(base)), activeCurrency);
   }
 
@@ -462,16 +466,19 @@
         const planName=option.dataset.planName || option.textContent.split('·')[0].trim();
         option.dataset.planName=planName;
         const label=priceLabelFromBase(base);
-        option.dataset.priceLabel=label;
+        option.dataset.priceLabel=label || '';
         option.textContent=`${planName} · ${label}`;
       });
       const card=select.closest('.product-card');
       const option=select.options[select.selectedIndex];
-      const strong=card?.querySelector('.price-wrap strong');
-      if(strong) strong.textContent=option?.dataset.priceLabel || t('consult');
+      const priceWrap=card?.querySelector('.price-wrap');
+      const strong=priceWrap?.querySelector('strong');
+      const label=option?.dataset.priceLabel || '';
+      if(priceWrap) priceWrap.hidden=!label;
+      if(strong) strong.textContent=label;
     });
     if (selectedOrder && modalPrice) {
-      modalPrice.textContent = selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : t('consult');
+      modalPrice.textContent = selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : (activeLanguage === 'es' ? 'POR CONFIRMAR' : t('consult'));
     }
   }
 
@@ -839,6 +846,7 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && modal.classList.contains('open')) closeCheckout();
     if (e.key === 'Escape' && socialModal?.classList.contains('open')) closeSocial();
+    if (e.key === 'Escape' && socialDetailsModal?.classList.contains('open')) closeSocialDetails();
     if (e.key === 'Escape' && detailsModal?.classList.contains('open')) closeDetails();
   });
 
@@ -846,8 +854,11 @@
     select.addEventListener('change', () => {
       const card = select.closest('.product-card');
       const option = select.options[select.selectedIndex];
-      const label = option.dataset.priceLabel || t('consult');
-      card.querySelector('.price-wrap strong').textContent = label;
+      const label = option.dataset.priceLabel || '';
+      const priceWrap = card.querySelector('.price-wrap');
+      const strong = priceWrap?.querySelector('strong');
+      if(priceWrap) priceWrap.hidden = !label;
+      if(strong) strong.textContent = label;
     });
   });
 
@@ -899,7 +910,7 @@
     const option = select.options[select.selectedIndex];
     const planText = option.dataset.planName || option.textContent.split('·')[0].trim();
     const rawPrice = option.dataset.basePrice ?? option.dataset.price;
-    const priceLabel = option.dataset.priceLabel || t('consult');
+    const priceLabel = option.dataset.priceLabel || '';
     const basePrice = rawPrice ? Number(rawPrice).toFixed(2) : '';
     selectedOrder = { product: button.dataset.product, productId: button.dataset.productId || '', plan: planText, basePrice, priceLabel, currency: activeCurrency };
     trackAnalyticsEvent('checkout', {product_id:selectedOrder.productId, product_name:selectedOrder.product, plan:selectedOrder.plan});
@@ -1158,10 +1169,28 @@
 
   async function openDetails(button) {
     const id = button.dataset.productId;
-    detailsProduct = (window.ALEX_PRODUCTS || []).find(p => p.id === id);
-    if (!detailsProduct || !detailsModal) return;
+    const originalProduct = (window.ALEX_PRODUCTS || []).find(p => p.id === id);
+    if (!originalProduct || !detailsModal) return;
 
-    trackAnalyticsEvent('details', {product_id:detailsProduct.id, product_name:detailsProduct.name});
+    // V45: DETALLES corresponde al plan actualmente seleccionado.
+    const card = button.closest('.product-card');
+    const select = card?.querySelector('.plan-select');
+    const selectedIndex = select ? Number(select.value || 0) : 0;
+    const selectedPlan = (originalProduct.plans || [])[selectedIndex] || (originalProduct.plans || [])[0];
+
+    detailsProduct = {
+      ...originalProduct,
+      description: selectedPlan?.description || originalProduct.description || '',
+      plans: selectedPlan ? [selectedPlan] : (originalProduct.plans || []),
+      details: selectedPlan?.details || originalProduct.details || [],
+      notes: selectedPlan?.notes || originalProduct.notes || []
+    };
+
+    trackAnalyticsEvent('details', {
+      product_id:detailsProduct.id,
+      product_name:detailsProduct.name,
+      plan:selectedPlan?.name || ''
+    });
 
     // Abrimos de inmediato con el contenido original para que no haya retraso visual.
     renderDetailsTranslated(detailsProduct, {
@@ -1219,7 +1248,9 @@
     const customerLanguage = currentCustomerLanguageLabel();
     const message = await localizeWhatsappMessage([
       'Hola Alex Streaming 👋','',
-      `Quiero información sobre: ${detailsProduct.name}`,'',
+      `Quiero información sobre: ${detailsProduct.name}`,
+      detailsProduct.plans?.[0]?.name ? `• Plan: ${detailsProduct.plans[0].name}` : '',
+      '',
       '¿Me indicas disponibilidad y condiciones?',
       `• ${t('customer_language')}: ${customerLanguage}`,
       'Acepto los términos y condiciones del servicio.',
@@ -1229,6 +1260,66 @@
     window.open(`https://wa.me/${window.ALEX_STORE.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
   });
 
+
+
+  async function openSocialDetails(button){
+    const card = button.closest('.social-card');
+    if(!card || !socialDetailsModal) return;
+
+    const network = button.dataset.network || card.dataset.social || 'Red social';
+    const metrics = String(card.dataset.socialMetrics || '')
+      .split('||')
+      .map(v=>v.trim())
+      .filter(Boolean);
+
+    if(socialDetailsTitle) socialDetailsTitle.textContent = network;
+    if(socialDetailsNotice) socialDetailsNotice.textContent = t('social_worldwide_notice');
+
+    if(socialDetailsMetrics){
+      socialDetailsMetrics.innerHTML='';
+      for(const metric of metrics){
+        const chip=document.createElement('span');
+        chip.textContent=metric;
+        socialDetailsMetrics.appendChild(chip);
+      }
+    }
+
+    socialDetailsModal.classList.add('open');
+    socialDetailsModal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+
+    if(activeLanguage !== 'es' && activeLanguage !== 'en'){
+      try{
+        const translatedNotice=await translateTextGlobal(
+          I18N.es.social_worldwide_notice || t('social_worldwide_notice'),
+          activeLanguage
+        );
+        if(socialDetailsNotice && translatedNotice) socialDetailsNotice.textContent=translatedNotice;
+
+        if(socialDetailsMetrics){
+          const chips=[...socialDetailsMetrics.querySelectorAll('span')];
+          for(let i=0;i<chips.length;i++){
+            const translatedMetric=await translateTextGlobal(metrics[i],activeLanguage);
+            if(translatedMetric) chips[i].textContent=translatedMetric;
+          }
+        }
+      }catch(_){}
+    }
+  }
+
+  function closeSocialDetails(){
+    if(!socialDetailsModal) return;
+    socialDetailsModal.classList.remove('open');
+    socialDetailsModal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  document.querySelectorAll('.social-details-btn').forEach(button=>{
+    button.addEventListener('click',()=>openSocialDetails(button));
+  });
+  document.querySelectorAll('[data-close-social-details]').forEach(el=>{
+    el.addEventListener('click',closeSocialDetails);
+  });
 
   function openSocial(button) {
     const card = button.closest('.social-card');
@@ -1272,7 +1363,7 @@
 
     const message = await localizeWhatsappMessage([
       'Hola Alex Streaming 👋', '',
-      'Quiero solicitar esta campaña social:',
+      'Quiero solicitar este servicio de red social:',
       `• Red: ${selectedSocialOrder.network}`,
       `• Objetivo: ${selectedSocialOrder.service}`,
       `• Cantidad: ${Number(selectedSocialOrder.quantity).toLocaleString(localeForLanguage(activeLanguage))}`,
@@ -1282,7 +1373,7 @@
       'Acepto los términos y condiciones del servicio.',
       'Puedes usar un traductor para que el vendedor y yo podamos entendernos. Mi idioma aparece indicado arriba.',
       '',
-      '¿Me indicas disponibilidad, precio y condiciones?'
+      '¿Me indicas disponibilidad, precio y condiciones del servicio?'
     ]);
 
     trackAnalyticsEvent('social_quote', {product_name:selectedSocialOrder.network, plan:`${selectedSocialOrder.service} · ${selectedSocialOrder.quantity}`});

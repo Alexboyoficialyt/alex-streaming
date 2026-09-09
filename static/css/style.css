@@ -724,3 +724,31 @@ body.access-locked .epic-entry{opacity:0!important;visibility:hidden!important;p
   .game-arena{height:300px}
   .game-orb{width:52px;height:52px}
 }
+
+
+/* V39 — REDES: DETALLES + COMUNICADO MUNDIAL */
+.social-actions{position:relative;z-index:2;display:grid;grid-template-columns:.72fr 1fr;gap:7px}
+.social-actions .social-order-btn{width:100%}
+.social-details-btn{
+  min-height:40px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(104,255,184,.16);background:rgba(104,255,184,.025);
+  color:#87a79d;font:800 8px var(--mono);letter-spacing:.04em;cursor:pointer
+}
+.social-details-btn:hover{
+  color:#dffff5;border-color:color-mix(in srgb,var(--social) 42%,rgba(104,255,184,.22));
+  background:color-mix(in srgb,var(--social) 6%,#050909)
+}
+.social-details-modal-card{max-width:620px}
+.social-details-copy,.social-details-metrics-wrap{
+  margin-top:12px;padding:12px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.02)
+}
+.social-details-copy h3,.social-details-metrics-wrap h3{
+  margin:0 0 8px;color:#66858e;font:800 8px var(--mono);letter-spacing:.08em
+}
+.social-details-copy p{margin:0;color:#dbe8eb;font:600 11px/1.6 var(--sans)}
+.social-details-metrics{display:flex;flex-wrap:wrap;gap:7px}
+.social-details-metrics span{
+  padding:6px 8px;border:1px solid rgba(104,255,184,.12);border-radius:7px;
+  background:rgba(104,255,184,.025);color:#a7c5bb;font:700 8px var(--mono)
+}
+@media(max-width:560px){.social-actions{grid-template-columns:1fr 1fr}}

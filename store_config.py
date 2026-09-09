@@ -182,17 +182,92 @@ PRODUCTS = [{'id': 'max',
   'accent': '#E50914',
   'category': 'Streaming',
   'badge': 'NETFLIX',
-  'description': 'Accesos y activaciones autorizadas coordinadas para Netflix.',
-  'plans': [{'name': 'Activación a TV · acceso autorizado · 30 días', 'price': 6},
-            {'name': 'Premium · activación a TV', 'price': 15},
-            {'name': 'Cuenta completa · 1 mes', 'price': 48}],
-  'details': ['Activación exclusiva para TV con espera máxima aproximada de 10 minutos según disponibilidad.',
-              'No modificar el nombre del perfil, no eliminar contenido, no cambiar membresía ni realizar '
-              'modificaciones en la cuenta.',
-              'El idioma se cambia directamente dentro de la película o serie que estés viendo.',
-              'Solo se ofrecen accesos y activaciones autorizadas.'],
-  'notes': ['No incluye acceso a cuentas ajenas, credenciales obtenidas sin permiso ni métodos de acceso no '
-            'autorizado.'],
+  'description': 'Opciones de Netflix coordinadas para TV y perfil, únicamente con accesos autorizados.',
+  'plans': [
+      {
+          'name': 'Activación a TV · acceso autorizado · 30 días',
+          'price': 12,
+          'description': 'Activación autorizada de Netflix para TV durante 30 días.',
+          'details': [
+              'USO: Servicio válido únicamente para un dispositivo de TV.',
+              'Para mantener la garantía, no cambiar contraseña, PIN, nombre del perfil, membresía ni otros datos de la cuenta.',
+              'Garantía de 30 días. El soporte y los reclamos se atienden dentro de ese período.',
+              'PASOS DE ACTIVACIÓN: entrar a Netflix en la TV y enviar el código de 8 dígitos para realizar la activación.',
+              'Es únicamente para TV. No incluye correo y contraseña para iniciar sesión en celular o PC.',
+              'Solo se realizan activaciones autorizadas por el titular o proveedor legítimo de la cuenta.'
+          ],
+          'notes': [
+              'Uso en un solo dispositivo.',
+              'No modificar datos de la cuenta.',
+              'No se ofrecen accesos a cuentas ajenas ni credenciales obtenidas sin autorización.'
+          ]
+      },
+      {
+          'name': 'Activación a TV · acceso autorizado · 7 días',
+          'price': 6,
+          'description': 'Activación autorizada de Netflix para TV durante 7 días.',
+          'details': [
+              'USO: Servicio válido únicamente para un dispositivo de TV.',
+              'Para mantener la garantía, no cambiar contraseña, PIN, nombre del perfil, membresía ni otros datos de la cuenta.',
+              'Garantía de 7 días. El soporte y los reclamos se atienden dentro de ese período.',
+              'PASOS DE ACTIVACIÓN: entrar a Netflix en la TV y enviar el código de 8 dígitos para realizar la activación.',
+              'Es únicamente para TV. No incluye correo y contraseña para iniciar sesión en celular o PC.',
+              'Solo se realizan activaciones autorizadas por el titular o proveedor legítimo de la cuenta.'
+          ],
+          'notes': [
+              'Uso en un solo dispositivo.',
+              'No modificar datos de la cuenta.',
+              'No se ofrecen accesos a cuentas ajenas ni credenciales obtenidas sin autorización.'
+          ]
+      },
+      {
+          'name': 'Instalación app oficial Netflix · Android / Android TV',
+          'price': 10,
+          'description': 'Asistencia para instalar y configurar la aplicación oficial de Netflix en Android o Android TV.',
+          'details': [
+              'Se utiliza únicamente la aplicación oficial de Netflix.',
+              'Compatible con Android y Android TV según disponibilidad del dispositivo.',
+              'La activación requiere una suscripción o acceso autorizado de Netflix.',
+              'No incluye APK modificada, desbloqueada ni versiones que evadan la suscripción.'
+          ],
+          'notes': [
+              'Solo instalación y configuración de la app oficial.'
+          ]
+      },
+      {
+          'name': 'Netflix Perfil · 1 mes',
+          'price': 15,
+          'description': 'Perfil de Netflix por 1 mes con acceso autorizado.',
+          'details': [
+              'Duración: 1 mes.',
+              'Se entregan los datos de acceso autorizados correspondientes al servicio.',
+              'NO CAMBIAR nombres, PIN, contraseña, membresía ni otros datos de la cuenta.',
+              'Uso en un solo dispositivo a la vez para mantener la garantía.'
+          ],
+          'notes': [
+              'Si se detecta uso simultáneo en más dispositivos de los permitidos, puede perderse la garantía.',
+              'Distribuir únicamente cuentas o perfiles que estés autorizado a comercializar.'
+          ]
+      },
+      {
+          'name': 'Cuenta completa · 1 mes',
+          'price': 48,
+          'description': 'Cuenta completa de Netflix por 1 mes, sujeta a disponibilidad y autorización.',
+          'details': [
+              'Cuenta completa por 1 mes.',
+              'Entrega y condiciones coordinadas por WhatsApp.',
+              'Usar únicamente accesos autorizados.'
+          ],
+          'notes': []
+      }
+  ],
+  'details': [
+      'Selecciona el plan y luego pulsa DETALLES para ver las condiciones específicas de esa opción.',
+      'Solo se ofrecen accesos y activaciones autorizadas.'
+  ],
+  'notes': [
+      'No incluye acceso a cuentas ajenas, credenciales obtenidas sin permiso ni métodos de acceso no autorizado.'
+  ],
   'logo_url': 'https://cdn.simpleicons.org/netflix/E50914',
   'logo_class': 'brand-logo brand-logo-wide',
   'display_name': 'Netflix'},
@@ -488,7 +563,7 @@ PRODUCTS = [{'id': 'max',
   'category': 'IA y productividad',
   'badge': 'GAMMA',
   'description': 'Gamma Pro para crear presentaciones, documentos y páginas con IA.',
-  'plans': [{'name': 'Cuenta completa · 1 mes · 4,000 créditos IA', 'price': None},
+  'plans': [{'name': 'Cuenta completa · 1 mes · 4,000 créditos IA', 'price': 30},
             {'name': 'Gamma · 1 mes', 'price': 15}],
   'details': ['Gamma Pro completo por 1 mes con 4,000 créditos de IA para funciones avanzadas.',
               'Ideal para crear presentaciones, documentos y páginas con resultados premium.',
@@ -1732,3 +1807,78 @@ SOCIAL_PLATFORMS = [
         "services": ["Promoción de canal", "Alcance mundial", "Analítica", "Gestión de comunidad", "Transmisiones en vivo"]
     }
 ]
+
+
+# ============================================================
+# V39 — REDES: DETALLES DE MÉTRICAS + ALCANCE MUNDIAL
+# ============================================================
+_SOCIAL_METRICS_V39 = {
+    "instagram": ["Seguidores", "Likes", "Comentarios", "Compartidas", "Vistas", "Espectadores en vivo", "Guardados"],
+    "facebook": ["Seguidores", "Me gusta", "Reacciones", "Comentarios", "Compartidas", "Vistas", "Espectadores en vivo"],
+    "tiktok": ["Seguidores", "Likes", "Comentarios", "Compartidas", "Vistas", "Espectadores en vivo", "Guardados"],
+    "youtube": ["Suscriptores", "Likes", "Comentarios", "Compartidas", "Vistas", "Espectadores en vivo"],
+    "x": ["Seguidores", "Likes", "Respuestas", "Reposts", "Vistas"],
+    "threads": ["Seguidores", "Likes", "Respuestas", "Reposts", "Vistas"],
+    "telegram": ["Miembros", "Reacciones", "Comentarios", "Compartidas", "Vistas"],
+    "linkedin": ["Seguidores", "Reacciones", "Comentarios", "Compartidas", "Vistas"],
+    "pinterest": ["Seguidores", "Guardados", "Clics", "Compartidas", "Vistas"],
+    "twitch": ["Seguidores", "Vistas", "Espectadores en vivo", "Interacciones", "Chat"],
+    "discord": ["Miembros", "Reacciones", "Interacciones"],
+    "snapchat": ["Seguidores", "Vistas", "Interacciones"],
+    "whatsapp": ["Miembros de canal", "Reacciones", "Vistas"],
+    "reddit": ["Seguidores", "Upvotes", "Comentarios", "Compartidas", "Vistas"],
+    "kick": ["Seguidores", "Vistas", "Espectadores en vivo", "Interacciones", "Chat"],
+}
+
+for _social in SOCIAL_PLATFORMS:
+    _sid = _social.get("id", "")
+    _social["metrics"] = _SOCIAL_METRICS_V39.get(
+        _sid,
+        ["Seguidores", "Likes", "Comentarios", "Compartidas", "Vistas", "Interacciones"]
+    )
+    _social["scope"] = "MUNDIAL"
+
+
+# V40 — REDES: nombres normales; DETALLES conserva el comunicado solicitado
+for _social in SOCIAL_PLATFORMS:
+    _names = {'instagram': 'Instagram', 'facebook': 'Facebook', 'tiktok': 'TikTok', 'youtube': 'YouTube', 'x': 'X / Twitter', 'threads': 'Threads', 'telegram': 'Telegram', 'linkedin': 'LinkedIn', 'pinterest': 'Pinterest', 'twitch': 'Twitch'}
+    if _social.get('id') in _names:
+        _social['name'] = _names[_social.get('id')]
+    _social.pop('scope', None)
+
+
+# ============================================================
+# V41 — REDES: MÉTRICAS EXACTAS SOLICITADAS
+# ============================================================
+_SOCIAL_METRICS_V41 = [
+    "Seguidores",
+    "Likes",
+    "Comentarios",
+    "Compartidas",
+    "Vistas",
+    "Espectadores en vivo",
+    "Guardados",
+]
+
+for _social in SOCIAL_PLATFORMS:
+    _social["metrics"] = list(_SOCIAL_METRICS_V41)
+
+
+# ============================================================
+# V42 — REDES: CORRECCIÓN VISUAL EXACTA
+# ============================================================
+_SOCIAL_OPTIONS_V42 = [
+    "Seguidores",
+    "Likes",
+    "Comentarios",
+    "Compartidas",
+    "Vistas",
+    "Espectadores en vivo",
+    "Guardados",
+]
+
+for _social in SOCIAL_PLATFORMS:
+    # Estas son las opciones que aparecen en el selector OBJETIVO.
+    _social["services"] = list(_SOCIAL_OPTIONS_V42)
+    # Estas mismas opciones aparecen en DETALLES.
+    _social["metrics"] = list(_SOCIAL_OPTIONS_V42)

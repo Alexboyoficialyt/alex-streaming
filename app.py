@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 
-from flask import Flask, render_template, jsonify, request, session
+from flask import Flask, render_template, jsonify, request, session, Response
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy import (
     create_engine, MetaData, Table, Column, Integer, String, DateTime, Text,
@@ -409,6 +409,31 @@ def home():
         stats=get_stats(),
     )
 
+
+
+@app.route("/sitemap.xml")
+def sitemap():
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://alexstreaming.store/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+"""
+    return Response(xml, mimetype="application/xml")
+
+
+@app.route("/robots.txt")
+def robots():
+    content = """User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://alexstreaming.store/sitemap.xml
+"""
+    return Response(content, mimetype="text/plain")
 
 @app.route("/api/catalog")
 def catalog():

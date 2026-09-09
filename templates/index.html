@@ -4,8 +4,31 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#020505">
-  <meta name="description" content="{{ store.name }} - catálogo digital de streaming, IA, software y servicios con atención por WhatsApp.">
-  <title>{{ store.name }}</title>
+  <title>ALEX STREAMING | Servicios digitales, IA y entretenimiento</title>
+  <meta name="description" content="ALEX STREAMING ofrece un catálogo de servicios digitales, herramientas de inteligencia artificial, software, entretenimiento y atención directa por WhatsApp.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://alexstreaming.store/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ALEX STREAMING">
+  <meta property="og:title" content="ALEX STREAMING | Servicios digitales, IA y entretenimiento">
+  <meta property="og:description" content="Catálogo de servicios digitales, IA, software y entretenimiento con atención directa.">
+  <meta property="og:url" content="https://alexstreaming.store/">
+  <meta property="og:locale" content="es_PE">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ALEX STREAMING">
+  <meta name="twitter:description" content="Servicios digitales, IA, software y entretenimiento.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ALEX STREAMING",
+    "url": "https://alexstreaming.store/",
+    "inLanguage": "es"
+  }
+  </script>
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -322,14 +345,18 @@
                   {% if plan.price is not none %}
                   <option value="{{ loop.index0 }}" data-price="{{ '%.2f'|format(plan.price) }}" data-base-price="{{ '%.2f'|format(plan.price) }}" data-plan-name="{{ plan.name }}" data-price-label="{{ store.currency }} {{ '%.2f'|format(plan.price) }}">{{ plan.name }} · {{ store.currency }} {{ '%.2f'|format(plan.price) }}</option>
                   {% else %}
-                  <option value="{{ loop.index0 }}" data-price="" data-base-price="" data-plan-name="{{ plan.name }}" data-price-label="Consultar">{{ plan.name }} · Consultar</option>
+                  <option value="{{ loop.index0 }}" data-price="" data-base-price="" data-plan-name="{{ plan.name }}" data-price-label="">{{ plan.name }}</option>
                   {% endif %}
                 {% endfor %}
               </select>
             </div>
 
             <div class="card-bottom">
-              <div class="price-wrap"><span>DESDE</span><strong>{% if product.plans[0].price is not none %}{{ store.currency }} {{ '%.2f'|format(product.plans[0].price) }}{% else %}Consultar{% endif %}</strong></div>
+              {% set priced_plans = product.plans | selectattr("price", "ne", none) | list %}
+              <div class="price-wrap"{% if not priced_plans %} hidden{% endif %}>
+                <span>DESDE</span>
+                <strong>{% if priced_plans %}{{ store.currency }} {{ '%.2f'|format(priced_plans | map(attribute="price") | min) }}{% endif %}</strong>
+              </div>
               <div class="card-actions"><button class="details-btn" type="button" data-product-id="{{ product.id }}">DETALLES</button><button class="buy-btn" data-product="{{ product.name }}" data-product-id="{{ product.id }}" data-currency="{{ store.currency }}">COMPRAR <b>↗</b></button></div>
             </div>
           </article>
@@ -346,18 +373,18 @@
           <div>
             <p class="kicker">// SOCIAL CONTROL PANEL</p>
             <h2>Redes sociales</h2>
-            <p class="section-subtitle">Selecciona una red, el tipo de campaña y la cantidad. El pedido se prepara para WhatsApp.</p>
+            <p class="section-subtitle">Selecciona una red, el tipo de interacción y la cantidad. El pedido se prepara para WhatsApp.</p>
           </div>
           <div class="social-terminal">
             <span>NETWORKS</span><strong>{{ social_platforms|length }}</strong>
             <i></i>
-            <span>MODE</span><strong>MANUAL QUOTE</strong>
+            <span>MODE</span><strong>SOCIAL SERVICES</strong>
           </div>
         </div>
 
         <div class="social-grid">
           {% for social in social_platforms %}
-          <article class="social-card" style="--social: {{ social.accent }}" data-social="{{ social.name }}">
+          <article class="social-card" style="--social: {{ social.accent }}" data-social="{{ social.name }}" data-social-id="{{ social.id }}" data-social-metrics="{{ social.metrics|default([])|join('||') }}">
             <div class="social-card-head">
               <div class="social-icon"><iconify-icon icon="{{ social.icon }}"></iconify-icon></div>
               <div><span>NETWORK_{{ '%02d'|format(loop.index) }}</span><h3>{{ social.name }}</h3></div>
@@ -389,7 +416,12 @@
             <div class="social-metrics">
               {% for service in social.services[:4] %}<span>{{ service }}</span>{% endfor %}
             </div>
-            <button class="social-order-btn" data-network="{{ social.name }}">COMPRAR <b>↗</b></button>
+            <div class="social-actions">
+              <button class="social-details-btn" type="button" data-network="{{ social.name }}">
+                <span data-i18n="details">DETALLES</span>
+              </button>
+              <button class="social-order-btn" data-network="{{ social.name }}">COMPRAR <b>↗</b></button>
+            </div>
           </article>
           {% endfor %}
         </div>
@@ -520,6 +552,28 @@
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
         <span data-i18n="consult_whatsapp">CONSULTAR POR WHATSAPP</span> <span>↗</span>
       </button>
+    </div>
+  </div>
+
+
+  <div class="modal" id="socialDetailsModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-social-details></div>
+    <div class="modal-card social-details-modal-card" role="dialog" aria-modal="true" aria-labelledby="socialDetailsTitle">
+      <div class="modal-corners"><i></i><i></i><i></i><i></i></div>
+      <button class="modal-close" data-close-social-details aria-label="Cerrar">×</button>
+      <p class="kicker">// SOCIAL DETAILS</p>
+      <h2 id="socialDetailsTitle">—</h2>
+      <div class="social-details-copy">
+        <h3 data-i18n="social_notice_title">COMUNICADO IMPORTANTE</h3>
+        <p id="socialDetailsNotice">—</p>
+      </div>
+
+      <div class="social-details-metrics-wrap">
+        <h3 data-i18n="social_metrics_title">INTERACCIONES / MÉTRICAS DISPONIBLES</h3>
+        <div class="social-details-metrics" id="socialDetailsMetrics"></div>
+      </div>
+
+      <p class="checkout-note" data-i18n="social_details_note">La disponibilidad depende de la plataforma seleccionada y de las condiciones de cada campaña. Las campañas deben respetar las reglas de cada plataforma.</p>
     </div>
   </div>
 
