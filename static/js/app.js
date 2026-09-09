@@ -54,6 +54,17 @@
   const detailsInfo = document.getElementById('detailsInfo');
   const detailsNotes = document.getElementById('detailsNotes');
   const detailsWhatsapp = document.getElementById('detailsWhatsapp');
+  const detailsReviewsSection = document.getElementById('detailsReviewsSection');
+  const detailsReviewAverage = document.getElementById('detailsReviewAverage');
+  const detailsReviewStars = document.getElementById('detailsReviewStars');
+  const detailsReviewCount = document.getElementById('detailsReviewCount');
+  const detailsReviewList = document.getElementById('detailsReviewList');
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewStarPicker = document.getElementById('reviewStarPicker');
+  const reviewComment = document.getElementById('reviewComment');
+  const reviewFeedback = document.getElementById('reviewFeedback');
+  const reviewSubmit = document.getElementById('reviewSubmit');
+  let reviewRating = 0;
   let detailsProduct = null;
 
   let currentFilter = 'all';
@@ -1166,6 +1177,143 @@
     }
   }
 
+
+  function reviewStarsText(rating){
+    const value = Math.max(0, Math.min(5, Number(rating || 0)));
+    const rounded = Math.round(value);
+    return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
+  }
+
+  function updateCardReviewSummary(productId, summary){
+    const el = document.querySelector(`[data-review-summary="${CSS.escape(String(productId))}"]`);
+    if (!el || !summary) return;
+    const count = Number(summary.count || 0);
+    const average = Number(summary.average || 0);
+    const avgEl = el.querySelector('[data-review-average]');
+    const countEl = el.querySelector('[data-review-count]');
+    const fillEl = el.querySelector('[data-review-stars-fill]');
+    if (avgEl) avgEl.textContent = count ? average.toFixed(1) : '—';
+    if (countEl) countEl.textContent = `${count} reseña${count === 1 ? '' : 's'}`;
+    if (fillEl) fillEl.style.width = `${count ? (average / 5) * 100 : 0}%`;
+  }
+
+  function renderReviewSummary(summary){
+    const count = Number(summary?.count || 0);
+    const average = Number(summary?.average || 0);
+    if (detailsReviewAverage) detailsReviewAverage.textContent = count ? average.toFixed(1) : '—';
+    if (detailsReviewStars) detailsReviewStars.textContent = count ? reviewStarsText(average) : '☆☆☆☆☆';
+    if (detailsReviewCount) {
+      detailsReviewCount.textContent = count
+        ? `${count} reseña${count === 1 ? '' : 's'}`
+        : 'Sin reseñas todavía';
+    }
+  }
+
+  function reviewDateLabel(value){
+    if (!value) return '';
+    try {
+      return new Intl.DateTimeFormat(activeLanguage || 'es', {
+        year:'numeric', month:'short', day:'numeric'
+      }).format(new Date(value));
+    } catch (_) {
+      return '';
+    }
+  }
+
+  function renderReviewList(reviews){
+    if (!detailsReviewList) return;
+    detailsReviewList.innerHTML = '';
+
+    if (!Array.isArray(reviews) || !reviews.length) {
+      const empty = document.createElement('p');
+      empty.className = 'reviews-empty';
+      empty.textContent = 'Todavía no hay reseñas. Puedes ser la primera persona en opinar.';
+      detailsReviewList.appendChild(empty);
+      return;
+    }
+
+    reviews.forEach(review => {
+      const article = document.createElement('article');
+      article.className = 'customer-review';
+
+      const top = document.createElement('div');
+      top.className = 'customer-review-top';
+
+      const person = document.createElement('div');
+      person.className = 'customer-review-person';
+      const avatar = document.createElement('span');
+      avatar.textContent = String(review.display_name || 'C').trim().charAt(0).toUpperCase() || 'C';
+      const nameWrap = document.createElement('div');
+      const name = document.createElement('strong');
+      name.textContent = review.display_name || 'Cliente';
+      const date = document.createElement('small');
+      date.textContent = reviewDateLabel(review.updated_at || review.created_at);
+      nameWrap.append(name, date);
+      person.append(avatar, nameWrap);
+
+      const rating = document.createElement('span');
+      rating.className = 'customer-review-stars';
+      rating.textContent = reviewStarsText(review.rating);
+
+      top.append(person, rating);
+
+      const comment = document.createElement('p');
+      comment.textContent = review.comment || '';
+
+      article.append(top, comment);
+      detailsReviewList.appendChild(article);
+    });
+  }
+
+  function setReviewPicker(rating){
+    reviewRating = Number(rating || 0);
+    reviewStarPicker?.querySelectorAll('button').forEach(button => {
+      const value = Number(button.dataset.rating || 0);
+      button.classList.toggle('active', value <= reviewRating);
+      button.setAttribute('aria-pressed', value === reviewRating ? 'true' : 'false');
+    });
+  }
+
+  async function loadProductReviews(productId){
+    if (!productId) return;
+
+    if (window.ALEX_PREVIEW_MODE) {
+      renderReviewSummary({count:0, average:0});
+      renderReviewList([]);
+      if (reviewFeedback) reviewFeedback.textContent = 'Vista previa: las reseñas reales se guardan cuando publiques la web.';
+      return;
+    }
+
+    if (detailsReviewList) {
+      detailsReviewList.innerHTML = '<p class="reviews-empty">Cargando reseñas...</p>';
+    }
+
+    try {
+      const response = await fetch(`/api/reviews?product_id=${encodeURIComponent(productId)}`, {
+        headers:{'Accept':'application/json'}
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || 'review_load_error');
+
+      renderReviewSummary(data.summary);
+      renderReviewList(data.reviews);
+      updateCardReviewSummary(productId, data.summary);
+
+      if (data.own_review) {
+        setReviewPicker(data.own_review.rating);
+        if (reviewComment) reviewComment.value = data.own_review.comment || '';
+        if (reviewFeedback) reviewFeedback.textContent = 'Ya tienes una reseña. Puedes editarla y volver a publicar.';
+      } else {
+        setReviewPicker(0);
+        if (reviewComment) reviewComment.value = '';
+        if (reviewFeedback) reviewFeedback.textContent = '';
+      }
+    } catch (_) {
+      renderReviewList([]);
+      if (reviewFeedback) reviewFeedback.textContent = 'No se pudieron cargar las reseñas en este momento.';
+    }
+  }
+
   async function openDetails(button) {
     const id = button.dataset.productId;
     const originalProduct = (window.ALEX_PRODUCTS || []).find(p => p.id === id);
@@ -1204,6 +1352,7 @@
     detailsModal.classList.add('open');
     detailsModal.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
+    loadProductReviews(detailsProduct.id);
 
     // Si el usuario no usa español, traducimos automáticamente el contenido
     // del modal al idioma detectado al entrar o seleccionado manualmente.
@@ -1236,6 +1385,80 @@
   }
 
   document.querySelectorAll('.details-btn').forEach(button => button.addEventListener('click', () => openDetails(button)));
+
+  document.querySelectorAll('.reviews-btn').forEach(button => button.addEventListener('click', async () => {
+    await openDetails(button);
+    setTimeout(() => detailsReviewsSection?.scrollIntoView({behavior:'smooth', block:'start'}), 140);
+  }));
+
+  reviewStarPicker?.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => setReviewPicker(Number(button.dataset.rating || 0)));
+  });
+
+  reviewForm?.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!detailsProduct) return;
+
+    if (!reviewRating) {
+      if (reviewFeedback) reviewFeedback.textContent = 'Selecciona de 1 a 5 estrellas.';
+      return;
+    }
+
+    const comment = String(reviewComment?.value || '').trim();
+    if (comment.length < 3) {
+      if (reviewFeedback) reviewFeedback.textContent = 'Escribe un comentario de al menos 3 caracteres.';
+      return;
+    }
+
+    if (window.ALEX_PREVIEW_MODE) {
+      if (reviewFeedback) reviewFeedback.textContent = 'Vista previa: al publicar la web, esta reseña se guardará en la base de datos.';
+      return;
+    }
+
+    let name = '';
+    try { name = localStorage.getItem('alex-alias') || ''; } catch (_) {}
+
+    reviewSubmit.disabled = true;
+    if (reviewFeedback) reviewFeedback.textContent = 'Publicando reseña...';
+
+    try {
+      const response = await fetch('/api/reviews', {
+        method:'POST',
+        headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+        body:JSON.stringify({
+          product_id: detailsProduct.id,
+          rating: reviewRating,
+          comment,
+          name,
+        })
+      });
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        const messages = {
+          registration_required:'Debes registrarte con tu nombre antes de dejar una reseña.',
+          invalid_rating:'Selecciona una valoración válida.',
+          comment_too_short:'Escribe un comentario un poco más completo.',
+          private_contact_not_allowed:'No publiques teléfonos, correos ni enlaces en una reseña pública.',
+          slow_down:'Espera unos segundos antes de volver a publicar.',
+        };
+        throw new Error(messages[data.error] || 'No se pudo publicar la reseña.');
+      }
+
+      if (reviewFeedback) {
+        reviewFeedback.textContent = data.updated
+          ? 'Tu reseña fue actualizada correctamente.'
+          : '¡Gracias! Tu reseña fue publicada.';
+      }
+      updateCardReviewSummary(detailsProduct.id, data.summary);
+      await loadProductReviews(detailsProduct.id);
+    } catch (error) {
+      if (reviewFeedback) reviewFeedback.textContent = error.message || 'No se pudo publicar la reseña.';
+    } finally {
+      reviewSubmit.disabled = false;
+    }
+  });
+
   document.querySelectorAll('[data-close-details]').forEach(el => el.addEventListener('click', closeDetails));
   detailsWhatsapp?.addEventListener('click', async () => {
     if (!detailsProduct) return;

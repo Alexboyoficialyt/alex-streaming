@@ -1,3 +1,201 @@
+# ALEX STREAMING V81 — PRIME VIDEO LOGO FIXED
+
+Corrección:
+- Prime Video ahora usa un archivo SVG local.
+- Ya no depende del CDN externo de Simple Icons.
+- Se corrigió en la tarjeta individual de Prime Video.
+- Se corrigió en todos los combos que incluyen Prime Video.
+- Se añadió una placa blanca para que el logo azul sea visible.
+- Mantiene los combos ordenados de V80 y el diseño Hacker Elite.
+
+# ALEX STREAMING V80 — HACKER COMBOS FIXED
+
+Correcciones aplicadas específicamente a los combos:
+- DUO perfectamente dividido en 2 columnas
+- TRIO perfectamente dividido en 3 columnas
+- cada servicio tiene su propia mini tarjeta
+- logos centrados y con tamaño uniforme
+- HBO Max / Disney+ usan placa clara para que se vean
+- nombre de cada servicio debajo del logo
+- títulos de combos alineados
+- botones y precios mantienen la misma posición
+- responsive en PC, tablet y celular
+
+Mantiene el diseño Hacker Elite y todas las funciones anteriores.
+
+# ALEX STREAMING V79 — HACKER ELITE
+
+Estética hacker/cyber visual, hecha con HTML/CSS:
+- negro + verde neón
+- grid técnico
+- lluvia de código decorativa
+- títulos estilo terminal
+- portal verde/cian
+- badges SYSTEM ONLINE / SECURE LINK / ELITE ACCESS
+- tarjetas premium con estética terminal
+- sin funciones maliciosas
+- mantiene catálogo, reseñas, WhatsApp, chat, juego, pagos y SEO
+
+# ALEX STREAMING V78 — PRODUCT CARDS FIXED
+
+Esta versión corrige exactamente los problemas vistos en las capturas:
+- tarjetas más anchas
+- 3 columnas en pantallas normales
+- 4 columnas solo cuando hay espacio suficiente
+- botones DETALLES / RESEÑAS / COMPRAR ya no se cortan
+- precio y botones se separan en dos filas
+- títulos más legibles
+- logos más grandes
+- logos de combos sobre placa clara para que HBO/Prime/Disney se vean
+- mejor adaptación a tablet y móvil
+- conserva el diseño FUSION INFERNO PRO y todas las funciones
+
+# ALEX STREAMING V77 — FUSION INFERNO PRO
+
+Diseño 100% basado en código HTML/CSS para el hero y efectos principales.
+
+Características:
+- estilo agresivo pero profesional
+- azul eléctrico + naranja/dorado
+- portal de energía
+- rayos dobles azul/naranja
+- panel técnico 99.9%
+- badges POWER ONLINE / ULTRA FAST / PREMIUM ACCESS
+- tarjetas más premium y oscuras
+- animaciones de luz
+- sin personajes
+- sin imágenes de fondo
+- mantiene catálogo, reseñas, WhatsApp, chat, juego, pagos y SEO
+
+# ALEX STREAMING — V76-COSMIC-AURA-CODE
+
+DISEÑO CODE-ONLY:
+- el fondo y la energía están creados con HTML/CSS
+- no usa imágenes como fondo del hero
+- sin personajes
+- conserva catálogo, reseñas, WhatsApp, chat, juego, pagos y SEO
+- las imágenes funcionales existentes del sitio (logos/favicons/productos) se mantienen
+
+# ALEX STREAMING V71 — SUPER ENERGY SIN PERSONAJES
+
+Versión preparada para subir a tu sitio web.
+
+Cambios:
+- estilo visual inspirado en Dragon Ball Super
+- sin personajes, sin guerreros y sin siluetas
+- aura azul eléctrica
+- anillos dorados
+- rayos de energía
+- rocas flotantes
+- cielo brillante tipo anime
+- escenario tipo torneo
+- símbolo ALEX en el centro del portal
+- mantiene catálogo, WhatsApp, pagos, chat, juego, SEO y reseñas por producto
+
+# ALEX STREAMING V70 — SUPER AURA REAL
+
+Rediseño completo del inicio:
+- se eliminó el hero anterior que seguía heredando el estilo Matrix/cyber
+- cielo anime brillante
+- nubes grandes
+- rocas flotantes
+- escenario tipo torneo
+- guerrero anime original
+- aura azul
+- anillos dorados
+- rayos de energía
+- tipografía azul + naranja/dorado
+- medidor de energía
+- botones y beneficios integrados
+- mantiene reseñas reales por producto
+
+Es un diseño original inspirado en la estética visual de Dragon Ball Super,
+sin copiar personajes, logos ni arte oficial.
+
+# ALEX STREAMING V69 — SUPER ANIME TOURNAMENT
+
+Versión más cercana a una estética tipo Dragon Ball Super:
+- torneo
+- cielo brillante con nubes
+- rocas flotantes
+- aura azul
+- anillos dorados
+- speed lines
+- kanji decorativos
+- guerrero anime original con cabello puntiagudo
+- medidor POWER LEVEL
+- naranja + azul + dorado
+- mantiene reseñas por producto
+
+No copia personajes, nombres ni logos oficiales.
+
+# ALEX STREAMING V68 — SUPER BATTLE STYLE
+
+Esta versión sí está enfocada en una estética tipo Dragon Ball Super:
+- energía azul eléctrica
+- acentos dorados/naranjas
+- esfera central de poder
+- anillos y destellos animados
+- silueta original tipo guerrero anime
+- escenario futurista/arena
+- tipografía heroica
+- tarjetas con aura por categoría
+- mantiene reseñas reales por producto
+
+No usa personajes, nombres, logos ni arte oficial de Dragon Ball. Es un diseño original inspirado en la estética de anime shonen de alta energía.
+
+# ALEX STREAMING V66 — SUPER ENERGY + RESEÑAS
+
+Diseño:
+- estética original inspirada en anime shonen de alta energía
+- azul eléctrico, cian y dorado
+- aura, anillos, rayos visuales y tarjetas neón
+- no incluye personajes, logos ni arte oficial de Dragon Ball
+
+Reseñas:
+- cada producto tiene valoración promedio y cantidad de reseñas
+- botón RESEÑAS en cada tarjeta
+- estrellas de 1 a 5
+- comentario público
+- usa el nombre registrado al entrar al sitio
+- una reseña por visitante y producto; volver a publicar actualiza la anterior
+- bloquea teléfonos, correos y enlaces en reseñas públicas
+- se guardan en la misma base de datos del sitio
+
+IMPORTANTE EN RAILWAY:
+Usa PostgreSQL y DATABASE_URL para que las reseñas y el chat persistan entre despliegues.
+Si Railway está usando SQLite local, los datos pueden perderse al redeploy.
+
+# ALEX STREAMING V65 — ANIME CONCEPT MATCH
+
+Esta versión intenta acercarse mucho más al concepto visual mostrado:
+- hero a dos columnas
+- escena energética a la derecha
+- ALEX azul + STREAMING dorado
+- botones grandes
+- fila de confianza
+- categoría destacadas con tarjetas neón
+- paleta azul/cian/dorado
+- conserva catálogo y funciones reales debajo
+
+El fondo escénico del hero usa un recorte del concepto visual generado en esta conversación.
+
+# ALEX STREAMING V64 — ANIME ENERGY
+
+Código real basado en el concepto visual de energía anime.
+
+Incluye:
+- hero ALEX / STREAMING con tipografías energéticas
+- paleta azul eléctrico + dorado
+- esfera de energía original con anillos animados
+- botones y tarjetas con brillo
+- catálogo, redes y pagos adaptados al mismo estilo
+- inicio/login adaptado
+- responsive para móvil
+- mantiene funciones, SEO, sitemap.xml y robots.txt
+
+No copia personajes, logos ni arte oficial de Dragon Ball; es un diseño original inspirado en la energía visual del género shonen.
+
 # ALEX STREAMING V63 — NOMBRE CON SÍMBOLOS
 
 Ahora los símbolos forman parte del propio nombre:

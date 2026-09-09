@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Oxanium:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Oxanium:wght@600;700;800&family=Audiowide&family=Bangers&family=Russo+One&display=swap" rel="stylesheet">
   <link rel="canonical" href="https://alexstreaming.store/">
 
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
@@ -53,7 +53,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
 </head>
-<body class="access-locked">
+<body class="access-locked theme-hacker-elite">
   <div class="access-gate" id="accessGate" role="dialog" aria-modal="true" aria-labelledby="accessTitle">
     <div class="access-gate-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="access-card access-card-apex">
@@ -140,7 +140,7 @@
         <div class="entry-orbit orbit-b"></div>
         <div class="epic-logo-shell"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></div>
       </div>
-      <p class="epic-kicker">{{ store.name }} // PREMIUM ACCESS</p>
+      <p class="epic-kicker">{{ store.name }} // ELITE ACCESS</p>
       <div class="entry-v12-title">
         <span>ACCESO A TODO TU</span>
         <strong>UNIVERSO DIGITAL</strong>
@@ -247,140 +247,154 @@
   </header>
 
   <main id="inicio">
-    <section class="hero shell">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="status-dot"></span> ⌬ ALEX STREAMING ⟦ ALEXSTREAMING.STORE ⟧</div>
-        <div class="hero-superline"><span>MATRIX EXPERIENCE // NEXT LEVEL</span><b>2026</b></div>
-        <div class="matrix-symbol-row matrix-symbol-row-top" aria-hidden="true">
-          <span>⌁</span><span>∆</span><span>01</span><span>⟦</span><span>⧉</span><span>⫷</span><span>AX</span><span>⫸</span><span>⧈</span><span>101</span>
-        </div>
-        <div class="matrix-title-wrap">
-          <span class="matrix-corner mc-tl" aria-hidden="true">⌜</span>
-          <span class="matrix-corner mc-tr" aria-hidden="true">⌝</span>
-          <span class="matrix-corner mc-bl" aria-hidden="true">⌞</span>
-          <span class="matrix-corner mc-br" aria-hidden="true">⌟</span>
-
-          <span class="matrix-side-code left" aria-hidden="true">0110 // AXS // SYS</span>
-          <span class="matrix-side-code right" aria-hidden="true">STORE // LIVE // 2026</span>
-
-          <h1 class="glitch hero-matrix-title" data-text="ALEX STREAMING">
-            <span class="hero-word-alex"><i class="name-symbol">⌬</i>ALEX<i class="name-symbol name-symbol-small">∆</i></span>
-            <span class="hero-word-streaming"><i class="name-bracket">⟦</i>STREAMING<i class="name-bracket">⟧</i></span>
-          </h1>
-        </div>
-        <div class="matrix-symbol-row matrix-symbol-row-bottom" aria-hidden="true">
-          <span>⟨/⟩</span><span>◇</span><span>SYS</span><span>⌬</span><span>∞</span><span>⟡</span><span>LIVE</span><span>⌁</span><span>0101</span>
-        </div>
-        <p class="hero-lead" id="heroLead">Una experiencia <b>Matrix, intensa y futurista</b> para explorar streaming, inteligencia artificial, software, productividad y servicios digitales.</p>
-
-        <div class="matrix-mini-status" aria-hidden="true">
-          <span><b>◉</b> SYSTEM ONLINE</span>
-          <span><b>◇</b> SECURE ACCESS</span>
-          <span><b>⌬</b> DIGITAL HUB</span>
-          <span><b>∞</b> ALWAYS ACTIVE</span>
-        </div>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#catalogo"><span id="heroCatalogButton">ENTRAR AL CATÁLOGO</span><b>↗</b></a>
-          <a class="btn btn-ghost" id="heroTalkButton" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">HABLAR CON ALEX</a>
-        </div>
-        <div class="hero-service-deck">
-          <a href="#catalogo" class="deck-card deck-streaming">
-            <span class="deck-index">01</span>
-            <iconify-icon icon="lucide:clapperboard"></iconify-icon>
-            <div><small>ENTRETENIMIENTO</small><strong>Streaming</strong></div>
-            <b>↗</b>
-          </a>
-          <a href="#catalogo" class="deck-card deck-ai">
-            <span class="deck-index">02</span>
-            <iconify-icon icon="lucide:bot"></iconify-icon>
-            <div><small>NUEVA GENERACIÓN</small><strong>Inteligencia IA</strong></div>
-            <b>↗</b>
-          </a>
-          <a href="#catalogo" class="deck-card deck-tools">
-            <span class="deck-index">03</span>
-            <iconify-icon icon="lucide:boxes"></iconify-icon>
-            <div><small>PRODUCTIVIDAD</small><strong>Software & Tools</strong></div>
-            <b>↗</b>
-          </a>
-        </div>
-
-        <div class="stats-strip stats-live">
-          <div><span class="stat-number">{{ products|length }}</span><small>PRODUCTOS</small></div>
-          <div class="live-stat"><span class="stat-number" id="visitorCount">{{ stats.visitors }}</span><small>VISITANTES</small></div>
-          <div class="live-stat"><span class="stat-number" id="orderCount">{{ stats.orders }}</span><small>PEDIDOS ENVIADOS</small></div>
-          <div><span class="stat-number">{{ social_platforms|length }}</span><small>REDES</small></div>
-          <div><span class="stat-number">04</span><small>PAGOS</small></div>
-        </div>
-        <p class="stats-note"><span></span> Contadores en vivo. El país del visitante se estima por su IP pública; mostramos solo el país, no la IP, ciudad ni ubicación exacta. “Pedidos enviados” no significa pago confirmado.</p>
+    <section class="hero-super-section" id="inicio">
+      <div class="hacker-grid-overlay" aria-hidden="true"></div>
+      <div class="hacker-code-rain" aria-hidden="true">
+        <span>010101</span><span>ACCESS</span><span>NODE</span><span>101100</span>
+        <span>SECURE</span><span>STREAM</span><span>110010</span><span>ONLINE</span>
       </div>
 
-      <div class="stream-feature" aria-label="Contenido destacado">
-        <div class="stream-feature-backdrop"></div>
-        <div class="neon-orbit orbit-one"></div>
-        <div class="neon-orbit orbit-two"></div>
-        <div class="neon-shard shard-one"></div>
-        <div class="neon-shard shard-two"></div>
-        <div class="neon-shard shard-three"></div>
-        <div class="stream-feature-overlay"></div>
+      <div class="hero-super-bg" aria-hidden="true">
+        <div class="super-clouds super-clouds-a"></div>
+        <div class="super-clouds super-clouds-b"></div>
+        <div class="super-light-rays"></div>
+        <div class="super-floating-rock r1"></div>
+        <div class="super-floating-rock r2"></div>
+        <div class="super-floating-rock r3"></div>
+        <div class="super-floating-rock r4"></div>
+        <div class="super-floating-rock r5"></div>
+      </div>
 
-        <div class="feature-hud-lines"><i></i><i></i><i></i></div>
-        <div class="feature-side-code">ALEX // DIGITAL // 2026</div>
-        <div class="feature-symbols" aria-hidden="true">
-          <span>⌬</span><span>∆</span><span>0110</span><span>⧉</span><span>∞</span>
-        </div>
-        <div class="stream-feature-top">
-          <span class="stream-feature-badge">DESTACADO</span>
-          <span class="stream-feature-status"><i></i> DISPONIBLE</span>
-        </div>
-
-        <div class="stream-feature-logo">
-          <img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt="ALEX STREAMING">
-        </div>
-
-        <div class="stream-feature-copy">
-          <p>ALEX STREAMING</p>
-          <h2><i class="feature-name-symbol">⌬</i>ALEX <span>⟦STREAMING⟧</span></h2>
-          <div class="stream-meta">
-            <span>Streaming</span><b>•</b><span>IA</span><b>•</b><span>Software</span><b>•</b><span>Redes</span>
+      <div class="hero-super-shell shell">
+        <div class="hero-super-copy">
+          <div class="super-topline">
+            <span>気</span>
+            <p>CYBER ACCESS · ALEX STREAMING</p>
           </div>
-          <p class="stream-feature-text">Potencia tu experiencia digital con un catálogo visual, rápido y directo.</p>
-          <div class="stream-feature-actions">
-            <a href="#catalogo" class="stream-play"><iconify-icon icon="lucide:play"></iconify-icon> EXPLORAR</a>
-            <a href="#pagos" class="stream-info"><iconify-icon icon="lucide:info"></iconify-icon> MÁS INFO</a>
+
+          <div class="super-brand-title">
+            <span class="super-brand-alex">ALEX</span>
+            <span class="super-brand-streaming">STREAMING</span>
+          </div>
+
+          <p class="super-tagline">ACTIVA EL <b>MODO HACKER</b></p>
+          <p class="super-categories">Streaming · IA · Productividad · Redes · Software · Premium</p>
+
+          <div class="fusion-badges">
+            <span><i></i> SYSTEM ONLINE</span>
+            <span>⚡ SECURE LINK</span>
+            <span>◆ PREMIUM ACCESS</span>
+          </div>
+
+          <div class="super-cta-row">
+            <a class="super-btn super-btn-blue" href="#catalogo">
+              <iconify-icon icon="lucide:shopping-cart"></iconify-icon>
+              <span>ENTRAR AL CATÁLOGO</span><b>→</b>
+            </a>
+            <a class="super-btn super-btn-orange" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20hacer%20una%20consulta." target="_blank" rel="noopener">
+              <iconify-icon icon="lucide:message-circle"></iconify-icon>
+              <span>HABLAR POR WHATSAPP</span><b>→</b>
+            </a>
+          </div>
+
+          <div class="super-power-panel">
+            <div class="super-power-head">
+              <span>NIVEL DE ENERGÍA</span>
+              <b>SUPER</b>
+            </div>
+            <div class="super-power-track"><i></i></div>
+            <small>ACCESO DIGITAL · RESPUESTA RÁPIDA · SOPORTE DIRECTO</small>
+          </div>
+
+          <div class="super-trust">
+            <div>
+              <iconify-icon icon="lucide:zap"></iconify-icon>
+              <span><strong>ENTREGA RÁPIDA</strong><small>Acceso en minutos</small></span>
+            </div>
+            <div>
+              <iconify-icon icon="lucide:shield-check"></iconify-icon>
+              <span><strong>COMPRA SEGURA</strong><small>Atención directa</small></span>
+            </div>
+            <div>
+              <iconify-icon icon="lucide:star"></iconify-icon>
+              <span><strong>CATÁLOGO PREMIUM</strong><small>Servicios seleccionados</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-super-visual">
+          <div class="aura-sun"></div>
+          <div class="aura-ring aura-ring-1"></div>
+          <div class="aura-ring aura-ring-2"></div>
+          <div class="aura-ring aura-ring-3"></div>
+
+          <div class="energy-bolt bolt-1"></div>
+          <div class="energy-bolt bolt-2"></div>
+          <div class="energy-bolt bolt-3"></div>
+          <div class="energy-bolt bolt-4"></div>
+
+          <div class="super-energy-symbol" aria-hidden="true">
+            <img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt="">
+          </div>
+
+          <div class="super-stage">
+            <div class="stage-top"></div>
+            <div class="stage-lines"></div>
+          </div>
+
+          <div class="visual-status">
+            <span>SUPER MODE</span>
+            <strong><i></i> ENERGÍA ACTIVA</strong>
+          </div>
+
+          <div class="fusion-tech-panel" aria-hidden="true">
+            <span>NODE STATUS</span>
+            <strong>99.9%</strong>
+            <small>NETWORK SIGNAL</small>
+            <div><i></i></div>
+          </div>
+
+          <div class="visual-copy">
+            <small>ALEX STREAMING</small>
+            <strong>HACKER CORE</strong>
+            <span>SYSTEM ONLINE</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="apex-spotlight shell" aria-label="Experiencia destacada">
-      <div class="spotlight-heading">
-        <span>01</span>
-        <div>
-          <small>EXPLORE THE MATRIX</small>
-          <strong>Todo tu ecosistema digital dentro de una estética Matrix.</strong>
-        </div>
+    <section class="anime-category-showcase shell">
+      <div class="anime-section-title">
+        <small>SELECCIONA TU MÓDULO</small>
+        <h2>MÓDULOS <span>DESTACADOS</span></h2>
+        <a href="#catalogo">VER TODO ↗</a>
       </div>
-      <div class="spotlight-grid">
-        <a href="#catalogo" class="spotlight-main">
-          <div class="spotlight-number">01</div>
-          <div class="spotlight-icon"><iconify-icon icon="lucide:play"></iconify-icon></div>
-          <small>STREAMING</small>
-          <strong>Entretenimiento</strong>
-          <p>Explora plataformas y planes disponibles desde un solo catálogo.</p>
-          <b>DESCUBRIR ↗</b>
+
+      <div class="anime-category-grid">
+        <a href="#catalogo" class="anime-cat-card cat-streaming">
+          <iconify-icon icon="lucide:play"></iconify-icon>
+          <div><strong>STREAMING</strong><small>Películas, series y más</small></div>
+          <span>VER PRODUCTOS ↗</span>
         </a>
-        <a href="#catalogo" class="spotlight-mini">
-          <span>02</span><iconify-icon icon="lucide:sparkles"></iconify-icon>
-          <div><small>IA</small><strong>Herramientas en la red</strong></div>
+        <a href="#catalogo" class="anime-cat-card cat-ai">
+          <iconify-icon icon="lucide:brain-circuit"></iconify-icon>
+          <div><strong>IA</strong><small>Crea, aprende y potencia</small></div>
+          <span>VER PRODUCTOS ↗</span>
         </a>
-        <a href="#catalogo" class="spotlight-mini">
-          <span>03</span><iconify-icon icon="lucide:laptop"></iconify-icon>
-          <div><small>SOFTWARE</small><strong>Productividad avanzada</strong></div>
+        <a href="#catalogo" class="anime-cat-card cat-productivity">
+          <iconify-icon icon="lucide:laptop"></iconify-icon>
+          <div><strong>PRODUCTIVIDAD</strong><small>Trabaja mejor</small></div>
+          <span>VER PRODUCTOS ↗</span>
         </a>
-        <a href="#redes" class="spotlight-mini">
-          <span>04</span><iconify-icon icon="lucide:radio-tower"></iconify-icon>
-          <div><small>REDES</small><strong>Servicios conectados</strong></div>
+        <a href="#redes" class="anime-cat-card cat-social">
+          <iconify-icon icon="lucide:radio-tower"></iconify-icon>
+          <div><strong>REDES SOCIALES</strong><small>Conecta y destaca</small></div>
+          <span>VER SERVICIOS ↗</span>
+        </a>
+        <a href="#pagos" class="anime-cat-card cat-payments">
+          <iconify-icon icon="lucide:wallet-cards"></iconify-icon>
+          <div><strong>PAGOS</strong><small>Métodos disponibles</small></div>
+          <span>VER MÉTODOS ↗</span>
         </a>
       </div>
     </section>
@@ -425,7 +439,7 @@
 
         <div class="product-grid" id="productGrid">
           {% for product in products %}
-          <article class="product-card" data-name="{{ product.name|lower }}" data-category="{{ product.category }}" style="--accent: {{ product.accent }}; --delay: {{ loop.index0 * 35 }}ms;">
+          <article class="product-card{% if product.combo_logos %} is-combo combo-card-{{ product.combo_logos|length }}{% endif %}" data-product-id="{{ product.id }}" data-name="{{ product.name|lower }}" data-category="{{ product.category }}" style="--accent: {{ product.accent }}; --delay: {{ loop.index0 * 35 }}ms;">
             <div class="card-glow"></div>
             <div class="card-grid"></div>
             <div class="card-edge"></div>
@@ -441,8 +455,11 @@
                   <div class="combo-logo-grid combo-count-{{ product.combo_logos|length }}">
                     {% for combo_logo in product.combo_logos %}
                       <span class="combo-logo-chip">
-                        <img class="{{ combo_logo.logo_class }}" src="{{ combo_logo.logo_url }}" alt="{{ combo_logo.name }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex'">
-                        <iconify-icon class="combo-fallback" icon="{{ combo_logo.icon|default('lucide:play') }}" style="display:none" aria-label="{{ combo_logo.name }}"></iconify-icon>
+                        <span class="combo-logo-media">
+                          <img class="{{ combo_logo.logo_class }}" src="{{ combo_logo.logo_url }}" alt="{{ combo_logo.name }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex'">
+                          <iconify-icon class="combo-fallback" icon="{{ combo_logo.icon|default('lucide:play') }}" style="display:none" aria-label="{{ combo_logo.name }}"></iconify-icon>
+                        </span>
+                        <small>{{ combo_logo.name }}</small>
                       </span>
                     {% endfor %}
                   </div>
@@ -460,6 +477,18 @@
               <p class="category">{{ product.category }}</p>
               <h3>{{ product.name }}</h3>
               <p class="description">{{ product.description }}</p>
+            </div>
+
+            {% set review_summary = review_summaries.get(product.id, {}) %}
+            {% set review_count = review_summary.get("count", 0) %}
+            {% set review_average = review_summary.get("average", 0) %}
+            <div class="product-review-summary" data-review-summary="{{ product.id }}">
+              <div class="mini-review-stars" aria-label="Valoración de clientes">
+                <span>★★★★★</span>
+                <i data-review-stars-fill style="width: {{ ((review_average / 5) * 100) if review_count else 0 }}%">★★★★★</i>
+              </div>
+              <strong data-review-average>{% if review_count %}{{ '%.1f'|format(review_average) }}{% else %}—{% endif %}</strong>
+              <small data-review-count>{{ review_count }} reseña{% if review_count != 1 %}s{% endif %}</small>
             </div>
 
             <div class="plan-selector">
@@ -481,7 +510,11 @@
                 <span>DESDE</span>
                 <strong>{% if priced_plans %}{{ store.currency }} {{ '%.2f'|format(priced_plans | map(attribute="price") | min) }}{% endif %}</strong>
               </div>
-              <div class="card-actions"><button class="details-btn" type="button" data-product-id="{{ product.id }}">DETALLES</button><button class="buy-btn" data-product="{{ product.name }}" data-product-id="{{ product.id }}" data-currency="{{ store.currency }}">COMPRAR <b>↗</b></button></div>
+              <div class="card-actions card-actions-reviews">
+                <button class="details-btn" type="button" data-product-id="{{ product.id }}">DETALLES</button>
+                <button class="reviews-btn" type="button" data-product-id="{{ product.id }}">RESEÑAS</button>
+                <button class="buy-btn" data-product="{{ product.name }}" data-product-id="{{ product.id }}" data-currency="{{ store.currency }}">COMPRAR <b>↗</b></button>
+              </div>
             </div>
           </article>
           {% endfor %}
@@ -662,6 +695,48 @@
       <div id="detailsPlans" class="details-plans"></div>
       <div id="detailsInfo" class="details-info"></div>
       <div id="detailsNotes" class="details-notes"></div>
+
+      <section class="product-reviews-panel" id="detailsReviewsSection">
+        <div class="reviews-panel-head">
+          <div>
+            <p class="kicker">// CUSTOMER REVIEWS</p>
+            <h3>Reseñas de clientes</h3>
+          </div>
+          <div class="reviews-score">
+            <strong id="detailsReviewAverage">—</strong>
+            <div>
+              <span id="detailsReviewStars">☆☆☆☆☆</span>
+              <small id="detailsReviewCount">Sin reseñas todavía</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-list" id="detailsReviewList">
+          <p class="reviews-empty">Cargando reseñas...</p>
+        </div>
+
+        <form class="review-form" id="reviewForm">
+          <div class="review-form-title">
+            <strong>DEJA TU RESEÑA</strong>
+            <small>Una reseña por producto. Si vuelves a enviar, se actualiza la anterior.</small>
+          </div>
+
+          <div class="review-star-picker" id="reviewStarPicker" aria-label="Selecciona una valoración">
+            <button type="button" data-rating="1" aria-label="1 estrella">★</button>
+            <button type="button" data-rating="2" aria-label="2 estrellas">★</button>
+            <button type="button" data-rating="3" aria-label="3 estrellas">★</button>
+            <button type="button" data-rating="4" aria-label="4 estrellas">★</button>
+            <button type="button" data-rating="5" aria-label="5 estrellas">★</button>
+          </div>
+
+          <textarea id="reviewComment" maxlength="500" rows="4" placeholder="Cuéntanos cómo fue tu experiencia con este producto..." required></textarea>
+          <p class="review-safety">Tu reseña es pública. No compartas teléfonos, correos, contraseñas, enlaces ni datos personales.</p>
+          <div class="review-form-footer">
+            <span id="reviewFeedback" role="status" aria-live="polite"></span>
+            <button class="review-submit" id="reviewSubmit" type="submit">PUBLICAR RESEÑA ↗</button>
+          </div>
+        </form>
+      </section>
 
       <div class="whatsapp-language-note" id="detailsLanguageNote">
         <iconify-icon icon="lucide:languages"></iconify-icon>

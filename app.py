@@ -91,6 +91,21 @@ chat_messages = Table(
     Column("created_at", DateTime(timezone=True), nullable=False),
 )
 
+
+product_reviews = Table(
+    "product_reviews", metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("product_id", String(100), nullable=False, index=True),
+    Column("product_name", String(180), nullable=False),
+    Column("visitor_id", String(64), nullable=False, index=True),
+    Column("display_name", String(80), nullable=False),
+    Column("rating", Integer, nullable=False),
+    Column("comment", Text, nullable=False),
+    Column("created_at", DateTime(timezone=True), nullable=False),
+    Column("updated_at", DateTime(timezone=True), nullable=False),
+)
+
+
 metadata.create_all(engine)
 
 
@@ -384,6 +399,72 @@ def latest_chat_messages(limit=40, after_id=None):
     return [serialize_chat_row(row) for row in rows]
 
 
+
+# -----------------------------------------------------------------------------
+# PRODUCT REVIEWS
+# Una reseña por visitante y producto. Si vuelve a enviar, actualiza la anterior.
+# No se permiten teléfonos, correos ni enlaces dentro de la reseña pública.
+# -----------------------------------------------------------------------------
+REVIEW_MAX_LENGTH = 500
+REVIEW_COOLDOWN_SECONDS = 8
+VALID_PRODUCT_MAP = {str(p.get("id")): p for p in PRODUCTS}
+
+def clean_review_comment(value):
+    value = re.sub(r"\s+", " ", str(value or "").strip())
+    value = "".join(ch for ch in value if ch.isprintable())
+    return value[:REVIEW_MAX_LENGTH].strip()
+
+def serialize_review_row(row):
+    item = dict(row)
+    item.pop("visitor_id", None)
+    for key in ("created_at", "updated_at"):
+        value = item.get(key)
+        if isinstance(value, datetime):
+            item[key] = value.isoformat()
+    return item
+
+def review_summary(product_id):
+    with engine.connect() as conn:
+        row = conn.execute(
+            select(
+                func.count(product_reviews.c.id).label("count"),
+                func.avg(product_reviews.c.rating).label("average"),
+            ).where(product_reviews.c.product_id == product_id)
+        ).mappings().first()
+    count = int((row or {}).get("count") or 0)
+    average = float((row or {}).get("average") or 0)
+    return {"count": count, "average": round(average, 1) if count else 0}
+
+def all_review_summaries():
+    summaries = {str(p.get("id")): {"count": 0, "average": 0} for p in PRODUCTS}
+    with engine.connect() as conn:
+        rows = conn.execute(
+            select(
+                product_reviews.c.product_id,
+                func.count(product_reviews.c.id).label("count"),
+                func.avg(product_reviews.c.rating).label("average"),
+            ).group_by(product_reviews.c.product_id)
+        ).mappings().all()
+    for row in rows:
+        pid = str(row.get("product_id") or "")
+        if pid:
+            count = int(row.get("count") or 0)
+            average = float(row.get("average") or 0)
+            summaries[pid] = {"count": count, "average": round(average, 1) if count else 0}
+    return summaries
+
+def latest_product_reviews(product_id, limit=24):
+    limit = max(1, min(int(limit or 24), 40))
+    with engine.connect() as conn:
+        rows = conn.execute(
+            select(product_reviews)
+            .where(product_reviews.c.product_id == product_id)
+            .order_by(product_reviews.c.updated_at.desc(), product_reviews.c.id.desc())
+            .limit(limit)
+        ).mappings().all()
+    return [serialize_review_row(row) for row in rows]
+
+
 # -----------------------------------------------------------------------------
 # ROUTES
 # -----------------------------------------------------------------------------
@@ -407,6 +488,7 @@ def home():
         payment_methods=PAYMENT_METHODS,
         social_platforms=SOCIAL_PLATFORMS,
         stats=get_stats(),
+        review_summaries=all_review_summaries(),
     )
 
 
@@ -556,6 +638,150 @@ def track_order():
     record_event("order", product_id=product_id, product_name=product, plan=plan, payment=payment)
     return jsonify({"ok": True, "orders": get_stats()["orders"]})
 
+
+
+
+@app.route("/api/reviews", methods=["GET"])
+def product_review_feed():
+    visitor_id = ensure_visitor()
+    product_id = str(request.args.get("product_id") or "").strip()[:100]
+    if product_id not in VALID_PRODUCT_MAP:
+        return jsonify({"ok": False, "error": "invalid_product"}), 404
+
+    reviews = latest_product_reviews(product_id)
+    summary = review_summary(product_id)
+
+    own_review = None
+    with engine.connect() as conn:
+        row = conn.execute(
+            select(product_reviews)
+            .where(
+                product_reviews.c.product_id == product_id,
+                product_reviews.c.visitor_id == visitor_id,
+            )
+            .order_by(product_reviews.c.id.desc())
+            .limit(1)
+        ).mappings().first()
+        if row:
+            own_review = serialize_review_row(row)
+
+    return jsonify({
+        "ok": True,
+        "product_id": product_id,
+        "summary": summary,
+        "reviews": reviews,
+        "own_review": own_review,
+    })
+
+
+@app.route("/api/reviews", methods=["POST"])
+def product_review_submit():
+    visitor_id = ensure_visitor()
+    payload = request.get_json(silent=True) or {}
+
+    product_id = str(payload.get("product_id") or "").strip()[:100]
+    product = VALID_PRODUCT_MAP.get(product_id)
+    if not product:
+        return jsonify({"ok": False, "error": "invalid_product"}), 404
+
+    try:
+        rating = int(payload.get("rating"))
+    except (TypeError, ValueError):
+        return jsonify({"ok": False, "error": "invalid_rating"}), 400
+    if rating < 1 or rating > 5:
+        return jsonify({"ok": False, "error": "invalid_rating"}), 400
+
+    comment = clean_review_comment(payload.get("comment"))
+    if len(comment) < 3:
+        return jsonify({"ok": False, "error": "comment_too_short"}), 400
+    if chat_message_has_private_contact(comment):
+        return jsonify({"ok": False, "error": "private_contact_not_allowed"}), 400
+
+    context = visitor_context(visitor_id)
+    display_name = clean_required_name(
+        payload.get("name")
+        or session.get("display_name")
+        or context.get("display_name")
+    )
+    if len(display_name) < 2 or display_name.lower() in {
+        "visitante", "visitor", "guest", "usuario", "user", "invitado"
+    }:
+        return jsonify({"ok": False, "error": "registration_required"}), 403
+
+    session["display_name"] = display_name
+
+    # Mantener sincronizado el nombre registrado.
+    with engine.begin() as conn:
+        conn.execute(
+            update(visitors)
+            .where(visitors.c.visitor_id == visitor_id)
+            .values(display_name=display_name[:80], last_seen=utcnow())
+        )
+
+    now_epoch = int(time.time())
+    last_review = int(session.get("last_product_review", 0) or 0)
+    if now_epoch - last_review < REVIEW_COOLDOWN_SECONDS:
+        return jsonify({"ok": False, "error": "slow_down"}), 429
+
+    now = utcnow()
+    updated_existing = False
+    with engine.begin() as conn:
+        existing = conn.execute(
+            select(product_reviews.c.id)
+            .where(
+                product_reviews.c.product_id == product_id,
+                product_reviews.c.visitor_id == visitor_id,
+            )
+            .order_by(product_reviews.c.id.desc())
+            .limit(1)
+        ).first()
+
+        if existing:
+            review_id = existing[0]
+            conn.execute(
+                update(product_reviews)
+                .where(product_reviews.c.id == review_id)
+                .values(
+                    display_name=display_name[:80],
+                    rating=rating,
+                    comment=comment,
+                    updated_at=now,
+                )
+            )
+            updated_existing = True
+        else:
+            result = conn.execute(
+                insert(product_reviews).values(
+                    product_id=product_id,
+                    product_name=str(product.get("name") or "")[:180],
+                    visitor_id=visitor_id,
+                    display_name=display_name[:80],
+                    rating=rating,
+                    comment=comment,
+                    created_at=now,
+                    updated_at=now,
+                )
+            )
+            review_id = result.inserted_primary_key[0]
+
+    session["last_product_review"] = now_epoch
+    record_event(
+        "review",
+        product_id=product_id,
+        product_name=str(product.get("name") or ""),
+    )
+
+    with engine.connect() as conn:
+        row = conn.execute(
+            select(product_reviews).where(product_reviews.c.id == review_id)
+        ).mappings().first()
+
+    return jsonify({
+        "ok": True,
+        "updated": updated_existing,
+        "review": serialize_review_row(row),
+        "summary": review_summary(product_id),
+    })
 
 
 @app.route("/api/chat", methods=["GET"])
