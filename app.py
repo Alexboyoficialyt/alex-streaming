@@ -12,7 +12,7 @@ from urllib.parse import quote
 from flask import Flask, render_template, jsonify, request, session
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy import (
-    create_engine, MetaData, Table, Column, Integer, String, DateTime,
+    create_engine, MetaData, Table, Column, Integer, String, DateTime, Text,
     select, insert, update, func, text, inspect
 )
 from sqlalchemy.exc import IntegrityError
@@ -76,6 +76,18 @@ events = Table(
     Column("country_code", String(2), nullable=False, default=""),
     Column("device", String(24), nullable=False, default="Desconocido"),
     Column("visitor_name", String(80), nullable=True),
+    Column("created_at", DateTime(timezone=True), nullable=False),
+)
+
+
+chat_messages = Table(
+    "chat_messages", metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("visitor_id", String(64), nullable=False),
+    Column("display_name", String(80), nullable=False),
+    Column("country", String(80), nullable=False, default=""),
+    Column("country_code", String(2), nullable=False, default=""),
+    Column("message", Text, nullable=False),
     Column("created_at", DateTime(timezone=True), nullable=False),
 )
 
@@ -314,6 +326,64 @@ def latest_visitor_events(limit=8, after_id=None):
     return rows
 
 
+
+# -----------------------------------------------------------------------------
+# GLOBAL CUSTOMER CHAT
+# Public text-only chat. No IP/city/coordinates are stored.
+# -----------------------------------------------------------------------------
+CHAT_MAX_LENGTH = 240
+CHAT_COOLDOWN_SECONDS = 4
+
+def clean_chat_message(value):
+    value = re.sub(r"\s+", " ", str(value or "").strip())
+    value = value[:CHAT_MAX_LENGTH]
+    # Strip control characters.
+    value = "".join(ch for ch in value if ch.isprintable())
+    return value.strip()
+
+def chat_message_has_private_contact(value):
+    value = str(value or "")
+    # Keep public chat safer: no URLs, email addresses or phone-number-like strings.
+    if re.search(r"https?://|www\.", value, flags=re.I):
+        return True
+    if re.search(r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b", value):
+        return True
+    digits = re.sub(r"\D", "", value)
+    if len(digits) >= 8:
+        return True
+    return False
+
+def serialize_chat_row(row):
+    item = dict(row)
+    created = item.get("created_at")
+    if isinstance(created, datetime):
+        item["created_at"] = created.isoformat()
+    item.pop("visitor_id", None)
+    return item
+
+def latest_chat_messages(limit=40, after_id=None):
+    limit = max(1, min(int(limit or 40), 60))
+    stmt = select(
+        chat_messages.c.id,
+        chat_messages.c.display_name,
+        chat_messages.c.country,
+        chat_messages.c.country_code,
+        chat_messages.c.message,
+        chat_messages.c.created_at,
+    )
+    if after_id is not None and after_id > 0:
+        stmt = stmt.where(chat_messages.c.id > after_id).order_by(chat_messages.c.id.asc()).limit(limit)
+    else:
+        stmt = stmt.order_by(chat_messages.c.id.desc()).limit(limit)
+
+    with engine.connect() as conn:
+        rows = conn.execute(stmt).mappings().all()
+
+    if not after_id:
+        rows = list(reversed(rows))
+    return [serialize_chat_row(row) for row in rows]
+
+
 # -----------------------------------------------------------------------------
 # ROUTES
 # -----------------------------------------------------------------------------
@@ -454,6 +524,90 @@ def track_order():
         return jsonify({"ok": False, "error": "missing_product"}), 400
     record_event("order", product_id=product_id, product_name=product, plan=plan, payment=payment)
     return jsonify({"ok": True, "orders": get_stats()["orders"]})
+
+
+
+@app.route("/api/chat", methods=["GET"])
+def chat_feed():
+    try:
+        after = max(0, int(request.args.get("after", "0")))
+    except ValueError:
+        after = 0
+    messages = latest_chat_messages(limit=50, after_id=after if after else None)
+    latest_id = messages[-1]["id"] if messages else after
+    return jsonify({"ok": True, "messages": messages, "latest_id": latest_id})
+
+
+@app.route("/api/chat", methods=["POST"])
+def chat_send():
+    visitor_id = ensure_visitor()
+    payload = request.get_json(silent=True) or {}
+    message = clean_chat_message(payload.get("message"))
+
+    context = visitor_context(visitor_id)
+
+    # V37: usa exactamente el nombre con el que la persona se registró
+    # en la portada. El navegador lo envía junto con el mensaje y aquí
+    # se sincroniza con la sesión/registro del visitante.
+    display_name = clean_required_name(
+        payload.get("name")
+        or session.get("display_name")
+        or context.get("display_name")
+    )
+    if len(display_name) < 2 or display_name.lower() in {"visitante", "visitor", "guest", "usuario", "user"}:
+        return jsonify({"ok": False, "error": "registration_required"}), 403
+
+    session["display_name"] = display_name
+
+    # Mantener sincronizado el nombre del visitante con el usado en el chat.
+    with engine.begin() as conn:
+        conn.execute(
+            update(visitors)
+            .where(visitors.c.visitor_id == visitor_id)
+            .values(
+                display_name=display_name[:80],
+                last_seen=utcnow(),
+            )
+        )
+
+    if not message:
+        return jsonify({"ok": False, "error": "empty_message"}), 400
+    if len(message) > CHAT_MAX_LENGTH:
+        return jsonify({"ok": False, "error": "message_too_long"}), 400
+    if chat_message_has_private_contact(message):
+        return jsonify({"ok": False, "error": "private_contact_not_allowed"}), 400
+
+    now_epoch = int(time.time())
+    last_chat = int(session.get("last_chat_message", 0) or 0)
+    if now_epoch - last_chat < CHAT_COOLDOWN_SECONDS:
+        return jsonify({"ok": False, "error": "slow_down"}), 429
+
+    with engine.begin() as conn:
+        result = conn.execute(insert(chat_messages).values(
+            visitor_id=visitor_id,
+            display_name=display_name[:80],
+            country=(context.get("country") or "")[:80],
+            country_code=(context.get("country_code") or "")[:2],
+            message=message,
+            created_at=utcnow(),
+        ))
+        message_id = result.inserted_primary_key[0]
+
+    session["last_chat_message"] = now_epoch
+
+    with engine.connect() as conn:
+        row = conn.execute(
+            select(
+                chat_messages.c.id,
+                chat_messages.c.display_name,
+                chat_messages.c.country,
+                chat_messages.c.country_code,
+                chat_messages.c.message,
+                chat_messages.c.created_at,
+            ).where(chat_messages.c.id == message_id)
+        ).mappings().first()
+
+    return jsonify({"ok": True, "message": serialize_chat_row(row)})
 
 
 @app.route("/health")

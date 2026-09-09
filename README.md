@@ -1,3 +1,87 @@
+# ALEX STREAMING V38 — NEON RUSH
+
+Se añadió un minijuego original llamado **ALEX NEON RUSH**.
+
+Cómo funciona:
+- La partida dura 30 segundos.
+- Aparecen núcleos luminosos en posiciones aleatorias.
+- Verde: +10 puntos.
+- Azul: +20 puntos.
+- Rojo/GLITCH: -15 puntos y reinicia el combo.
+- Los aciertos seguidos crean un combo que puede dar puntos extra.
+- El récord se guarda localmente en el navegador del usuario.
+- El nombre del jugador es el mismo nombre registrado al entrar a la web.
+- Funciona con mouse y pantalla táctil.
+- No usa dinero, apuestas, premios pagados ni compras dentro del juego.
+- La interfaz utiliza el mismo sistema multidioma automático del sitio.
+
+El juego es solo una actividad de entretenimiento mientras el cliente navega por ALEX STREAMING.
+
+# ALEX STREAMING V37 — CHAT CON NOMBRE REGISTRADO
+
+Cambios:
+- El chat muestra claramente **CHATEANDO COMO: [nombre registrado]**.
+- Cada mensaje se envía al servidor junto con el mismo nombre que la persona escribió al entrar a la página.
+- El servidor sincroniza ese nombre con la sesión del visitante antes de guardar el mensaje.
+- Los mensajes del chat muestran el nombre registrado de cada persona.
+- Si no hay un nombre válido registrado, el servidor no permite publicar en el chat.
+- Se eliminó una referencia antigua al muñeco que ya no existe.
+
+Ejemplo:
+Si la persona entra a la página como `Carlos Mendoza`, en el chat aparecerá:
+`Carlos Mendoza · 🇵🇪 Perú`
+y sus mensajes quedarán publicados con ese nombre.
+
+# ALEX STREAMING V36 — CHAT GLOBAL
+
+Cambios:
+- Se eliminó por completo el muñeco / ALEX GUIDE.
+- Se añadió un CHAT GLOBAL flotante para que los clientes registrados interactúen entre sí.
+- Los mensajes se guardan en PostgreSQL de Railway cuando DATABASE_URL está configurado.
+- En local usa SQLite, igual que el resto de métricas.
+- El chat se actualiza aproximadamente cada 3.5 segundos.
+- Usa el nombre registrado del visitante y muestra solo país, no IP, ciudad ni ubicación exacta.
+- Límite de 240 caracteres.
+- Anti-spam: 4 segundos entre mensajes.
+- Por seguridad no permite publicar teléfonos, correos electrónicos ni enlaces en el chat público.
+- El chat es solo texto: no permite subir imágenes, archivos ni contraseñas.
+- La interfaz del chat usa el mismo sistema multidioma del sitio.
+
+IMPORTANTE:
+Para que todos los visitantes vean el mismo historial de chat de forma estable en Railway,
+conviene mantener PostgreSQL/DATABASE_URL activo. Con SQLite, varias instancias del servidor
+pueden no compartir exactamente el mismo archivo.
+
+# ALEX STREAMING V35 — WhatsApp multidioma + términos obligatorios
+
+Cambios:
+- El mensaje de compra enviado a WhatsApp se genera en el idioma preferido detectado del navegador/dispositivo.
+- El mensaje de CONSULTAR POR WHATSAPP también se genera en ese idioma.
+- La sección de campañas/redes usa el mismo sistema.
+- El mensaje indica el idioma del cliente para que el vendedor sepa en qué idioma responder.
+- Antes de continuar aparece el aviso:
+  "Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor."
+- Se añadió un checkbox pequeño de aceptación de términos.
+- No se puede continuar a WhatsApp hasta marcar el checkbox.
+- La compra además exige haber seleccionado un método de pago.
+- El aviso y el checkbox usan el sistema multidioma automático del sitio.
+
+Nota: el sitio detecta el idioma preferido configurado en el navegador/dispositivo; no puede saber con certeza
+el idioma natal real de una persona.
+
+# ALEX STREAMING V34 — Duolingo + ESET + Redes mundiales
+
+Cambios:
+- Categoría DUOLINGO con:
+  - ⚡⚡DUOLINGO SUPER 1 año A TU CORREO⚡⚡ — S/100
+  - DUOLINGO X 30 DIAS — S/8
+- Se agregaron las condiciones, descripción y detalles indicados.
+- ESET conserva su producto, pero el logotipo oficial no se incrusta automáticamente:
+  ESET indica que su logo registrado debe usarse con aprobación previa y con el arte oficial sin modificar.
+- La sección REDES ahora se muestra como servicios de marketing/promoción MUNDIAL legítimos.
+- El botón de esa sección muestra COMPRAR / continuar compra por WhatsApp.
+- No se venden métricas artificiales (seguidores, likes o comentarios falsos).
+
 # ALEX STREAMING V33 — NOMBRE REAL OBLIGATORIO
 
 Cambios del portal de acceso:

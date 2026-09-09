@@ -12,6 +12,9 @@
   const paymentInstructionTitle = document.getElementById('paymentInstructionTitle');
   const paymentInstructionText = document.getElementById('paymentInstructionText');
   const continueButton = document.getElementById('continueWhatsapp');
+  const checkoutTerms = document.getElementById('checkoutTerms');
+  const detailsTerms = document.getElementById('detailsTerms');
+  const socialTerms = document.getElementById('socialTerms');
   const toast = document.getElementById('toast');
   const clock = document.getElementById('liveClock');
   const visitorCount = document.getElementById('visitorCount');
@@ -69,7 +72,7 @@
 
   const LANGUAGE_NAMES = {es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS',fr:'FRANÇAIS',de:'DEUTSCH',it:'ITALIANO',vi:'TIẾNG VIỆT',ru:'РУССКИЙ',tr:'TÜRKÇE',ar:'العربية',zh:'中文',ja:'日本語',ko:'한국어',hi:'हिन्दी',id:'BAHASA INDONESIA',th:'ไทย',nl:'NEDERLANDS',pl:'POLSKI'};
   const I18N = {
-    es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'ENVIAR COTIZACIÓN POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COTIZAR',online:'ONLINE',consult:'Consultar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX'},
+    es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'CONTINUAR COMPRA POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COMPRAR',online:'ONLINE',consult:'Consultar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX'},
     en:{nav_catalog:'CATALOG',nav_social:'SOCIAL',nav_payments:'PAYMENTS',nav_how:'HOW TO BUY',catalog_title:'Full catalog',catalog_subtitle:'Streaming, AI, productivity, software, education, VPN, authorized services and bundles.',search_placeholder:'Search HBO Max, Gamma, Canva, Office...',filter_all:'ALL',payment_title:'Payment methods',payment_note:'Choose a payment method when ordering. Final confirmation is handled on WhatsApp.',steps_title:'Buy in 3 steps',step1_title:'Choose a platform',step1_text:'Find the service and select the plan you want.',step2_title:'Choose payment',step2_text:'Select Yape, Plin, BCP or Binance.',step3_title:'Confirm on WhatsApp',step3_text:'Your order is prepared automatically and ready to send.',checkout_title:'Complete order',select_payment:'SELECT PAYMENT METHOD',continue_whatsapp:'CONTINUE ON WHATSAPP',consult_whatsapp:'ASK ON WHATSAPP',social_prepare:'Prepare campaign',send_quote:'SEND QUOTE ON WHATSAPP',contact:'CONTACT',choose_plan:'SELECT PLAN',from:'FROM',details:'DETAILS',buy:'BUY',quote:'QUOTE',online:'ONLINE',consult:'Ask',product:'PRODUCT',plan:'PLAN',total:'TOTAL',includes:'INCLUDES',conditions:'TERMS',price_approx:'approx. price',access_title:'ENTER THE DIGITAL UNIVERSE',access_desc:'Premium catalog, AI tools, productivity, social services and direct WhatsApp support.',your_name:'YOUR NAME',start_experience:'START EXPERIENCE',country_detected:'DETECTED COUNTRY',enter_status:'WHEN YOU ENTER, YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING',hero_lead:'Your digital catalog with a high-impact premium experience. Streaming, AI, productivity, software and bundles in one place. Choose a plan and finish the order on WhatsApp.',enter_catalog:'OPEN CATALOG',talk_alex:'TALK TO ALEX'},
     pt:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGAMENTOS',nav_how:'COMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, produtividade, software, educação, VPN, serviços autorizados e combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TUDO',payment_title:'Métodos de pagamento',payment_note:'Escolha o método ao comprar. A confirmação final é feita pelo WhatsApp.',steps_title:'Compre em 3 passos',step1_title:'Escolha a plataforma',step1_text:'Procure o serviço e selecione o plano desejado.',step2_title:'Escolha o pagamento',step2_text:'Selecione Yape, Plin, BCP ou Binance.',step3_title:'Confirme no WhatsApp',step3_text:'Seu pedido é preparado automaticamente e fica pronto para envio.',checkout_title:'Finalizar pedido',select_payment:'SELECIONE O MÉTODO DE PAGAMENTO',continue_whatsapp:'CONTINUAR NO WHATSAPP',consult_whatsapp:'CONSULTAR NO WHATSAPP',social_prepare:'Preparar campanha',send_quote:'ENVIAR COTAÇÃO PELO WHATSAPP',contact:'CONTATO',choose_plan:'SELECIONAR PLANO',from:'A PARTIR DE',details:'DETALHES',buy:'COMPRAR',quote:'COTAR',online:'ONLINE',consult:'Consultar',product:'PRODUTO',plan:'PLANO',total:'TOTAL',includes:'INCLUI',conditions:'CONDIÇÕES',price_approx:'preço aproximado',access_title:'ENTRE NO UNIVERSO DIGITAL',access_desc:'Catálogo premium, ferramentas de IA, produtividade, redes e atendimento direto pelo WhatsApp.',your_name:'SEU NOME',start_experience:'INICIAR EXPERIÊNCIA',country_detected:'PAÍS DETECTADO',enter_status:'AO ENTRAR, SEU NOME + PAÍS APARECERÃO NO ALEX STREAMING',hero_lead:'Seu catálogo digital com uma experiência premium de alto impacto. Streaming, IA, produtividade, software e combos em um só lugar. Escolha um plano e finalize pelo WhatsApp.',enter_catalog:'ABRIR CATÁLOGO',talk_alex:'FALAR COM ALEX'},
     fr:{nav_catalog:'CATALOGUE',nav_social:'RÉSEAUX',nav_payments:'PAIEMENTS',nav_how:'COMMENT ACHETER',catalog_title:'Catalogue complet',catalog_subtitle:'Streaming, IA, productivité, logiciels, éducation, VPN, services autorisés et packs.',search_placeholder:'Rechercher HBO Max, Gamma, Canva, Office...',filter_all:'TOUT',payment_title:'Modes de paiement',payment_note:'Choisissez le mode de paiement. La confirmation finale se fait sur WhatsApp.',steps_title:'Achetez en 3 étapes',step1_title:'Choisissez la plateforme',step1_text:'Trouvez le service et sélectionnez le forfait souhaité.',step2_title:'Choisissez le paiement',step2_text:'Sélectionnez Yape, Plin, BCP ou Binance.',step3_title:'Confirmez sur WhatsApp',step3_text:'Votre commande est préparée automatiquement.',checkout_title:'Finaliser la commande',select_payment:'SÉLECTIONNEZ LE MODE DE PAIEMENT',continue_whatsapp:'CONTINUER SUR WHATSAPP',consult_whatsapp:'DEMANDER SUR WHATSAPP',social_prepare:'Préparer la campagne',send_quote:'ENVOYER LE DEVIS SUR WHATSAPP',contact:'CONTACT',choose_plan:'CHOISIR LE FORFAIT',from:'À PARTIR DE',details:'DÉTAILS',buy:'ACHETER',quote:'DEVIS',online:'EN LIGNE',consult:'Consulter',product:'PRODUIT',plan:'FORFAIT',total:'TOTAL',includes:'INCLUS',conditions:'CONDITIONS',price_approx:'prix approximatif',access_title:'ENTREZ DANS L’UNIVERS NUMÉRIQUE',access_desc:'Catalogue premium, outils IA, productivité, réseaux et assistance directe sur WhatsApp.',your_name:'VOTRE NOM',start_experience:'DÉMARRER L’EXPÉRIENCE',country_detected:'PAYS DÉTECTÉ',enter_status:'À L’ENTRÉE, VOTRE NOM + PAYS APPARAÎTRONT DANS ALEX STREAMING',hero_lead:'Votre catalogue numérique avec une expérience premium à fort impact. Streaming, IA, productivité, logiciels et packs en un seul endroit.',enter_catalog:'OUVRIR LE CATALOGUE',talk_alex:'PARLER À ALEX'},
@@ -132,7 +135,7 @@
     payment_base_amount:'Monto base a pagar',
     payment_local_amount:'Equivalente aproximado en tu moneda',
     payment_method_help:'Coordina los datos de pago por WhatsApp.',
-    checkout_note:'No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.'
+    checkout_note:'No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.',whatsapp_language_note:'Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor.',accept_terms:'Acepto los términos y condiciones del servicio.',terms_required:'Debes aceptar los términos para continuar.',customer_language:'Idioma del cliente',chat_open:'CHAT GLOBAL',chat_community:'COMUNIDAD ALEX STREAMING',chat_title:'CHAT GLOBAL',chat_safety:'Chat público. No compartas teléfono, correo, contraseñas, enlaces ni datos personales.',chat_empty:'Todavía no hay mensajes. Inicia la conversación.',chat_placeholder:'Escribe un mensaje...',chat_send:'ENVIAR',chat_registration_required:'Debes registrarte con tu nombre para escribir en el chat.',chat_private_contact:'Por seguridad, no compartas teléfonos, correos ni enlaces en el chat público.',chat_slow_down:'Espera unos segundos antes de enviar otro mensaje.',chat_send_error:'No se pudo enviar el mensaje. Inténtalo nuevamente.',chat_as:'CHATEANDO COMO',game_open:'JUGAR NEON RUSH',game_title:'NEON RUSH',game_explain:'Atrapa los núcleos de energía antes de que desaparezcan. Los verdes dan +10 puntos, los azules +20 y los rojos quitan 15 puntos. Tienes 30 segundos para conseguir la mayor puntuación posible.',game_start:'EMPEZAR PARTIDA',game_player:'JUGADOR',game_score:'PUNTOS',game_best:'RÉCORD',game_time:'TIEMPO',game_ready:'LISTO PARA JUGAR',game_ready_hint:'Pulsa empezar y toca los núcleos que aparezcan.',game_combo:'COMBO',game_restart:'JUGAR OTRA VEZ',game_finished:'PARTIDA TERMINADA',game_new_record:'¡NUEVO RÉCORD!'
   });
   Object.assign(I18N.en, {
     access_portal:'ACCESS PORTAL',
@@ -153,7 +156,7 @@
     payment_base_amount:'Base amount to pay',
     payment_local_amount:'Approximate equivalent in your currency',
     payment_method_help:'Coordinate payment details on WhatsApp.',
-    checkout_note:'Do not enter passwords, banking codes or sensitive information on this website. The order is coordinated on WhatsApp.'
+    checkout_note:'Do not enter passwords, banking codes or sensitive information on this website. The order is coordinated on WhatsApp.',whatsapp_language_note:'You can use a translator so you and the seller can understand each other. Tell the seller your language so they can assist you better.',accept_terms:'I accept the service terms and conditions.',terms_required:'You must accept the terms to continue.',customer_language:'Customer language',chat_open:'GLOBAL CHAT',chat_community:'ALEX STREAMING COMMUNITY',chat_title:'GLOBAL CHAT',chat_safety:'Public chat. Do not share phone numbers, email, passwords, links or personal information.',chat_empty:'No messages yet. Start the conversation.',chat_placeholder:'Write a message...',chat_send:'SEND',chat_registration_required:'Register with your name before writing in the chat.',chat_private_contact:'For safety, do not share phone numbers, email addresses or links in the public chat.',chat_slow_down:'Wait a few seconds before sending another message.',chat_send_error:'The message could not be sent. Try again.',chat_as:'CHATTING AS',game_open:'PLAY NEON RUSH',game_title:'NEON RUSH',game_explain:'Catch the energy cores before they disappear. Green gives +10 points, blue +20, and red removes 15 points. You have 30 seconds to get the highest score possible.',game_start:'START GAME',game_player:'PLAYER',game_score:'SCORE',game_best:'BEST',game_time:'TIME',game_ready:'READY TO PLAY',game_ready_hint:'Press start and tap the cores that appear.',game_combo:'COMBO',game_restart:'PLAY AGAIN',game_finished:'GAME OVER',game_new_record:'NEW HIGH SCORE!'
   });
 
   function normalizeLanguageCode(raw){
@@ -263,7 +266,7 @@
     'feature_streaming','feature_ai','feature_catalog','feature_support',
     'payment_title','payment_note','checkout_title','select_payment','continue_whatsapp',
     'payment_ready','payment_data','pay_with','payment_choose','payment_base_amount',
-    'payment_local_amount','payment_method_help','checkout_note'
+    'payment_local_amount','payment_method_help','checkout_note','whatsapp_language_note','accept_terms','terms_required','customer_language','chat_open','chat_community','chat_title','chat_safety','chat_empty','chat_placeholder','chat_send','chat_registration_required','chat_private_contact','chat_slow_down','chat_send_error','chat_as','game_open','game_title','game_explain','game_start','game_player','game_score','game_best','game_time','game_ready','game_ready_hint','game_combo','game_restart','game_finished','game_new_record'
   ];
 
   async function hydrateCriticalTranslations(lang){
@@ -848,6 +851,48 @@
     });
   });
 
+
+  function currentCustomerLanguageLabel(){
+    return nativeLanguageName(activeLanguage || browserLanguage());
+  }
+
+  async function localizeWhatsappMessage(linesEs){
+    const sourceLines = Array.isArray(linesEs) ? linesEs : [String(linesEs || '')];
+    if (activeLanguage === 'es') return sourceLines.join('\n');
+
+    const translated = [];
+    for (const line of sourceLines) {
+      if (!line) {
+        translated.push('');
+        continue;
+      }
+
+      // Conserva líneas de datos/identificadores sin traducir la parte variable cuando sea posible.
+      // Para el resto usa el mismo traductor global del sitio.
+      try {
+        translated.push(await translateTextGlobal(line, activeLanguage) || line);
+      } catch (_) {
+        translated.push(line);
+      }
+    }
+    return translated.join('\n');
+  }
+
+  function updateCheckoutContinueState(){
+    if (!continueButton) return;
+    continueButton.disabled = !(selectedPayment && checkoutTerms?.checked);
+  }
+
+  function showTermsRequired(){
+    const message = t('terms_required');
+    if (toast) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+  }
+
+
   function openCheckout(button) {
     const card = button.closest('.product-card');
     const select = card.querySelector('.plan-select');
@@ -865,6 +910,7 @@
     paymentButtons.forEach(btn => { btn.classList.remove('selected'); btn.querySelector('i').textContent = '○'; });
     if (paymentInstructions) paymentInstructions.hidden = true;
     if (paymentInstructionText) paymentInstructionText.textContent = '';
+    if (checkoutTerms) checkoutTerms.checked = false;
     continueButton.disabled = true;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
@@ -929,21 +975,45 @@
         btn.querySelector('i').textContent = selected ? '●' : '○';
       });
       await renderPaymentInstructions(button);
-      continueButton.disabled = false;
+      updateCheckoutContinueState();
     });
   });
 
-  continueButton.addEventListener('click', () => {
+  checkoutTerms?.addEventListener('change', updateCheckoutContinueState);
+  detailsTerms?.addEventListener('change', () => {
+    if (detailsWhatsapp) detailsWhatsapp.disabled = !detailsTerms.checked;
+  });
+  socialTerms?.addEventListener('change', () => {
+    if (socialWhatsapp) socialWhatsapp.disabled = !socialTerms.checked;
+  });
+
+  continueButton.addEventListener('click', async () => {
     if (!selectedOrder || !selectedPayment) return;
-    const message = [
-      'Hola Alex Streaming 👋', '', 'Quiero realizar este pedido:',
+    if (!checkoutTerms?.checked) {
+      showTermsRequired();
+      return;
+    }
+
+    const paymentButton = paymentButtons.find(b => b.dataset.method === selectedPayment);
+    const customerLanguage = currentCustomerLanguageLabel();
+
+    const linesEs = [
+      'Hola Alex Streaming 👋', '',
+      'Quiero realizar este pedido:',
       `• Plataforma: ${selectedOrder.product}`,
       `• Plan: ${selectedOrder.plan}`,
       `• Precio: ${selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : selectedOrder.priceLabel}${selectedOrder.basePrice && activeCurrency !== BASE_CURRENCY ? ` (base S/ ${Number(selectedOrder.basePrice).toFixed(2)})` : ''}`,
       `• Método de pago: ${selectedPayment}`,
-      `• Datos: ${paymentButtons.find(b => b.dataset.method === selectedPayment)?.dataset.instructions || 'Coordinar por WhatsApp'}`, '',
+      `• Datos: ${paymentButton?.dataset.instructions || 'Coordinar por WhatsApp'}`,
+      `• ${t('customer_language')}: ${customerLanguage}`, '',
+      'Acepto los términos y condiciones del servicio.',
+      'Puedes usar un traductor para que el vendedor y yo podamos entendernos. Mi idioma aparece indicado arriba.',
+      '',
       'Enviaré mi comprobante después de realizar el pago.'
-    ].join('\n');
+    ];
+
+    const message = await localizeWhatsappMessage(linesEs);
+
     toast?.classList.add('show');
     setTimeout(() => toast?.classList.remove('show'), 1300);
     trackOrderIntent(selectedOrder, selectedPayment);
@@ -1101,6 +1171,8 @@
       notes: [...(detailsProduct.notes || [])]
     });
 
+    if (detailsTerms) detailsTerms.checked = false;
+    if (detailsWhatsapp) detailsWhatsapp.disabled = true;
     detailsModal.classList.add('open');
     detailsModal.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
@@ -1137,10 +1209,23 @@
 
   document.querySelectorAll('.details-btn').forEach(button => button.addEventListener('click', () => openDetails(button)));
   document.querySelectorAll('[data-close-details]').forEach(el => el.addEventListener('click', closeDetails));
-  detailsWhatsapp?.addEventListener('click', () => {
+  detailsWhatsapp?.addEventListener('click', async () => {
     if (!detailsProduct) return;
-    const message = ['Hola Alex Streaming 👋','',`Quiero información sobre: ${detailsProduct.name}`,'','¿Me indicas disponibilidad y condiciones?'].join('\
-');
+    if (!detailsTerms?.checked) {
+      showTermsRequired();
+      return;
+    }
+
+    const customerLanguage = currentCustomerLanguageLabel();
+    const message = await localizeWhatsappMessage([
+      'Hola Alex Streaming 👋','',
+      `Quiero información sobre: ${detailsProduct.name}`,'',
+      '¿Me indicas disponibilidad y condiciones?',
+      `• ${t('customer_language')}: ${customerLanguage}`,
+      'Acepto los términos y condiciones del servicio.',
+      'Puedes usar un traductor para que el vendedor y yo podamos entendernos. Mi idioma aparece indicado arriba.'
+    ]);
+
     window.open(`https://wa.me/${window.ALEX_STORE.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
   });
 
@@ -1155,6 +1240,8 @@
     socialModalService.textContent = service;
     socialModalQuantity.textContent = Number(quantity).toLocaleString('es-PE');
     if (socialTarget) socialTarget.value = '';
+    if (socialTerms) socialTerms.checked = false;
+    if (socialWhatsapp) socialWhatsapp.disabled = true;
     socialModal.classList.add('open');
     socialModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -1173,21 +1260,33 @@
   });
   document.querySelectorAll('[data-close-social]').forEach(el => el.addEventListener('click', closeSocial));
 
-  socialWhatsapp?.addEventListener('click', () => {
+  socialWhatsapp?.addEventListener('click', async () => {
     if (!selectedSocialOrder) return;
+    if (!socialTerms?.checked) {
+      showTermsRequired();
+      return;
+    }
+
     const target = (socialTarget?.value || '').trim();
-    const message = [
+    const customerLanguage = currentCustomerLanguageLabel();
+
+    const message = await localizeWhatsappMessage([
       'Hola Alex Streaming 👋', '',
-      'Quiero solicitar una cotización de campaña social:',
+      'Quiero solicitar esta campaña social:',
       `• Red: ${selectedSocialOrder.network}`,
       `• Objetivo: ${selectedSocialOrder.service}`,
-      `• Cantidad: ${Number(selectedSocialOrder.quantity).toLocaleString('es-PE')}`,
+      `• Cantidad: ${Number(selectedSocialOrder.quantity).toLocaleString(localeForLanguage(activeLanguage))}`,
       target ? `• Enlace / usuario: ${target}` : '• Enlace / usuario: lo envío por chat',
+      `• ${t('customer_language')}: ${customerLanguage}`,
+      '',
+      'Acepto los términos y condiciones del servicio.',
+      'Puedes usar un traductor para que el vendedor y yo podamos entendernos. Mi idioma aparece indicado arriba.',
       '',
       '¿Me indicas disponibilidad, precio y condiciones?'
-    ].join('\n');
+    ]);
+
     trackAnalyticsEvent('social_quote', {product_name:selectedSocialOrder.network, plan:`${selectedSocialOrder.service} · ${selectedSocialOrder.quantity}`});
-    toast.textContent = 'COTIZACIÓN PREPARADA';
+    toast.textContent = t('continue_whatsapp');
     toast?.classList.add('show');
     setTimeout(() => toast?.classList.remove('show'), 1300);
     const url = `https://wa.me/${window.ALEX_STORE.whatsapp}?text=${encodeURIComponent(message)}`;
@@ -1237,10 +1336,7 @@
   const accessNameError = document.getElementById('accessNameError');
   const accessCountryLine = document.getElementById('accessCountryLine');
   const accessCountryValue = document.getElementById('accessCountryValue');
-  const mascot = document.getElementById('animeGuide');
-  const bubble = document.getElementById('animeGuideBubble');
   const musicBtn = document.getElementById('musicToggle');
-  const isDesktop = () => window.matchMedia('(min-width: 901px)').matches;
 
   // ---------- Original procedural background music: ALEX PULSE ----------
   // Uses Web Audio only. No copyrighted/commercial song is included.
@@ -1488,8 +1584,6 @@
         window.dispatchEvent(new CustomEvent('alex:access-granted',{detail:{alias}}));
       } catch (_) {}
       setTimeout(()=>{ try { gate.remove(); } catch (_) {} },700);
-      const strong=bubble?.querySelector('strong');
-      if(strong) strong.textContent=`${alias} · ${countryLabel} ✦`;
     },520);
   }
   if(aliasInput){
@@ -1505,49 +1599,356 @@
   enterBtn?.addEventListener('click',grantAccess);
   aliasInput?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();grantAccess();}});
 
-  // ---------- Moving guide ----------
-  const guideMessages = [
-    {id:'inicio', text:'Bienvenido a Alex Streaming ✦'},
-    {id:'catalogo', text:'Elige tu plataforma o herramienta.'},
-    {id:'redes', text:'Panel de redes listo para cotizar.'},
-    {id:'pagos', text:'Yape, Plin, BCP y Binance.'},
-    {id:'como-comprar', text:'3 pasos y terminas por WhatsApp.'}
-  ];
-  function currentGuideMessage(){
-    let selected=guideMessages[0], y=scrollY+innerHeight*.46;
-    guideMessages.forEach(item=>{const el=document.getElementById(item.id);if(el&&el.offsetTop<=y) selected=item;});
-    return selected.text;
+  window.addEventListener('alex:access-granted', (event) => {
+    const registeredName = String(event?.detail?.alias || chatOwnName() || '').trim();
+    if (chatIdentity) chatIdentity.textContent = registeredName || '—';
+  });
+
+
+
+  // ---------- ALEX NEON RUSH MINI GAME ----------
+  const gameLauncher = document.getElementById('gameLauncher');
+  const gameModal = document.getElementById('gameModal');
+  const gameArena = document.getElementById('gameArena');
+  const gameStart = document.getElementById('gameStart');
+  const gameRestart = document.getElementById('gameRestart');
+  const gameScoreEl = document.getElementById('gameScore');
+  const gameBestEl = document.getElementById('gameBest');
+  const gameTimeEl = document.getElementById('gameTime');
+  const gameComboEl = document.getElementById('gameCombo');
+  const gamePlayerEl = document.getElementById('gamePlayer');
+  const gameReady = document.getElementById('gameReady');
+
+  let gameScore = 0;
+  let gameCombo = 0;
+  let gameTime = 30;
+  let gameRunning = false;
+  let gameTimer = null;
+  let gameSpawnTimer = null;
+  let currentOrb = null;
+
+  function readGameBest(){
+    try{return Math.max(0,Number(localStorage.getItem('alex-neon-rush-best')||0));}
+    catch(_){return 0;}
   }
-  let lastY=scrollY,lastX=0,walkTimer=null,lastText='';
-  function moveMascot(){
-    if(!mascot||!isDesktop()) return;
-    const maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-    const progress=Math.min(1,Math.max(0,scrollY/maxScroll));
-    const minX=18,maxX=Math.max(minX,innerWidth-145);
-    // Moves left-to-right through first half, then back right-to-left in second half.
-    const waveProgress=progress<.5?progress*2:(1-progress)*2;
-    const x=minX+(maxX-minX)*waveProgress;
-    const y=Math.sin(scrollY/115)*7;
-    const dir=x>=lastX?'right':'left'; lastX=x;
-    mascot.dataset.side=x>innerWidth*.64?'right':'left';
-    mascot.dataset.dir=dir;
-    mascot.style.transform=`translate3d(${x}px,${y}px,0) scaleX(${dir==='left'?-1:1})`;
-    // Keep text readable even when the character flips.
-    if(bubble) bubble.style.transform=`scaleX(${dir==='left'?-1:1})`;
-    const text=currentGuideMessage();
-    if(bubble&&text!==lastText){const strong=bubble.querySelector('strong');if(strong)strong.textContent=text;lastText=text;}
-    if(Math.abs(scrollY-lastY)>2){
-      mascot.classList.add('walking'); clearTimeout(walkTimer); walkTimer=setTimeout(()=>mascot.classList.remove('walking'),420);
+
+  function writeGameBest(value){
+    try{localStorage.setItem('alex-neon-rush-best',String(value));}catch(_){}
+  }
+
+  function gameRegisteredName(){
+    try{return String(localStorage.getItem('alex-alias')||'').trim() || 'PLAYER';}
+    catch(_){return 'PLAYER';}
+  }
+
+  function updateGameHud(){
+    if(gameScoreEl) gameScoreEl.textContent=String(Math.max(0,gameScore));
+    if(gameBestEl) gameBestEl.textContent=String(readGameBest());
+    if(gameTimeEl) gameTimeEl.textContent=String(gameTime);
+    if(gameComboEl) gameComboEl.textContent=`x${gameCombo}`;
+    if(gamePlayerEl) gamePlayerEl.textContent=gameRegisteredName();
+  }
+
+  function openGame(){
+    if(!gameModal) return;
+    updateGameHud();
+    gameModal.classList.add('open');
+    gameModal.setAttribute('aria-hidden','false');
+    gameLauncher?.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+  }
+
+  function closeGame(){
+    stopGame(false);
+    gameModal?.classList.remove('open');
+    gameModal?.setAttribute('aria-hidden','true');
+    gameLauncher?.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+  }
+
+  function removeCurrentOrb(){
+    if(currentOrb){
+      currentOrb.remove();
+      currentOrb=null;
     }
-    lastY=scrollY;
   }
-  addEventListener('scroll',()=>requestAnimationFrame(moveMascot),{passive:true});
-  addEventListener('resize',moveMascot,{passive:true});
-  if(mascot&&isDesktop()){
-    addEventListener('mousemove',e=>{
-      const nx=(e.clientX/innerWidth-.5)*8,ny=(e.clientY/innerHeight-.5)*6;
-      mascot.style.filter=`drop-shadow(${nx*-.4}px ${ny*-.4}px 22px rgba(82,214,255,.12))`;
-    },{passive:true});
+
+  function scorePop(x,y,value){
+    if(!gameArena) return;
+    const pop=document.createElement('span');
+    pop.className=`game-score-pop ${value>=0?'good':'bad'}`;
+    pop.textContent=value>0?`+${value}`:String(value);
+    pop.style.left=`${x}px`;
+    pop.style.top=`${y}px`;
+    gameArena.appendChild(pop);
+    setTimeout(()=>pop.remove(),600);
   }
-  moveMascot();
+
+  function spawnOrb(){
+    if(!gameRunning || !gameArena) return;
+    removeCurrentOrb();
+
+    const rect=gameArena.getBoundingClientRect();
+    const margin=38;
+    const x=margin+Math.random()*Math.max(10,rect.width-margin*2);
+    const y=margin+Math.random()*Math.max(10,rect.height-margin*2);
+
+    const roll=Math.random();
+    const type=roll<.58?'green':roll<.84?'blue':'red';
+    const value=type==='green'?10:type==='blue'?20:-15;
+
+    const orb=document.createElement('button');
+    orb.type='button';
+    orb.className=`game-orb ${type}`;
+    orb.setAttribute('aria-label',type==='red'?'Glitch':'Energy core');
+    orb.style.left=`${x}px`;
+    orb.style.top=`${y}px`;
+    currentOrb=orb;
+    gameArena.appendChild(orb);
+
+    let caught=false;
+    orb.addEventListener('pointerdown',(event)=>{
+      if(!gameRunning || caught) return;
+      caught=true;
+      const bonus=value>0 ? Math.min(20,gameCombo*2) : 0;
+      const finalValue=value>0 ? value+bonus : value;
+      gameScore=Math.max(0,gameScore+finalValue);
+
+      if(value>0) gameCombo+=1;
+      else gameCombo=0;
+
+      updateGameHud();
+      scorePop(x,y,finalValue);
+      orb.classList.add('hit');
+      setTimeout(()=>orb.remove(),160);
+      if(currentOrb===orb) currentOrb=null;
+
+      clearTimeout(gameSpawnTimer);
+      gameSpawnTimer=setTimeout(spawnOrb,150+Math.random()*250);
+    },{once:true});
+
+    const lifetime=Math.max(520,1050-(30-gameTime)*10);
+    gameSpawnTimer=setTimeout(()=>{
+      if(!gameRunning || currentOrb!==orb) return;
+      orb.remove();
+      currentOrb=null;
+      gameCombo=0;
+      updateGameHud();
+      spawnOrb();
+    },lifetime);
+  }
+
+  function finishGame(){
+    gameRunning=false;
+    clearInterval(gameTimer);
+    clearTimeout(gameSpawnTimer);
+    gameTimer=null;gameSpawnTimer=null;
+    removeCurrentOrb();
+
+    const previousBest=readGameBest();
+    const isRecord=gameScore>previousBest;
+    if(isRecord) writeGameBest(gameScore);
+    updateGameHud();
+
+    if(gameReady){
+      gameReady.style.display='grid';
+      const strong=gameReady.querySelector('strong');
+      const span=gameReady.querySelector('span');
+      if(strong) strong.textContent=isRecord?t('game_new_record'):t('game_finished');
+      if(span) span.textContent=`${t('game_score')}: ${gameScore}`;
+    }
+    if(gameRestart) gameRestart.disabled=false;
+  }
+
+  function startGame(){
+    clearInterval(gameTimer);
+    clearTimeout(gameSpawnTimer);
+    removeCurrentOrb();
+
+    gameScore=0;
+    gameCombo=0;
+    gameTime=30;
+    gameRunning=true;
+    if(gameRestart) gameRestart.disabled=true;
+    if(gameReady) gameReady.style.display='none';
+    updateGameHud();
+
+    spawnOrb();
+    gameTimer=setInterval(()=>{
+      gameTime-=1;
+      updateGameHud();
+      if(gameTime<=0) finishGame();
+    },1000);
+  }
+
+  function stopGame(resetReady=true){
+    if(!gameRunning && !gameTimer && !gameSpawnTimer) return;
+    gameRunning=false;
+    clearInterval(gameTimer);
+    clearTimeout(gameSpawnTimer);
+    gameTimer=null;gameSpawnTimer=null;
+    removeCurrentOrb();
+    if(resetReady && gameReady) gameReady.style.display='grid';
+  }
+
+  gameLauncher?.addEventListener('click',openGame);
+  document.querySelectorAll('[data-close-game]').forEach(el=>el.addEventListener('click',closeGame));
+  gameStart?.addEventListener('click',startGame);
+  gameRestart?.addEventListener('click',startGame);
+  window.addEventListener('keydown',(event)=>{
+    if(event.key==='Escape' && gameModal?.classList.contains('open')) closeGame();
+  });
+  updateGameHud();
+
+
+  // ---------- Global customer chat ----------
+  const chatLauncher = document.getElementById('globalChatLauncher');
+  const chatPanel = document.getElementById('globalChatPanel');
+  const chatClose = document.getElementById('globalChatClose');
+  const chatMessages = document.getElementById('globalChatMessages');
+  const chatEmpty = document.getElementById('globalChatEmpty');
+  const chatForm = document.getElementById('globalChatForm');
+  const chatInput = document.getElementById('globalChatInput');
+  const chatCount = document.getElementById('globalChatCount');
+  const chatSend = document.getElementById('globalChatSend');
+  const chatError = document.getElementById('globalChatError');
+  const chatIdentity = document.getElementById('globalChatIdentity');
+
+  let chatLatestId = 0;
+  let chatLoaded = false;
+  let chatPolling = null;
+
+  function escapeFlag(code){
+    const cc=String(code||'').toUpperCase();
+    if(!/^[A-Z]{2}$/.test(cc)) return '🌐';
+    return String.fromCodePoint(...[...cc].map(c=>127397+c.charCodeAt()));
+  }
+
+  function chatTimeLabel(value){
+    try{
+      return new Intl.DateTimeFormat(localeForLanguage(activeLanguage),{
+        hour:'2-digit',minute:'2-digit'
+      }).format(new Date(value));
+    }catch(_){ return ''; }
+  }
+
+  function chatOwnName(){
+    try{return String(localStorage.getItem('alex-alias')||'').trim();}catch(_){return '';}
+  }
+
+  function renderChatMessage(item){
+    if(!chatMessages || !item || document.querySelector(`[data-chat-id="${item.id}"]`)) return;
+    if(chatEmpty) chatEmpty.hidden=true;
+
+    const wrap=document.createElement('article');
+    wrap.className='global-chat-message';
+    wrap.dataset.chatId=item.id;
+    if(chatOwnName() && String(item.display_name||'').toLowerCase()===chatOwnName().toLowerCase()){
+      wrap.classList.add('own');
+    }
+
+    const meta=document.createElement('div');
+    meta.className='global-chat-meta';
+    const name=document.createElement('strong');
+    name.textContent=item.display_name||'—';
+    const region=document.createElement('span');
+    region.textContent=`${escapeFlag(item.country_code)} ${item.country||''}`.trim();
+    const time=document.createElement('span');
+    time.textContent=chatTimeLabel(item.created_at);
+
+    const body=document.createElement('div');
+    body.className='global-chat-text';
+    body.textContent=item.message||'';
+
+    meta.append(name,region,time);
+    wrap.append(meta,body);
+    chatMessages.appendChild(wrap);
+  }
+
+  async function loadChat(initial=false){
+    if(!window.ALEX_STORE?.chatUrl || !chatMessages) return;
+    try{
+      const suffix=(!initial && chatLatestId)?`?after=${encodeURIComponent(chatLatestId)}`:'';
+      const res=await fetch(`${window.ALEX_STORE.chatUrl}${suffix}`,{cache:'no-store'});
+      if(!res.ok) return;
+      const data=await res.json();
+      (data.messages||[]).forEach(renderChatMessage);
+      chatLatestId=Math.max(chatLatestId,Number(data.latest_id||0));
+      if(initial && chatMessages.scrollHeight) chatMessages.scrollTop=chatMessages.scrollHeight;
+      else if((data.messages||[]).length) chatMessages.scrollTop=chatMessages.scrollHeight;
+      chatLoaded=true;
+    }catch(_){}
+  }
+
+  function openGlobalChat(){
+    if(!chatPanel) return;
+    const registeredName = chatOwnName();
+    if(chatIdentity) chatIdentity.textContent = registeredName || '—';
+    chatPanel.classList.add('open');
+    chatPanel.setAttribute('aria-hidden','false');
+    chatLauncher?.setAttribute('aria-expanded','true');
+    if(!chatLoaded) loadChat(true);
+    if(!chatPolling) chatPolling=setInterval(()=>loadChat(false),3500);
+    setTimeout(()=>chatInput?.focus(),120);
+  }
+
+  function closeGlobalChat(){
+    chatPanel?.classList.remove('open');
+    chatPanel?.setAttribute('aria-hidden','true');
+    chatLauncher?.setAttribute('aria-expanded','false');
+    if(chatPolling){clearInterval(chatPolling);chatPolling=null;}
+  }
+
+  chatLauncher?.addEventListener('click',()=>{
+    if(chatPanel?.classList.contains('open')) closeGlobalChat(); else openGlobalChat();
+  });
+  chatClose?.addEventListener('click',closeGlobalChat);
+
+  chatInput?.addEventListener('input',()=>{
+    if(chatCount) chatCount.textContent=String(chatInput.value.length);
+    if(chatError) chatError.textContent='';
+  });
+
+  chatForm?.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const message=String(chatInput?.value||'').trim();
+    if(!message || !window.ALEX_STORE?.chatUrl) return;
+
+    if(chatSend) chatSend.disabled=true;
+    if(chatError) chatError.textContent='';
+
+    try{
+      const res=await fetch(window.ALEX_STORE.chatUrl,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          message,
+          name: chatOwnName()
+        })
+      });
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok || !data.ok){
+        const error=data.error||'send_error';
+        if(chatError){
+          chatError.textContent =
+            error==='registration_required' ? t('chat_registration_required') :
+            error==='private_contact_not_allowed' ? t('chat_private_contact') :
+            error==='slow_down' ? t('chat_slow_down') :
+            t('chat_send_error');
+        }
+        return;
+      }
+      renderChatMessage(data.message);
+      chatLatestId=Math.max(chatLatestId,Number(data.message?.id||0));
+      if(chatInput){chatInput.value='';chatInput.focus();}
+      if(chatCount) chatCount.textContent='0';
+      if(chatMessages) chatMessages.scrollTop=chatMessages.scrollHeight;
+    }catch(_){
+      if(chatError) chatError.textContent=t('chat_send_error');
+    }finally{
+      if(chatSend) chatSend.disabled=false;
+    }
+  });
+
+
 })();

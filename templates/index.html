@@ -389,7 +389,7 @@
             <div class="social-metrics">
               {% for service in social.services[:4] %}<span>{{ service }}</span>{% endfor %}
             </div>
-            <button class="social-order-btn" data-network="{{ social.name }}">COTIZAR <b>↗</b></button>
+            <button class="social-order-btn" data-network="{{ social.name }}">COMPRAR <b>↗</b></button>
           </article>
           {% endfor %}
         </div>
@@ -477,6 +477,16 @@
         <p id="paymentInstructionText">Selecciona un método para ver los datos.</p>
       </div>
 
+
+      <div class="whatsapp-language-note" id="checkoutLanguageNote">
+        <iconify-icon icon="lucide:languages"></iconify-icon>
+        <span data-i18n="whatsapp_language_note">Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor.</span>
+      </div>
+      <label class="terms-check">
+        <input type="checkbox" id="checkoutTerms">
+        <span data-i18n="accept_terms">Acepto los términos y condiciones del servicio.</span>
+      </label>
+
       <button id="continueWhatsapp" class="checkout-whatsapp" disabled>
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
         <span data-i18n="continue_whatsapp">CONTINUAR POR WHATSAPP</span> <span>↗</span>
@@ -496,7 +506,17 @@
       <div id="detailsPlans" class="details-plans"></div>
       <div id="detailsInfo" class="details-info"></div>
       <div id="detailsNotes" class="details-notes"></div>
-      <button id="detailsWhatsapp" class="checkout-whatsapp">
+
+      <div class="whatsapp-language-note" id="detailsLanguageNote">
+        <iconify-icon icon="lucide:languages"></iconify-icon>
+        <span data-i18n="whatsapp_language_note">Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor.</span>
+      </div>
+      <label class="terms-check">
+        <input type="checkbox" id="detailsTerms">
+        <span data-i18n="accept_terms">Acepto los términos y condiciones del servicio.</span>
+      </label>
+
+      <button id="detailsWhatsapp" class="checkout-whatsapp" disabled>
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
         <span data-i18n="consult_whatsapp">CONSULTAR POR WHATSAPP</span> <span>↗</span>
       </button>
@@ -518,27 +538,133 @@
       <label class="social-url-label">ENLACE O @USUARIO
         <input id="socialTarget" type="text" placeholder="Ej.: @usuario o https://..." autocomplete="off">
       </label>
-      <button id="socialWhatsapp" class="checkout-whatsapp">
+
+      <div class="whatsapp-language-note" id="socialLanguageNote">
+        <iconify-icon icon="lucide:languages"></iconify-icon>
+        <span data-i18n="whatsapp_language_note">Puedes usar un traductor para que el vendedor y tú se entiendan. Dile tu idioma al vendedor para que pueda atenderte mejor.</span>
+      </div>
+      <label class="terms-check">
+        <input type="checkbox" id="socialTerms">
+        <span data-i18n="accept_terms">Acepto los términos y condiciones del servicio.</span>
+      </label>
+
+      <button id="socialWhatsapp" class="checkout-whatsapp" disabled>
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
-        <span data-i18n="send_quote">ENVIAR COTIZACIÓN POR WHATSAPP</span> <span>↗</span>
+        <span data-i18n="send_quote">CONTINUAR COMPRA POR WHATSAPP</span> <span>↗</span>
       </button>
-      <p class="checkout-note">No ingreses contraseñas ni códigos de acceso. Solo coloca el enlace público o nombre de usuario necesario para cotizar.</p>
+      <p class="checkout-note">No ingreses contraseñas ni códigos de acceso. Solo coloca el enlace público o nombre de usuario necesario para preparar la campaña.</p>
     </div>
   </div>
 
+  <button class="global-chat-launcher" id="globalChatLauncher" type="button" aria-expanded="false" aria-controls="globalChatPanel">
+    <span class="global-chat-dot"></span>
+    <iconify-icon icon="lucide:messages-square"></iconify-icon>
+    <span data-i18n="chat_open">CHAT GLOBAL</span>
+  </button>
 
+  <section class="global-chat-panel" id="globalChatPanel" aria-hidden="true" aria-label="Chat global de clientes">
+    <header class="global-chat-head">
+      <div>
+        <small data-i18n="chat_community">COMUNIDAD ALEX STREAMING</small>
+        <strong data-i18n="chat_title">CHAT GLOBAL</strong>
+      </div>
+      <button id="globalChatClose" type="button" aria-label="Cerrar chat">
+        <iconify-icon icon="lucide:x"></iconify-icon>
+      </button>
+    </header>
 
-  <aside class="anime-guide" id="animeGuide" aria-label="Guía virtual de Alex Streaming">
-    <div class="anime-guide-bubble" id="animeGuideBubble"><span>ALEX GUIDE</span><strong>Explora el catálogo ✦</strong></div>
-    <div class="anime-guide-character" aria-hidden="true">
-      <div class="ag-aura"></div>
-      <div class="ag-hair"><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="ag-head"><span class="ag-eye left"></span><span class="ag-eye right"></span><b class="ag-visor"></b></div>
-      <div class="ag-neck"></div>
-      <div class="ag-body"><span class="ag-core"></span><i class="ag-arm left"></i><i class="ag-arm right"></i></div>
-      <div class="ag-shadow"></div>
+    <div class="global-chat-safety">
+      <iconify-icon icon="lucide:shield-check"></iconify-icon>
+      <span data-i18n="chat_safety">Chat público. No compartas teléfono, correo, contraseñas, enlaces ni datos personales.</span>
     </div>
-  </aside>
+
+    <div class="global-chat-identity">
+      <iconify-icon icon="lucide:user-check"></iconify-icon>
+      <span data-i18n="chat_as">CHATEANDO COMO</span>
+      <strong id="globalChatIdentity">—</strong>
+    </div>
+
+    <div class="global-chat-messages" id="globalChatMessages" aria-live="polite">
+      <div class="global-chat-empty" id="globalChatEmpty" data-i18n="chat_empty">Todavía no hay mensajes. Inicia la conversación.</div>
+    </div>
+
+    <form class="global-chat-form" id="globalChatForm">
+      <textarea id="globalChatInput" maxlength="240" rows="2" data-i18n-placeholder="chat_placeholder" placeholder="Escribe un mensaje..." required></textarea>
+      <div class="global-chat-form-foot">
+        <span><b id="globalChatCount">0</b>/240</span>
+        <button id="globalChatSend" type="submit">
+          <span data-i18n="chat_send">ENVIAR</span>
+          <iconify-icon icon="lucide:send"></iconify-icon>
+        </button>
+      </div>
+      <p class="global-chat-error" id="globalChatError" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+
+  <button class="game-launcher" id="gameLauncher" type="button" aria-expanded="false" aria-controls="gameModal">
+    <iconify-icon icon="lucide:gamepad-2"></iconify-icon>
+    <span>
+      <small>ALEX // MINI GAME</small>
+      <strong data-i18n="game_open">JUGAR NEON RUSH</strong>
+    </span>
+  </button>
+
+  <div class="game-modal" id="gameModal" aria-hidden="true">
+    <div class="game-backdrop" data-close-game></div>
+    <section class="game-shell" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+      <header class="game-head">
+        <div>
+          <small>ALEX STREAMING // ARCADE</small>
+          <h2 id="gameTitle" data-i18n="game_title">NEON RUSH</h2>
+        </div>
+        <button class="game-close" type="button" data-close-game aria-label="Cerrar juego">
+          <iconify-icon icon="lucide:x"></iconify-icon>
+        </button>
+      </header>
+
+      <div class="game-intro" id="gameIntro">
+        <div class="game-intro-icon"><iconify-icon icon="lucide:zap"></iconify-icon></div>
+        <p data-i18n="game_explain">Atrapa los núcleos de energía antes de que desaparezcan. Los verdes dan +10 puntos, los azules +20 y los rojos quitan 15 puntos. Tienes 30 segundos para conseguir la mayor puntuación posible.</p>
+        <div class="game-legend">
+          <span><i class="orb-demo green"></i><b>+10</b></span>
+          <span><i class="orb-demo blue"></i><b>+20</b></span>
+          <span><i class="orb-demo red"></i><b>-15</b></span>
+        </div>
+        <button class="game-start" id="gameStart" type="button">
+          <iconify-icon icon="lucide:play"></iconify-icon>
+          <span data-i18n="game_start">EMPEZAR PARTIDA</span>
+        </button>
+      </div>
+
+      <div class="game-hud">
+        <div><small data-i18n="game_player">JUGADOR</small><strong id="gamePlayer">—</strong></div>
+        <div><small data-i18n="game_score">PUNTOS</small><strong id="gameScore">0</strong></div>
+        <div><small data-i18n="game_best">RÉCORD</small><strong id="gameBest">0</strong></div>
+        <div><small data-i18n="game_time">TIEMPO</small><strong><span id="gameTime">30</span>s</strong></div>
+      </div>
+
+      <div class="game-arena" id="gameArena" aria-label="Área de juego">
+        <div class="game-grid"></div>
+        <div class="game-ready" id="gameReady">
+          <iconify-icon icon="lucide:crosshair"></iconify-icon>
+          <strong data-i18n="game_ready">LISTO PARA JUGAR</strong>
+          <span data-i18n="game_ready_hint">Pulsa empezar y toca los núcleos que aparezcan.</span>
+        </div>
+      </div>
+
+      <footer class="game-footer">
+        <div>
+          <span data-i18n="game_combo">COMBO</span>
+          <strong id="gameCombo">x0</strong>
+        </div>
+        <button class="game-restart" id="gameRestart" type="button" disabled>
+          <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
+          <span data-i18n="game_restart">JUGAR OTRA VEZ</span>
+        </button>
+      </footer>
+    </section>
+  </div>
 
   <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" title="Activar o pausar ALEX PULSE">
     <iconify-icon icon="lucide:music-2"></iconify-icon>
@@ -562,7 +688,8 @@
       trackOrderUrl: "/api/track-order",
       trackEventUrl: "/api/track-event",
       presenceUrl: "/api/presence",
-      visitorFeedUrl: "/api/visitor-feed"
+      visitorFeedUrl: "/api/visitor-feed",
+      chatUrl: "/api/chat"
     };
   </script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>

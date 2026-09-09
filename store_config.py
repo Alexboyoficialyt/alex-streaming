@@ -1564,3 +1564,171 @@ PRODUCTS.extend([
         "display_name": "Geminis Ultra + Flow"
     }
 ])
+
+
+# ============================================================
+# V34 — DUOLINGO / ESET / REDES (ajustes seguros)
+# ============================================================
+
+# Reemplaza la tarjeta Duolingo anterior por dos productos separados.
+PRODUCTS = [p for p in PRODUCTS if p.get("id") != "duolingo"]
+
+PRODUCTS.extend([
+    {
+        "id": "duolingo-super-1-ano-v34",
+        "name": "⚡⚡DUOLINGO SUPER 1 año A TU CORREO⚡⚡",
+        "icon": "simple-icons:duolingo",
+        "accent": "#58CC02",
+        "category": "DUOLINGO",
+        "badge": "S/100",
+        "description": "Descripción Completa",
+        "plans": [
+            {"name": "⚡⚡DUOLINGO SUPER 1 año A TU CORREO⚡⚡", "price": 100}
+        ],
+        "details": [
+            "⚡Estas cuentas son de duración de 10 meses a un año.",
+            "⚡Acceso completo a todos los perfiles disponibles.",
+            "⚡Incluye datos de acceso completos.",
+            "⚡Alta calidad, ideal para uso personal o reventa.",
+            "⚡Garantía activa por 10 meses",
+            "Detalles de Solicitud",
+            "Garantía: El servicio tiene garantía por los 10 MESES de duración.",
+            "Uso personal: La cuenta es para uso individual; no se permite revender o compartir el acceso si es una cuenta compartida.",
+            "Entrega: La entrega se realiza en un plazo de 11día tras confirmar el pago.",
+            "Sin reembolsos: Una vez activado el servicio, no se aceptan devoluciones."
+        ],
+        "notes": [
+            "Condiciones de Uso",
+            "Garantía: El servicio tiene garantía por los 10 MESES de duración.",
+            "Uso personal: La cuenta es para uso individual; no se permite revender o compartir el acceso si es una cuenta compartida.",
+            "Entrega: La entrega se realiza en un plazo de 15 A 60 minutos tras confirmar el pago.",
+            "Sin reembolsos: Una vez activado el servicio, no se aceptan devoluciones.",
+            "Publica y distribuye este acceso únicamente si cuentas con autorización para comercializarlo."
+        ],
+        "logo_url": "https://cdn.simpleicons.org/duolingo/58CC02",
+        "logo_class": "brand-logo brand-logo-wide",
+        "display_name": "Duolingo"
+    },
+    {
+        "id": "duolingo-30-dias-v34",
+        "name": "DUOLINGO X 30 DIAS",
+        "icon": "simple-icons:duolingo",
+        "accent": "#58CC02",
+        "category": "DUOLINGO",
+        "badge": "S/8",
+        "description": "Descripción completa: Cuenta Duolingo privada con racha de 30 días activa.",
+        "plans": [
+            {"name": "DUOLINGO X 30 DIAS", "price": 8}
+        ],
+        "details": [
+            "Cuenta Duolingo privada con racha de 30 días activa.",
+            "100% funcional y lista para usar.",
+            "Incluye acceso completo al correo temporal para que puedas cambiarlo fácilmente a tu propio correo.",
+            "Ideal para mantener tu progreso sin interrupciones.",
+            "Detalles de Solicitud",
+            "Cuenta Duolingo 30 Días",
+            "Acceso al correo incluido",
+            "Racha activa garantizada",
+            "Entrega inmediata en panel (correo + contraseña)"
+        ],
+        "notes": [
+            "Condiciones de Uso",
+            "La cuenta es privada y de uso personal.",
+            "No editar método de pago.",
+            "No compartir las credenciales con terceros.",
+            "Una vez cambiado el correo, la cuenta queda bajo tu control total.",
+            "Garantía de 30 días (si hay algún problema con la cuenta, se reemplaza",
+            "Publica y distribuye este acceso únicamente si cuentas con autorización para comercializarlo."
+        ],
+        "logo_url": "https://cdn.simpleicons.org/duolingo/58CC02",
+        "logo_class": "brand-logo brand-logo-wide",
+        "display_name": "Duolingo"
+    }
+])
+
+# ESET: conserva la tarjeta, pero usa un icono de seguridad neutral.
+# El logo oficial no se incrusta automáticamente porque ESET exige aprobación previa
+# para su uso comercial según su guía de marca.
+for p in PRODUCTS:
+    if p.get("id") == "eset-internet-security":
+        p["icon"] = "lucide:shield-check"
+        p["logo_url"] = ""
+        p["display_name"] = "ESET Internet Security"
+        p["notes"] = list(p.get("notes", [])) + [
+            "Para colocar el logotipo oficial de ESET, utiliza el archivo original del press kit únicamente si cuentas con la autorización de marca correspondiente."
+        ]
+
+# REDES: no se convierte a compra directa de seguidores/likes artificiales.
+# Se presenta como marketing/promoción mundial legítima.
+SOCIAL_PLATFORMS = [
+    {
+        "id": "instagram",
+        "name": "Instagram · MUNDIAL",
+        "icon": "simple-icons:instagram",
+        "accent": "#FF2D7A",
+        "services": ["Campañas publicitarias", "Alcance mundial", "Gestión de comunidad", "Contenido", "Analítica", "Transmisiones en vivo"]
+    },
+    {
+        "id": "facebook",
+        "name": "Facebook · MUNDIAL",
+        "icon": "simple-icons:facebook",
+        "accent": "#1877F2",
+        "services": ["Campañas publicitarias", "Alcance mundial", "Gestión de comunidad", "Contenido", "Analítica", "Transmisiones en vivo"]
+    },
+    {
+        "id": "tiktok",
+        "name": "TikTok · MUNDIAL",
+        "icon": "simple-icons:tiktok",
+        "accent": "#25F4EE",
+        "services": ["Campañas publicitarias", "Alcance mundial", "Gestión de comunidad", "Contenido", "Analítica", "Transmisiones en vivo"]
+    },
+    {
+        "id": "youtube",
+        "name": "YouTube · MUNDIAL",
+        "icon": "simple-icons:youtube",
+        "accent": "#FF0033",
+        "services": ["Promoción de contenido", "Alcance mundial", "Gestión de comunidad", "Analítica", "Campañas", "Transmisiones en vivo"]
+    },
+    {
+        "id": "x",
+        "name": "X / Twitter · MUNDIAL",
+        "icon": "simple-icons:x",
+        "accent": "#FFFFFF",
+        "services": ["Campañas", "Alcance mundial", "Gestión de comunidad", "Contenido", "Analítica"]
+    },
+    {
+        "id": "threads",
+        "name": "Threads · MUNDIAL",
+        "icon": "simple-icons:threads",
+        "accent": "#FFFFFF",
+        "services": ["Campañas", "Alcance mundial", "Gestión de comunidad", "Contenido", "Analítica"]
+    },
+    {
+        "id": "telegram",
+        "name": "Telegram · MUNDIAL",
+        "icon": "simple-icons:telegram",
+        "accent": "#26A5E4",
+        "services": ["Gestión de canal", "Promoción", "Contenido", "Analítica", "Alcance mundial"]
+    },
+    {
+        "id": "linkedin",
+        "name": "LinkedIn · MUNDIAL",
+        "icon": "simple-icons:linkedin",
+        "accent": "#0A66C2",
+        "services": ["Campañas B2B", "Alcance mundial", "Contenido", "Analítica", "Gestión de comunidad"]
+    },
+    {
+        "id": "pinterest",
+        "name": "Pinterest · MUNDIAL",
+        "icon": "simple-icons:pinterest",
+        "accent": "#E60023",
+        "services": ["Promoción de pines", "Alcance mundial", "Contenido", "Analítica", "Campañas"]
+    },
+    {
+        "id": "twitch",
+        "name": "Twitch · MUNDIAL",
+        "icon": "simple-icons:twitch",
+        "accent": "#9146FF",
+        "services": ["Promoción de canal", "Alcance mundial", "Analítica", "Gestión de comunidad", "Transmisiones en vivo"]
+    }
+]
