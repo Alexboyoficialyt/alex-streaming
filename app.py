@@ -119,6 +119,12 @@ def clean_display_name(value):
     return value or "Visitante"
 
 
+def clean_required_name(value):
+    value = re.sub(r"\s+", " ", str(value or "").strip())[:40]
+    value = re.sub(r"[^\w\s\-'.À-ÿ]", "", value, flags=re.UNICODE).strip()
+    return value
+
+
 def ensure_visitor():
     session.permanent = True
     visitor_id = session.get("visitor_id")
@@ -354,7 +360,9 @@ def presence():
     visitor_id = ensure_visitor()
     geo = detect_country_from_ip(client_public_ip())
     payload = request.get_json(silent=True) or {}
-    display_name = clean_display_name(payload.get("name") or session.get("display_name"))
+    display_name = clean_required_name(payload.get("name") or session.get("display_name"))
+    if len(display_name) < 2:
+        return jsonify({"ok": False, "error": "name_required"}), 400
     session["display_name"] = display_name
     if geo["country"] == "País no disponible":
         fallback_country = clean_country(payload.get("country"))

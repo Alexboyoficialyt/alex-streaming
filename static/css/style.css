@@ -392,3 +392,28 @@ body.access-locked .epic-entry{opacity:0!important;visibility:hidden!important;p
 .price-wrap strong,.plan-select option{font-variant-numeric:tabular-nums}.local-price-note{display:block;margin-top:2px;color:#5f8076;font:600 7px var(--mono)}
 @media(max-width:900px){.locale-panel{margin-left:0}.locale-control{height:36px;padding:0 6px}.locale-control iconify-icon{display:none}}
 @media(max-width:640px){.locale-panel{order:3;width:100%;justify-content:flex-end;margin:0;padding-bottom:8px}.topbar-inner{flex-wrap:wrap}.locale-control{height:32px}.access-locale-live{grid-template-columns:1fr}.access-locale-live>span{font-size:7px}}
+
+
+/* V23 — mandatory registration + payment instructions */
+.access-name-error{min-height:22px;margin-top:8px;color:#ff6b7a;font:700 12px/1.4 "JetBrains Mono",monospace;letter-spacing:.04em}
+.access-gate.name-missing .access-card{animation:v23GateShake .42s ease}
+.access-gate.name-missing .access-input-line{border-color:#ff5268;box-shadow:0 0 0 1px rgba(255,82,104,.35),0 0 28px rgba(255,82,104,.13)}
+@keyframes v23GateShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.payment-copy small{display:block;margin-top:4px;color:rgba(225,255,245,.66);font:700 10px/1.3 "JetBrains Mono",monospace;letter-spacing:.04em}
+.payment-instructions{margin:14px 0 2px;padding:14px 15px;border:1px solid rgba(0,255,209,.24);background:linear-gradient(135deg,rgba(0,255,209,.06),rgba(0,184,255,.025));clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.payment-instructions[hidden]{display:none!important}
+.payment-instructions-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#55ffd5;font:800 11px/1.2 "JetBrains Mono",monospace;letter-spacing:.08em}
+.payment-instructions-head iconify-icon{font-size:17px}
+.payment-instructions p{margin:0;color:rgba(235,255,250,.82);font-size:13px;line-height:1.6}
+
+/* V25: instrucciones de pago multilingües */
+.payment-instructions p{white-space:pre-line;line-height:1.65}
+
+
+/* V32 — estado de traducción automática en el modal de detalles */
+#detailsDescription[data-translation-state="loading"]{
+  opacity:.72;
+}
+#detailsDescription[data-translation-state="loading"]::after{
+  content:"  ·  🌐";
+}

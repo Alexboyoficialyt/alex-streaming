@@ -8,6 +8,9 @@
   const modalPlan = document.getElementById('modalPlan');
   const modalPrice = document.getElementById('modalPrice');
   const paymentButtons = [...document.querySelectorAll('.modal-payment')];
+  const paymentInstructions = document.getElementById('paymentInstructions');
+  const paymentInstructionTitle = document.getElementById('paymentInstructionTitle');
+  const paymentInstructionText = document.getElementById('paymentInstructionText');
   const continueButton = document.getElementById('continueWhatsapp');
   const toast = document.getElementById('toast');
   const clock = document.getElementById('liveClock');
@@ -62,14 +65,9 @@
   let translationManual = false;
   let chromeTranslator = null;
 
-  const COUNTRY_CURRENCY = {
-    PE:'PEN', US:'USD', PR:'USD', EC:'USD', PA:'USD', SV:'USD', MX:'MXN', CO:'COP', CL:'CLP', AR:'ARS', BR:'BRL',
-    BO:'BOB', PY:'PYG', UY:'UYU', VE:'VES', CA:'CAD', GB:'GBP', IE:'EUR', ES:'EUR', FR:'EUR', DE:'EUR', IT:'EUR',
-    PT:'EUR', NL:'EUR', BE:'EUR', AT:'EUR', FI:'EUR', GR:'EUR', JP:'JPY', KR:'KRW', VN:'VND', AU:'AUD', NZ:'NZD',
-    CH:'CHF', CN:'CNY', IN:'INR'
-  };
+  const COUNTRY_CURRENCY = {"AD": "EUR", "AE": "AED", "AF": "AFN", "AG": "XCD", "AI": "XCD", "AL": "ALL", "AM": "AMD", "AO": "AOA", "AR": "ARS", "AS": "USD", "AT": "EUR", "AU": "AUD", "AW": "AWG", "AX": "EUR", "AZ": "AZN", "BA": "BAM", "BB": "BBD", "BD": "BDT", "BE": "EUR", "BF": "XOF", "BG": "BGN", "BH": "BHD", "BI": "BIF", "BJ": "XOF", "BL": "EUR", "BM": "BMD", "BN": "BND", "BO": "BOB", "BQ": "USD", "BR": "BRL", "BS": "BSD", "BT": "INR", "BV": "NOK", "BW": "BWP", "BY": "BYN", "BZ": "BZD", "CA": "CAD", "CC": "AUD", "CD": "CDF", "CF": "XAF", "CG": "XAF", "CH": "CHF", "CI": "XOF", "CK": "NZD", "CL": "CLP", "CM": "XAF", "CN": "CNY", "CO": "COP", "CR": "CRC", "CU": "CUP", "CV": "CVE", "CW": "XCG", "CX": "AUD", "CY": "EUR", "CZ": "CZK", "DE": "EUR", "DJ": "DJF", "DK": "DKK", "DM": "XCD", "DO": "DOP", "DZ": "DZD", "EC": "USD", "EE": "EUR", "EG": "EGP", "EH": "MAD", "ER": "ERN", "ES": "EUR", "ET": "ETB", "FI": "EUR", "FJ": "FJD", "FK": "FKP", "FM": "USD", "FO": "DKK", "FR": "EUR", "GA": "XAF", "GB": "GBP", "GD": "XCD", "GE": "GEL", "GF": "EUR", "GG": "GBP", "GH": "GHS", "GI": "GIP", "GL": "DKK", "GM": "GMD", "GN": "GNF", "GP": "EUR", "GQ": "XAF", "GR": "EUR", "GS": "GBP", "GT": "GTQ", "GU": "USD", "GW": "XOF", "GY": "GYD", "HK": "HKD", "HM": "AUD", "HN": "HNL", "HR": "EUR", "HT": "HTG", "HU": "HUF", "ID": "IDR", "IE": "EUR", "IL": "ILS", "IM": "GBP", "IN": "INR", "IO": "USD", "IQ": "IQD", "IR": "IRR", "IS": "ISK", "IT": "EUR", "JE": "GBP", "JM": "JMD", "JO": "JOD", "JP": "JPY", "KE": "KES", "KG": "KGS", "KH": "KHR", "KI": "AUD", "KM": "KMF", "KN": "XCD", "KP": "KPW", "KR": "KRW", "KW": "KWD", "KY": "KYD", "KZ": "KZT", "LA": "LAK", "LB": "LBP", "LC": "XCD", "LI": "CHF", "LK": "LKR", "LR": "LRD", "LS": "ZAR", "LT": "EUR", "LU": "EUR", "LV": "EUR", "LY": "LYD", "MA": "MAD", "MC": "EUR", "MD": "MDL", "ME": "EUR", "MF": "EUR", "MG": "MGA", "MH": "USD", "MK": "MKD", "ML": "XOF", "MM": "MMK", "MN": "MNT", "MO": "MOP", "MP": "USD", "MQ": "EUR", "MR": "MRU", "MS": "XCD", "MT": "EUR", "MU": "MUR", "MV": "MVR", "MW": "MWK", "MX": "MXN", "MY": "MYR", "MZ": "MZN", "NA": "ZAR", "NC": "XPF", "NE": "XOF", "NF": "AUD", "NG": "NGN", "NI": "NIO", "NL": "EUR", "NO": "NOK", "NP": "NPR", "NR": "AUD", "NU": "NZD", "NZ": "NZD", "OM": "OMR", "PA": "PAB", "PE": "PEN", "PF": "XPF", "PG": "PGK", "PH": "PHP", "PK": "PKR", "PL": "PLN", "PM": "EUR", "PN": "NZD", "PR": "USD", "PS": "ILS", "PT": "EUR", "PW": "USD", "PY": "PYG", "QA": "QAR", "RE": "EUR", "RO": "RON", "RS": "RSD", "RU": "RUB", "RW": "RWF", "SA": "SAR", "SB": "SBD", "SC": "SCR", "SD": "SDG", "SE": "SEK", "SG": "SGD", "SH": "SHP", "SI": "EUR", "SJ": "NOK", "SK": "EUR", "SL": "SLE", "SM": "EUR", "SN": "XOF", "SO": "SOS", "SR": "SRD", "SS": "SSP", "ST": "STN", "SV": "USD", "SX": "XCG", "SY": "SYP", "SZ": "SZL", "TC": "USD", "TD": "XAF", "TF": "EUR", "TG": "XOF", "TH": "THB", "TJ": "TJS", "TK": "NZD", "TL": "USD", "TM": "TMT", "TN": "TND", "TO": "TOP", "TR": "TRY", "TT": "TTD", "TV": "AUD", "TW": "TWD", "TZ": "TZS", "UA": "UAH", "UG": "UGX", "UM": "USD", "US": "USD", "UY": "UYU", "UZ": "UZS", "VA": "EUR", "VC": "XCD", "VE": "VES", "VG": "USD", "VI": "USD", "VN": "VND", "VU": "VUV", "WF": "XPF", "WS": "WST", "YE": "YER", "YT": "EUR", "ZA": "ZAR", "ZM": "ZMW", "ZW": "USD"};
 
-  const LANGUAGE_NAMES = {es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS',fr:'FRANÇAIS',de:'DEUTSCH',it:'ITALIANO',vi:'TIẾNG VIỆT'};
+  const LANGUAGE_NAMES = {es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS',fr:'FRANÇAIS',de:'DEUTSCH',it:'ITALIANO',vi:'TIẾNG VIỆT',ru:'РУССКИЙ',tr:'TÜRKÇE',ar:'العربية',zh:'中文',ja:'日本語',ko:'한국어',hi:'हिन्दी',id:'BAHASA INDONESIA',th:'ไทย',nl:'NEDERLANDS',pl:'POLSKI'};
   const I18N = {
     es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'ENVIAR COTIZACIÓN POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COTIZAR',online:'ONLINE',consult:'Consultar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX'},
     en:{nav_catalog:'CATALOG',nav_social:'SOCIAL',nav_payments:'PAYMENTS',nav_how:'HOW TO BUY',catalog_title:'Full catalog',catalog_subtitle:'Streaming, AI, productivity, software, education, VPN, authorized services and bundles.',search_placeholder:'Search HBO Max, Gamma, Canva, Office...',filter_all:'ALL',payment_title:'Payment methods',payment_note:'Choose a payment method when ordering. Final confirmation is handled on WhatsApp.',steps_title:'Buy in 3 steps',step1_title:'Choose a platform',step1_text:'Find the service and select the plan you want.',step2_title:'Choose payment',step2_text:'Select Yape, Plin, BCP or Binance.',step3_title:'Confirm on WhatsApp',step3_text:'Your order is prepared automatically and ready to send.',checkout_title:'Complete order',select_payment:'SELECT PAYMENT METHOD',continue_whatsapp:'CONTINUE ON WHATSAPP',consult_whatsapp:'ASK ON WHATSAPP',social_prepare:'Prepare campaign',send_quote:'SEND QUOTE ON WHATSAPP',contact:'CONTACT',choose_plan:'SELECT PLAN',from:'FROM',details:'DETAILS',buy:'BUY',quote:'QUOTE',online:'ONLINE',consult:'Ask',product:'PRODUCT',plan:'PLAN',total:'TOTAL',includes:'INCLUDES',conditions:'TERMS',price_approx:'approx. price',access_title:'ENTER THE DIGITAL UNIVERSE',access_desc:'Premium catalog, AI tools, productivity, social services and direct WhatsApp support.',your_name:'YOUR NAME',start_experience:'START EXPERIENCE',country_detected:'DETECTED COUNTRY',enter_status:'WHEN YOU ENTER, YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING',hero_lead:'Your digital catalog with a high-impact premium experience. Streaming, AI, productivity, software and bundles in one place. Choose a plan and finish the order on WhatsApp.',enter_catalog:'OPEN CATALOG',talk_alex:'TALK TO ALEX'},
@@ -80,49 +78,311 @@
     vi:{nav_catalog:'DANH MỤC',nav_social:'MẠNG XÃ HỘI',nav_payments:'THANH TOÁN',nav_how:'CÁCH MUA',catalog_title:'Danh mục đầy đủ',catalog_subtitle:'Streaming, AI, năng suất, phần mềm, giáo dục, VPN, dịch vụ được phép và combo.',search_placeholder:'Tìm HBO Max, Gamma, Canva, Office...',filter_all:'TẤT CẢ',payment_title:'Phương thức thanh toán',payment_note:'Chọn phương thức thanh toán khi mua. Xác nhận cuối cùng qua WhatsApp.',steps_title:'Mua trong 3 bước',step1_title:'Chọn nền tảng',step1_text:'Tìm dịch vụ và chọn gói bạn muốn.',step2_title:'Chọn thanh toán',step2_text:'Chọn Yape, Plin, BCP hoặc Binance.',step3_title:'Xác nhận qua WhatsApp',step3_text:'Đơn hàng được chuẩn bị tự động.',checkout_title:'Hoàn tất đơn hàng',select_payment:'CHỌN PHƯƠNG THỨC THANH TOÁN',continue_whatsapp:'TIẾP TỤC QUA WHATSAPP',consult_whatsapp:'HỎI QUA WHATSAPP',social_prepare:'Chuẩn bị chiến dịch',send_quote:'GỬI BÁO GIÁ QUA WHATSAPP',contact:'LIÊN HỆ',choose_plan:'CHỌN GÓI',from:'TỪ',details:'CHI TIẾT',buy:'MUA',quote:'BÁO GIÁ',online:'TRỰC TUYẾN',consult:'Liên hệ',product:'SẢN PHẨM',plan:'GÓI',total:'TỔNG',includes:'BAO GỒM',conditions:'ĐIỀU KIỆN',price_approx:'giá xấp xỉ',access_title:'BƯỚC VÀO THẾ GIỚI SỐ',access_desc:'Danh mục premium, công cụ AI, năng suất, mạng xã hội và hỗ trợ trực tiếp qua WhatsApp.',your_name:'TÊN CỦA BẠN',start_experience:'BẮT ĐẦU TRẢI NGHIỆM',country_detected:'QUỐC GIA ĐÃ PHÁT HIỆN',enter_status:'KHI VÀO, TÊN + QUỐC GIA CỦA BẠN SẼ HIỂN THỊ TRONG ALEX STREAMING',hero_lead:'Danh mục kỹ thuật số với trải nghiệm premium mạnh mẽ. Streaming, AI, năng suất, phần mềm và combo trong một nơi.',enter_catalog:'MỞ DANH MỤC',talk_alex:'CHAT VỚI ALEX'}
   };
 
+
+  // V24: idiomas adicionales. Cada idioma hereda cualquier texto no definido desde inglés.
+  Object.assign(I18N, {
+    ru:{...I18N.en,nav_catalog:'КАТАЛОГ',nav_social:'СОЦСЕТИ',nav_payments:'ОПЛАТА',nav_how:'КАК КУПИТЬ',catalog_title:'Полный каталог',payment_title:'Способы оплаты',steps_title:'Покупка в 3 шага',step1_title:'Выберите сервис',step2_title:'Выберите оплату',step3_title:'Подтвердите в WhatsApp',checkout_title:'Оформить заказ',select_payment:'ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ',continue_whatsapp:'ПРОДОЛЖИТЬ В WHATSAPP',choose_plan:'ВЫБРАТЬ ПЛАН',from:'ОТ',details:'ПОДРОБНЕЕ',buy:'КУПИТЬ',quote:'ЗАПРОС',consult:'Уточнить',product:'ПРОДУКТ',plan:'ПЛАН',total:'ИТОГО',includes:'ВКЛЮЧЕНО',conditions:'УСЛОВИЯ',your_name:'ВАШЕ ИМЯ',start_experience:'НАЧАТЬ',country_detected:'ОПРЕДЕЛЕННАЯ СТРАНА',access_title:'ВОЙДИТЕ В ЦИФРОВУЮ ВСЕЛЕННУ',enter_catalog:'ОТКРЫТЬ КАТАЛОГ',talk_alex:'НАПИСАТЬ ALEX'},
+    tr:{...I18N.en,nav_catalog:'KATALOG',nav_social:'SOSYAL',nav_payments:'ÖDEME',nav_how:'NASIL SATIN ALINIR',catalog_title:'Tam katalog',payment_title:'Ödeme yöntemleri',steps_title:'3 adımda satın al',step1_title:'Platform seç',step2_title:'Ödeme seç',step3_title:'WhatsApp ile onayla',checkout_title:'Siparişi tamamla',select_payment:'ÖDEME YÖNTEMİNİ SEÇ',continue_whatsapp:'WHATSAPP İLE DEVAM ET',choose_plan:'PLAN SEÇ',from:'BAŞLANGIÇ',details:'DETAYLAR',buy:'SATIN AL',quote:'TEKLİF',consult:'Sor',product:'ÜRÜN',plan:'PLAN',total:'TOPLAM',includes:'DAHİL',conditions:'KOŞULLAR',your_name:'ADINIZ',start_experience:'DENEYİMİ BAŞLAT',country_detected:'ALGILANAN ÜLKE',access_title:'DİJİTAL EVRENE GİR',enter_catalog:'KATALOĞU AÇ',talk_alex:'ALEX İLE KONUŞ'},
+    ar:{...I18N.en,nav_catalog:'الكتالوج',nav_social:'الشبكات',nav_payments:'الدفع',nav_how:'كيفية الشراء',catalog_title:'الكتالوج الكامل',payment_title:'طرق الدفع',steps_title:'اشترِ في 3 خطوات',step1_title:'اختر المنصة',step2_title:'اختر الدفع',step3_title:'أكد عبر واتساب',checkout_title:'إكمال الطلب',select_payment:'اختر طريقة الدفع',continue_whatsapp:'المتابعة عبر واتساب',choose_plan:'اختر الخطة',from:'ابتداءً من',details:'التفاصيل',buy:'شراء',quote:'طلب سعر',consult:'استفسار',product:'المنتج',plan:'الخطة',total:'الإجمالي',includes:'يشمل',conditions:'الشروط',your_name:'اسمك',start_experience:'ابدأ التجربة',country_detected:'البلد المكتشف',access_title:'ادخل العالم الرقمي',enter_catalog:'افتح الكتالوج',talk_alex:'تحدث مع أليكس'},
+    zh:{...I18N.en,nav_catalog:'目录',nav_social:'社交',nav_payments:'支付',nav_how:'如何购买',catalog_title:'完整目录',payment_title:'支付方式',steps_title:'3步完成购买',step1_title:'选择平台',step2_title:'选择支付',step3_title:'通过 WhatsApp 确认',checkout_title:'完成订单',select_payment:'选择支付方式',continue_whatsapp:'通过 WHATSAPP 继续',choose_plan:'选择套餐',from:'起价',details:'详情',buy:'购买',quote:'询价',consult:'咨询',product:'产品',plan:'套餐',total:'总计',includes:'包含',conditions:'条件',your_name:'你的名字',start_experience:'开始体验',country_detected:'检测到的国家',access_title:'进入数字世界',enter_catalog:'打开目录',talk_alex:'联系 ALEX'},
+    ja:{...I18N.en,nav_catalog:'カタログ',nav_social:'SNS',nav_payments:'支払い',nav_how:'購入方法',catalog_title:'全カタログ',payment_title:'支払い方法',steps_title:'3ステップで購入',step1_title:'サービスを選択',step2_title:'支払いを選択',step3_title:'WhatsAppで確認',checkout_title:'注文を完了',select_payment:'支払い方法を選択',continue_whatsapp:'WHATSAPPで続行',choose_plan:'プランを選択',from:'〜',details:'詳細',buy:'購入',quote:'見積り',consult:'問い合わせ',product:'商品',plan:'プラン',total:'合計',includes:'含む',conditions:'条件',your_name:'お名前',start_experience:'開始',country_detected:'検出された国',access_title:'デジタル世界へ',enter_catalog:'カタログを開く',talk_alex:'ALEXに連絡'},
+    ko:{...I18N.en,nav_catalog:'카탈로그',nav_social:'소셜',nav_payments:'결제',nav_how:'구매 방법',catalog_title:'전체 카탈로그',payment_title:'결제 방법',steps_title:'3단계 구매',step1_title:'서비스 선택',step2_title:'결제 선택',step3_title:'WhatsApp 확인',checkout_title:'주문 완료',select_payment:'결제 방법 선택',continue_whatsapp:'WHATSAPP으로 계속',choose_plan:'플랜 선택',from:'시작',details:'상세',buy:'구매',quote:'문의',consult:'문의',product:'상품',plan:'플랜',total:'합계',includes:'포함',conditions:'조건',your_name:'이름',start_experience:'시작하기',country_detected:'감지된 국가',access_title:'디지털 세계로',enter_catalog:'카탈로그 열기',talk_alex:'ALEX에게 문의'},
+    hi:{...I18N.en,nav_catalog:'कैटलॉग',nav_social:'सोशल',nav_payments:'भुगतान',nav_how:'कैसे खरीदें',catalog_title:'पूरा कैटलॉग',payment_title:'भुगतान के तरीके',steps_title:'3 चरणों में खरीदें',step1_title:'प्लेटफ़ॉर्म चुनें',step2_title:'भुगतान चुनें',step3_title:'WhatsApp पर पुष्टि करें',checkout_title:'ऑर्डर पूरा करें',select_payment:'भुगतान तरीका चुनें',continue_whatsapp:'WHATSAPP पर जारी रखें',choose_plan:'प्लान चुनें',from:'से',details:'विवरण',buy:'खरीदें',quote:'कोटेशन',consult:'पूछें',product:'उत्पाद',plan:'प्लान',total:'कुल',includes:'शामिल',conditions:'शर्तें',your_name:'आपका नाम',start_experience:'शुरू करें',country_detected:'देश पहचाना गया',access_title:'डिजिटल दुनिया में प्रवेश करें',enter_catalog:'कैटलॉग खोलें',talk_alex:'ALEX से बात करें'},
+    id:{...I18N.en,nav_catalog:'KATALOG',nav_social:'SOSIAL',nav_payments:'PEMBAYARAN',nav_how:'CARA MEMBELI',catalog_title:'Katalog lengkap',payment_title:'Metode pembayaran',steps_title:'Beli dalam 3 langkah',step1_title:'Pilih platform',step2_title:'Pilih pembayaran',step3_title:'Konfirmasi via WhatsApp',checkout_title:'Selesaikan pesanan',select_payment:'PILIH METODE PEMBAYARAN',continue_whatsapp:'LANJUT VIA WHATSAPP',choose_plan:'PILIH PAKET',from:'MULAI',details:'DETAIL',buy:'BELI',quote:'TANYA HARGA',consult:'Tanya',product:'PRODUK',plan:'PAKET',total:'TOTAL',includes:'TERMASUK',conditions:'SYARAT',your_name:'NAMA ANDA',start_experience:'MULAI',country_detected:'NEGARA TERDETEKSI',access_title:'MASUK KE DUNIA DIGITAL',enter_catalog:'BUKA KATALOG',talk_alex:'HUBUNGI ALEX'},
+    th:{...I18N.en,nav_catalog:'แคตตาล็อก',nav_social:'โซเชียล',nav_payments:'การชำระเงิน',nav_how:'วิธีซื้อ',catalog_title:'แคตตาล็อกทั้งหมด',payment_title:'วิธีชำระเงิน',steps_title:'ซื้อใน 3 ขั้นตอน',step1_title:'เลือกแพลตฟอร์ม',step2_title:'เลือกการชำระเงิน',step3_title:'ยืนยันผ่าน WhatsApp',checkout_title:'สั่งซื้อให้เสร็จ',select_payment:'เลือกวิธีชำระเงิน',continue_whatsapp:'ดำเนินการต่อผ่าน WHATSAPP',choose_plan:'เลือกแพ็กเกจ',from:'เริ่มต้น',details:'รายละเอียด',buy:'ซื้อ',quote:'สอบถามราคา',consult:'สอบถาม',product:'สินค้า',plan:'แพ็กเกจ',total:'รวม',includes:'รวม',conditions:'เงื่อนไข',your_name:'ชื่อของคุณ',start_experience:'เริ่มใช้งาน',country_detected:'ประเทศที่ตรวจพบ',access_title:'เข้าสู่โลกดิจิทัล',enter_catalog:'เปิดแคตตาล็อก',talk_alex:'คุยกับ ALEX'},
+    nl:{...I18N.en,nav_catalog:'CATALOGUS',nav_social:'SOCIAL',nav_payments:'BETALINGEN',nav_how:'HOE KOPEN',catalog_title:'Volledige catalogus',payment_title:'Betaalmethoden',steps_title:'Koop in 3 stappen',step1_title:'Kies platform',step2_title:'Kies betaling',step3_title:'Bevestig via WhatsApp',checkout_title:'Bestelling afronden',select_payment:'KIES BETAALMETHODE',continue_whatsapp:'DOORGAAN VIA WHATSAPP',choose_plan:'KIES PLAN',from:'VANAF',details:'DETAILS',buy:'KOPEN',quote:'OFFERTE',consult:'Vraag',product:'PRODUCT',plan:'PLAN',total:'TOTAAL',includes:'INCLUSIEF',conditions:'VOORWAARDEN',your_name:'JE NAAM',start_experience:'START',country_detected:'GEDETECTEERD LAND',access_title:'BETREED DE DIGITALE WERELD',enter_catalog:'OPEN CATALOGUS',talk_alex:'PRAAT MET ALEX'},
+    pl:{...I18N.en,nav_catalog:'KATALOG',nav_social:'SOCIAL',nav_payments:'PŁATNOŚCI',nav_how:'JAK KUPIĆ',catalog_title:'Pełny katalog',payment_title:'Metody płatności',steps_title:'Kup w 3 krokach',step1_title:'Wybierz platformę',step2_title:'Wybierz płatność',step3_title:'Potwierdź na WhatsApp',checkout_title:'Zakończ zamówienie',select_payment:'WYBIERZ METODĘ PŁATNOŚCI',continue_whatsapp:'KONTYNUUJ W WHATSAPP',choose_plan:'WYBIERZ PLAN',from:'OD',details:'SZCZEGÓŁY',buy:'KUP',quote:'WYCENA',consult:'Zapytaj',product:'PRODUKT',plan:'PLAN',total:'SUMA',includes:'ZAWIERA',conditions:'WARUNKI',your_name:'TWOJE IMIĘ',start_experience:'ROZPOCZNIJ',country_detected:'WYKRYTY KRAJ',access_title:'WEJDŹ DO CYFROWEGO ŚWIATA',enter_catalog:'OTWÓRZ KATALOG',talk_alex:'NAPISZ DO ALEX'}
+  });
+
+
+  // V25 GLOBAL AUTO:
+  // - Detecta cualquier etiqueta BCP-47 del navegador.
+  // - Usa traducciones integradas cuando existen.
+  // - Para otros idiomas intenta Browser Translator API y, como respaldo,
+  //   un servicio público de traducción. Si ambos fallan, conserva una
+  //   interfaz base legible sin bloquear el acceso.
+  const GLOBAL_LANGUAGE_CODES = [
+    'es','en','pt','fr','de','it','vi','ru','tr','ar','zh','ja','ko','hi','id','th','nl','pl',
+    'fa','ur','bn','ta','te','mr','gu','pa','he','sw','af','am','el','cs','sk','hu','ro','bg',
+    'uk','sr','hr','sl','lt','lv','et','fi','sv','no','da','is','ms','fil','km','lo','my','ne',
+    'si','ka','hy','az','kk','uz','mn','sq','mk','bs','ca','eu','gl','cy','ga','mt','lb','be',
+    'so','zu','xh','yo','ig','ha','rw','mg','sn'
+  ];
+
+  const RTL_LANGUAGES = new Set(['ar','fa','ur','he']);
+  const RUNTIME_I18N = Object.create(null);
+  const TRANSLATION_CACHE_PREFIX = 'alex-v25-i18n-';
+
+  Object.assign(I18N.es, {
+    access_portal:'PORTAL DE ACCESO',
+    access_kicker:'// STREAMING · IA · SOFTWARE · REDES',
+    name_placeholder:'Ej.: Alex',
+    name_required:'Escribe tu nombre para poder ingresar.',
+    real_name_required:'Usa tu nombre real. No se permiten nombres genéricos como “Visitante”, “Usuario”, “Guest”, “Visitor” o combinaciones similares.',
+    registration_required:'REGISTRO OBLIGATORIO: ESCRIBE TU NOMBRE PARA INGRESAR. TU NOMBRE + PAÍS APARECERÁN EN ALEX STREAMING.',
+    ready:'LISTO',
+    feature_streaming:'STREAMING',
+    feature_ai:'IA',
+    feature_catalog:'CATÁLOGO',
+    feature_support:'SOPORTE',
+    payment_ready:'LISTO',
+    payment_data:'DATOS DE PAGO',
+    pay_with:'PAGAR CON',
+    payment_choose:'Selecciona un método para ver los datos.',
+    payment_base_amount:'Monto base a pagar',
+    payment_local_amount:'Equivalente aproximado en tu moneda',
+    payment_method_help:'Coordina los datos de pago por WhatsApp.',
+    checkout_note:'No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.'
+  });
+  Object.assign(I18N.en, {
+    access_portal:'ACCESS PORTAL',
+    access_kicker:'// STREAMING · AI · SOFTWARE · SOCIAL',
+    name_placeholder:'E.g.: Alex',
+    name_required:'Enter your name to continue.',
+    real_name_required:'Use your real name. Generic names such as “Guest”, “Visitor”, “User”, “Visitante” or similar combinations are not allowed.',
+    registration_required:'REGISTRATION REQUIRED: ENTER YOUR NAME TO CONTINUE. YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING.',
+    ready:'READY',
+    feature_streaming:'STREAMING',
+    feature_ai:'AI',
+    feature_catalog:'CATALOG',
+    feature_support:'SUPPORT',
+    payment_ready:'READY',
+    payment_data:'PAYMENT DETAILS',
+    pay_with:'PAY WITH',
+    payment_choose:'Select a payment method to see the details.',
+    payment_base_amount:'Base amount to pay',
+    payment_local_amount:'Approximate equivalent in your currency',
+    payment_method_help:'Coordinate payment details on WhatsApp.',
+    checkout_note:'Do not enter passwords, banking codes or sensitive information on this website. The order is coordinated on WhatsApp.'
+  });
+
+  function normalizeLanguageCode(raw){
+    const value = String(raw || 'es').trim().toLowerCase().replace('_','-');
+    if (!value) return 'es';
+    const base = value.split('-')[0];
+    // Common legacy aliases.
+    if (base === 'iw') return 'he';
+    if (base === 'in') return 'id';
+    if (base === 'tl') return 'fil';
+    return base || 'es';
+  }
+
+  function nativeLanguageName(code){
+    const lang = normalizeLanguageCode(code);
+    if (LANGUAGE_NAMES[lang]) return LANGUAGE_NAMES[lang];
+    try {
+      const name = new Intl.DisplayNames([lang], {type:'language'}).of(lang);
+      if (name) return String(name).toLocaleUpperCase(lang);
+    } catch (_) {}
+    return lang.toUpperCase();
+  }
+
+  function populateGlobalLanguageSelector(){
+    if (!languageSelect) return;
+    const existing = new Set([...languageSelect.options].map(o => o.value));
+    GLOBAL_LANGUAGE_CODES.forEach(code => {
+      if (existing.has(code)) return;
+      const option = document.createElement('option');
+      option.value = code;
+      option.textContent = `${code.toUpperCase()} · ${nativeLanguageName(code)}`;
+      languageSelect.appendChild(option);
+    });
+  }
+
+  function populateGlobalCurrencySelector(){
+    if (!currencySelect) return;
+    const existing = new Set([...currencySelect.options].map(o => o.value));
+    [...new Set(Object.values(COUNTRY_CURRENCY))].sort().forEach(code => {
+      if (existing.has(code)) return;
+      const option = document.createElement('option');
+      option.value = code;
+      option.textContent = code;
+      currencySelect.appendChild(option);
+    });
+  }
+
+  async function browserTranslatorText(text, target){
+    if (!text || target === 'es' || !('Translator' in self)) return null;
+    try {
+      const options = {sourceLanguage:'es', targetLanguage:target};
+      const availability = await Translator.availability(options);
+      if (availability === 'unavailable') return null;
+      const translator = await Translator.create({
+        ...options,
+        monitor(m){ m.addEventListener('downloadprogress',()=>{}); }
+      });
+      return await translator.translate(text);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  async function publicTranslatorText(text, target){
+    if (!text || target === 'es') return text;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4200);
+    try {
+      const q = encodeURIComponent(text);
+      const pair = encodeURIComponent(`es|${target}`);
+      const response = await fetch(`https://api.mymemory.translated.net/get?q=${q}&langpair=${pair}`, {
+        cache:'force-cache',
+        mode:'cors',
+        signal:controller.signal
+      });
+      if (!response.ok) return null;
+      const data = await response.json();
+      const translated = data?.responseData?.translatedText;
+      return translated && typeof translated === 'string' ? translated : null;
+    } catch (_) {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  async function translateTextGlobal(text, target){
+    const lang = normalizeLanguageCode(target);
+    if (!text || lang === 'es') return text;
+    const cacheKey = `${TRANSLATION_CACHE_PREFIX}${lang}-${text}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) return cached;
+    } catch (_) {}
+
+    let translated = await browserTranslatorText(text, lang);
+    if (!translated) translated = await publicTranslatorText(text, lang);
+    if (!translated) return text;
+
+    try { localStorage.setItem(cacheKey, translated); } catch (_) {}
+    return translated;
+  }
+
+  const CRITICAL_KEYS = [
+    'access_portal','access_kicker','access_title','access_desc','your_name','name_placeholder',
+    'start_experience','country_detected','registration_required','name_required','real_name_required','ready',
+    'feature_streaming','feature_ai','feature_catalog','feature_support',
+    'payment_title','payment_note','checkout_title','select_payment','continue_whatsapp',
+    'payment_ready','payment_data','pay_with','payment_choose','payment_base_amount',
+    'payment_local_amount','payment_method_help','checkout_note'
+  ];
+
+  async function hydrateCriticalTranslations(lang){
+    const target = normalizeLanguageCode(lang);
+    if (target === 'es') return;
+    RUNTIME_I18N[target] ||= {};
+    const source = I18N.es;
+    const missing = CRITICAL_KEYS.filter(key => !RUNTIME_I18N[target][key] && !(I18N[target] && I18N[target][key]));
+    // Limit concurrency to avoid hammering public translation services.
+    for (const key of missing) {
+      const sourceText = source[key];
+      if (!sourceText) continue;
+      const translated = await translateTextGlobal(sourceText, target);
+      if (translated) RUNTIME_I18N[target][key] = translated;
+    }
+  }
+
   function browserLanguage(){
-    const raw = String((navigator.languages && navigator.languages[0]) || navigator.language || 'es').toLowerCase();
-    const short = raw.split('-')[0];
-    return I18N[short] ? short : 'es';
+    const raw = String((navigator.languages && navigator.languages[0]) || navigator.language || 'es');
+    return normalizeLanguageCode(raw);
   }
 
   function localeForLanguage(lang){
-    return ({es:'es-PE',en:'en-US',pt:'pt-BR',fr:'fr-FR',de:'de-DE',it:'it-IT',vi:'vi-VN'})[lang] || 'es-PE';
+    const known = ({es:'es-PE',en:'en-US',pt:'pt-BR',fr:'fr-FR',de:'de-DE',it:'it-IT',vi:'vi-VN',ru:'ru-RU',tr:'tr-TR',ar:'ar-SA',zh:'zh-CN',ja:'ja-JP',ko:'ko-KR',hi:'hi-IN',id:'id-ID',th:'th-TH',nl:'nl-NL',pl:'pl-PL',fa:'fa-IR',ur:'ur-PK',he:'he-IL',sw:'sw-KE',ms:'ms-MY',fil:'fil-PH'});
+    return known[lang] || lang || 'en-US';
   }
 
-  function t(key){ return (I18N[activeLanguage] || I18N.es)[key] || I18N.es[key] || key; }
+  function t(key){
+    return (RUNTIME_I18N[activeLanguage] && RUNTIME_I18N[activeLanguage][key])
+      || (I18N[activeLanguage] && I18N[activeLanguage][key])
+      || I18N.en[key]
+      || I18N.es[key]
+      || key;
+  }
 
-  function setLanguage(lang, manual=false){
-    const next = lang === 'auto' ? browserLanguage() : (I18N[lang] ? lang : 'es');
-    activeLanguage = next;
-    translationManual = manual || translationManual;
-    document.documentElement.lang = next;
-    if (languageSelect) languageSelect.value = manual ? next : (languageSelect.value === 'auto' ? 'auto' : next);
-    if (accessLanguageValue) accessLanguageValue.textContent = LANGUAGE_NAMES[next] || next.toUpperCase();
-    document.querySelectorAll('[data-i18n]').forEach(el => { const value=t(el.dataset.i18n); if(value) el.textContent=value; });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const value=t(el.dataset.i18nPlaceholder); if(value) el.placeholder=value; });
+  function applyLanguageUi(){
+    document.documentElement.lang = activeLanguage;
+    document.documentElement.dir = RTL_LANGUAGES.has(activeLanguage) ? 'rtl' : 'ltr';
+
+    if (accessLanguageValue) accessLanguageValue.textContent = nativeLanguageName(activeLanguage);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const value=t(el.dataset.i18n);
+      if(value) el.textContent=value;
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const value=t(el.dataset.i18nPlaceholder);
+      if(value) el.placeholder=value;
+    });
+
+    const accessPortalLabel=document.getElementById('accessPortalLabel'); if(accessPortalLabel) accessPortalLabel.textContent=t('access_portal');
+    const accessKicker=document.getElementById('accessKicker'); if(accessKicker) accessKicker.textContent=t('access_kicker');
     const accessTitle=document.getElementById('accessTitle'); if(accessTitle) accessTitle.textContent=t('access_title');
     const accessDescription=document.getElementById('accessDescription'); if(accessDescription) accessDescription.textContent=t('access_desc');
     const accessNameLabel=document.getElementById('accessNameLabel'); if(accessNameLabel) accessNameLabel.textContent=t('your_name');
+    const accessAliasMain=document.getElementById('accessAlias'); if(accessAliasMain) accessAliasMain.placeholder=t('name_placeholder');
+    const accessReadyLabel=document.getElementById('accessReadyLabel'); if(accessReadyLabel) accessReadyLabel.textContent=t('ready');
     const accessEnterText=document.getElementById('accessEnterText'); if(accessEnterText) accessEnterText.textContent=t('start_experience');
     const accessCountryLabel=document.getElementById('accessCountryLabel'); if(accessCountryLabel) accessCountryLabel.textContent=t('country_detected');
-    const accessStatus=document.getElementById('accessStatus'); if(accessStatus && !accessStatus.textContent.includes('·')) accessStatus.textContent=t('enter_status');
+    const accessStatus=document.getElementById('accessStatus');
+    if(accessStatus && !accessStatus.textContent.includes('·')) accessStatus.textContent=t('registration_required');
+
     const heroLead=document.getElementById('heroLead'); if(heroLead) heroLead.textContent=t('hero_lead');
     const heroCatalogButton=document.getElementById('heroCatalogButton'); if(heroCatalogButton) heroCatalogButton.textContent=t('enter_catalog');
     const heroTalkButton=document.getElementById('heroTalkButton'); if(heroTalkButton) heroTalkButton.textContent=t('talk_alex');
+
     document.querySelectorAll('.plan-selector label').forEach(el => el.textContent=t('choose_plan'));
     document.querySelectorAll('.price-wrap > span').forEach(el => el.textContent=t('from'));
     document.querySelectorAll('.details-btn').forEach(el => el.textContent=t('details'));
     document.querySelectorAll('.buy-btn').forEach(el => { el.innerHTML=`${t('buy')} <b>↗</b>`; });
     document.querySelectorAll('.social-order-btn').forEach(el => { el.innerHTML=`${t('quote')} <b>↗</b>`; });
-    document.querySelectorAll('.availability').forEach(el => { const dot=el.querySelector('i'); el.textContent=''; if(dot) el.appendChild(dot); el.append(document.createTextNode(' '+t('online'))); });
+    document.querySelectorAll('.availability').forEach(el => {
+      const dot=el.querySelector('i');
+      el.textContent='';
+      if(dot) el.appendChild(dot);
+      el.append(document.createTextNode(' '+t('online')));
+    });
+
     const summaryLabels = document.querySelectorAll('#checkoutModal .order-summary > div > span');
     if(summaryLabels[0]) summaryLabels[0].textContent=t('product');
     if(summaryLabels[1]) summaryLabels[1].textContent=t('plan');
     if(summaryLabels[2]) summaryLabels[2].textContent=t('total');
+
+    const safety=document.getElementById('checkoutSafetyNote'); if(safety) safety.textContent=t('checkout_note');
+    if (paymentInstructionTitle && !selectedPayment) paymentInstructionTitle.textContent=t('payment_data');
+    if (paymentInstructionText && !selectedPayment) paymentInstructionText.textContent=t('payment_choose');
+
     refreshAllPriceLabels();
+  }
+
+  function setLanguage(lang, manual=false, skipHydrate=false){
+    const next = lang === 'auto' ? browserLanguage() : normalizeLanguageCode(lang);
+    activeLanguage = next;
+    translationManual = manual || translationManual;
+    if (languageSelect) {
+      if (manual && [...languageSelect.options].some(o=>o.value===next)) languageSelect.value=next;
+      else if (!manual) languageSelect.value='auto';
+    }
+    applyLanguageUi();
+
+    if (!skipHydrate) {
+      hydrateCriticalTranslations(next).then(() => {
+        if (activeLanguage !== next) return;
+        applyLanguageUi();
+        localizePaymentCards();
+        if (selectedPayment) {
+          const selectedButton = paymentButtons.find(b => b.dataset.method === selectedPayment);
+          if (selectedButton) renderPaymentInstructions(selectedButton);
+        }
+      }).catch(()=>{});
+    }
     if (next !== 'es') translateProductCopyOnSupportedChrome(next);
   }
+
+  window.ALEX_GLOBAL_LOCALE = {
+    t: (key) => t(key),
+    language: () => activeLanguage,
+    locale: () => localeForLanguage(activeLanguage),
+    translateText: (text) => translateTextGlobal(text, activeLanguage)
+  };
 
   function currencyForCountry(code){ return COUNTRY_CURRENCY[String(code||'').toUpperCase()] || 'USD'; }
 
@@ -141,6 +401,20 @@
       const saved = JSON.parse(localStorage.getItem(cacheKey)||'null');
       if (saved && Date.now()-saved.time < 6*60*60*1000 && Number(saved.rate)>0) return Number(saved.rate);
     } catch (_) {}
+
+    // Fuente principal: Frankfurter v2 (tasas recientes, sin API key).
+    try {
+      const response = await fetch(`https://api.frankfurter.dev/v2/rate/${encodeURIComponent(BASE_CURRENCY)}/${encodeURIComponent(target)}`, {cache:'no-store'});
+      if (!response.ok) throw new Error('fx');
+      const data = await response.json();
+      let rate = Number(data?.rate);
+      if (!(rate>0) && Array.isArray(data)) rate = Number(data[0]?.rate);
+      if (!(rate>0)) throw new Error('fx');
+      try { localStorage.setItem(cacheKey, JSON.stringify({rate,time:Date.now(),source:'frankfurter'})); } catch (_) {}
+      return rate;
+    } catch (_) {}
+
+    // Respaldo para monedas no cubiertas temporalmente por la fuente principal.
     try {
       const response = await fetch('https://open.er-api.com/v6/latest/USD',{cache:'no-store'});
       if (!response.ok) throw new Error('fx');
@@ -149,7 +423,7 @@
       const out = Number(data?.rates?.[target]);
       if (!(pen>0) || !(out>0)) throw new Error('fx');
       const rate = out/pen;
-      try { localStorage.setItem(cacheKey, JSON.stringify({rate,time:Date.now()})); } catch (_) {}
+      try { localStorage.setItem(cacheKey, JSON.stringify({rate,time:Date.now(),source:'fallback'})); } catch (_) {}
       return rate;
     } catch (_) { return null; }
   }
@@ -225,9 +499,22 @@
   }
 
 
-  if (languageSelect) languageSelect.addEventListener('change',()=>{ setLanguage(languageSelect.value,true); translateProductCopyOnSupportedChrome(activeLanguage,true); });
+  populateGlobalLanguageSelector();
+  populateGlobalCurrencySelector();
+
+  if (languageSelect) languageSelect.addEventListener('change', async ()=>{
+    setLanguage(languageSelect.value,true);
+    translateProductCopyOnSupportedChrome(activeLanguage,true);
+    if (detailsProduct && detailsModal?.classList.contains('open')) {
+      const translated = await translateProductDetails(detailsProduct, activeLanguage);
+      if (detailsProduct && detailsModal?.classList.contains('open')) {
+        renderDetailsTranslated(detailsProduct, translated);
+      }
+    }
+  });
   if (currencySelect) currencySelect.addEventListener('change',()=>setCurrency(currencySelect.value,true));
   setLanguage('auto', false);
+  localizePaymentCards();
   setCurrency(BASE_CURRENCY, false);
 
   function updateClock(){
@@ -285,7 +572,7 @@
   function countryNameFromCode(code){
     const value = String(code || '').toUpperCase();
     if (!/^[A-Z]{2}$/.test(value)) return '';
-    try { return new Intl.DisplayNames(['es'], {type:'region'}).of(value) || value; }
+    try { return new Intl.DisplayNames([localeForLanguage(activeLanguage)], {type:'region'}).of(value) || value; }
     catch (_) { return value; }
   }
 
@@ -293,7 +580,7 @@
     let value = String(country || '').trim();
     if (/^[A-Za-z]{2}$/.test(value)) value = countryNameFromCode(value);
     if (!value && code) value = countryNameFromCode(code);
-    return (value || 'País no disponible').slice(0, 80);
+    return (value || (activeLanguage === 'es' ? 'País no disponible' : 'Country unavailable')).slice(0, 80);
   }
 
   function safeVisitorName(name){
@@ -308,7 +595,7 @@
     if (entryCountry) {
       entryCountry.dataset.geo = resolved === 'País no disponible' ? 'error' : (source === 'locale' ? 'fallback' : 'ok');
       const span = entryCountry.querySelector('span');
-      if (span) span.textContent = `CONEXIÓN DESDE ${label.toUpperCase()}${source === 'locale' ? ' · REGIÓN DEL DISPOSITIVO' : ''}`;
+      if (span) { const prefix = activeLanguage === 'es' ? 'CONEXIÓN DESDE' : 'CONNECTED FROM'; const suffix = source === 'locale' ? (activeLanguage === 'es' ? ' · REGIÓN DEL DISPOSITIVO' : ' · DEVICE REGION') : ''; span.textContent = `${prefix} ${label.toUpperCase()}${suffix}`; }
     }
     if (accessCountryValueMain) accessCountryValueMain.textContent = label.toUpperCase();
     if (accessCountryLineMain) accessCountryLineMain.dataset.geo = resolved === 'País no disponible' ? 'error' : (source === 'locale' ? 'fallback' : 'ok');
@@ -410,7 +697,7 @@
     return cachedGeo;
   }
 
-  async function registerPresence(displayName='Visitante'){
+  async function registerPresence(displayName=''){
     const fallback = cachedGeo || await primeCountry();
     updateCountryUI(fallback.country, fallback.country_code, fallback.source);
 
@@ -477,7 +764,7 @@
 
   primeCountry().catch(() => {});
   window.addEventListener('alex:access-granted', (event) => {
-    const alias = event?.detail?.alias || localStorage.getItem('alex-alias') || 'Visitante';
+    const alias = event?.detail?.alias || localStorage.getItem('alex-alias') || '';
     registerPresence(alias);
   }, {once:true});
   setInterval(pollVisitorFeed, 12000);
@@ -576,6 +863,8 @@
     modalPlan.textContent = selectedOrder.plan;
     modalPrice.textContent = selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : selectedOrder.priceLabel;
     paymentButtons.forEach(btn => { btn.classList.remove('selected'); btn.querySelector('i').textContent = '○'; });
+    if (paymentInstructions) paymentInstructions.hidden = true;
+    if (paymentInstructionText) paymentInstructionText.textContent = '';
     continueButton.disabled = true;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
@@ -591,14 +880,55 @@
   document.querySelectorAll('.buy-btn').forEach(button => button.addEventListener('click', () => openCheckout(button)));
   document.querySelectorAll('[data-close-modal]').forEach(el => el.addEventListener('click', closeCheckout));
 
+
+  async function localizePaymentCards(){
+    const nodes=[...document.querySelectorAll('.payment-detail-text')];
+    for (const node of nodes) {
+      const source = node.dataset.sourceEs || node.textContent.trim();
+      if (!source) continue;
+      if (activeLanguage === 'es') {
+        node.textContent = source;
+        continue;
+      }
+      // Details that are almost entirely IDs/numbers remain untouched.
+      const letters=(source.match(/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/g)||[]).length;
+      if (letters < 8) { node.textContent=source; continue; }
+      const translated = await translateTextGlobal(source, activeLanguage);
+      if (translated) node.textContent = translated;
+    }
+  }
+
+  async function renderPaymentInstructions(button){
+    if (!button) return;
+    const methodName = button.dataset.method || '';
+    const sourceInstruction = button.dataset.instructions || I18N.es.payment_method_help;
+    if (paymentInstructions) paymentInstructions.hidden = false;
+    if (paymentInstructionTitle) paymentInstructionTitle.textContent = `${t('pay_with')} ${methodName.toUpperCase()}`;
+
+    let instruction = sourceInstruction;
+    if (activeLanguage !== 'es') {
+      instruction = await translateTextGlobal(sourceInstruction, activeLanguage) || sourceInstruction;
+    }
+
+    const lines = [instruction];
+    if (selectedOrder?.basePrice) {
+      lines.push(`${t('payment_base_amount')}: S/ ${Number(selectedOrder.basePrice).toFixed(2)}`);
+      if (activeCurrency !== BASE_CURRENCY) {
+        lines.push(`${t('payment_local_amount')}: ${priceLabelFromBase(selectedOrder.basePrice)}`);
+      }
+    }
+    if (paymentInstructionText) paymentInstructionText.textContent = lines.join('\n');
+  }
+
   paymentButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       selectedPayment = button.dataset.method;
       paymentButtons.forEach(btn => {
         const selected = btn === button;
         btn.classList.toggle('selected', selected);
         btn.querySelector('i').textContent = selected ? '●' : '○';
       });
+      await renderPaymentInstructions(button);
       continueButton.disabled = false;
     });
   });
@@ -610,8 +940,9 @@
       `• Plataforma: ${selectedOrder.product}`,
       `• Plan: ${selectedOrder.plan}`,
       `• Precio: ${selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : selectedOrder.priceLabel}${selectedOrder.basePrice && activeCurrency !== BASE_CURRENCY ? ` (base S/ ${Number(selectedOrder.basePrice).toFixed(2)})` : ''}`,
-      `• Método de pago: ${selectedPayment}`, '',
-      '¿Me indicas los datos para continuar con el pago?'
+      `• Método de pago: ${selectedPayment}`,
+      `• Datos: ${paymentButtons.find(b => b.dataset.method === selectedPayment)?.dataset.instructions || 'Coordinar por WhatsApp'}`, '',
+      'Enviaré mi comprobante después de realizar el pago.'
     ].join('\n');
     toast?.classList.add('show');
     setTimeout(() => toast?.classList.remove('show'), 1300);
@@ -621,25 +952,180 @@
   });
 
 
-  function openDetails(button) {
+
+  // V32 — Traducción automática de DETALLES según el idioma detectado al entrar.
+  // Una web no puede conocer el "idioma natal" real; usa el idioma preferido
+  // configurado en el navegador/dispositivo (navigator.languages / navigator.language).
+  const DETAILS_TRANSLATION_CACHE = new Map();
+
+  async function translateProductDetails(product, targetLang){
+    const lang = normalizeLanguageCode(targetLang || activeLanguage || 'es');
+    if (!product || lang === 'es') {
+      return {
+        description: product?.description || '',
+        plans: (product?.plans || []).map(p => p.name || ''),
+        details: [...(product?.details || [])],
+        notes: [...(product?.notes || [])]
+      };
+    }
+
+    const cacheKey = `${product.id || product.name}::${lang}`;
+    if (DETAILS_TRANSLATION_CACHE.has(cacheKey)) {
+      return DETAILS_TRANSLATION_CACHE.get(cacheKey);
+    }
+
+    const translateOne = async (value) => {
+      const text = String(value || '').trim();
+      if (!text) return text;
+
+      // Mantener marcas, IDs, precios, números, emojis y líneas casi sin texto.
+      const letters = (text.match(/[A-Za-zÁÉÍÓÚÜÑáéíóúüñÀ-ÿ\u0400-\u04FF\u0600-\u06FF\u0900-\u097F\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF]/g) || []).length;
+      if (letters < 3) return text;
+
+      try {
+        return await translateTextGlobal(text, lang) || text;
+      } catch (_) {
+        return text;
+      }
+    };
+
+    // Traducimos de forma secuencial para no saturar el servicio de respaldo.
+    const translated = {
+      description: await translateOne(product.description || ''),
+      plans: [],
+      details: [],
+      notes: []
+    };
+
+    for (const plan of (product.plans || [])) {
+      translated.plans.push(await translateOne(plan.name || ''));
+    }
+    for (const line of (product.details || [])) {
+      translated.details.push(await translateOne(line));
+    }
+    for (const line of (product.notes || [])) {
+      translated.notes.push(await translateOne(line));
+    }
+
+    DETAILS_TRANSLATION_CACHE.set(cacheKey, translated);
+    return translated;
+  }
+
+  function detailsOptionsTitle(){
+    const builtIn = {
+      es:'MODALIDADES DISPONIBLES',
+      en:'AVAILABLE OPTIONS',
+      pt:'OPÇÕES DISPONÍVEIS',
+      fr:'OPTIONS DISPONIBLES',
+      de:'VERFÜGBARE OPTIONEN',
+      it:'OPZIONI DISPONIBILI',
+      vi:'CÁC LỰA CHỌN CÓ SẴN',
+      ru:'ДОСТУПНЫЕ ВАРИАНТЫ',
+      tr:'MEVCUT SEÇENEKLER',
+      ar:'الخيارات المتاحة',
+      zh:'可用选项',
+      ja:'利用可能なオプション',
+      ko:'사용 가능한 옵션',
+      hi:'उपलब्ध विकल्प',
+      id:'OPSI YANG TERSEDIA',
+      th:'ตัวเลือกที่มี',
+      nl:'BESCHIKBARE OPTIES',
+      pl:'DOSTĘPNE OPCJE'
+    };
+    return builtIn[activeLanguage] || (activeLanguage === 'es' ? 'MODALIDADES DISPONIBLES' : 'AVAILABLE OPTIONS');
+  }
+
+  function renderDetailsTranslated(product, translated){
+    if (!product || !translated) return;
+
+    // El nombre comercial se conserva como marca/título; el contenido sí se traduce.
+    detailsTitle.textContent = product.name;
+    detailsDescription.textContent = translated.description || product.description || '';
+
+    detailsPlans.innerHTML = '';
+    if ((product.plans || []).length) {
+      const title = document.createElement('div');
+      title.className = 'details-plan-title';
+      title.textContent = detailsOptionsTitle();
+      detailsPlans.appendChild(title);
+
+      (product.plans || []).forEach((plan, index) => {
+        const row = document.createElement('div');
+        row.className = 'details-plan-name';
+        const span = document.createElement('span');
+        span.textContent = translated.plans[index] || plan.name || '';
+        row.appendChild(span);
+        detailsPlans.appendChild(row);
+      });
+    }
+
+    detailsInfo.innerHTML = '';
+    if ((product.details || []).length) {
+      const h3 = document.createElement('h3');
+      h3.textContent = t('includes');
+      const ul = document.createElement('ul');
+      (product.details || []).forEach((line, index) => {
+        const li = document.createElement('li');
+        li.textContent = translated.details[index] || line;
+        ul.appendChild(li);
+      });
+      detailsInfo.append(h3, ul);
+    }
+
+    detailsNotes.innerHTML = '';
+    if ((product.notes || []).length) {
+      const h3 = document.createElement('h3');
+      h3.textContent = t('conditions');
+      const ul = document.createElement('ul');
+      (product.notes || []).forEach((line, index) => {
+        const li = document.createElement('li');
+        li.textContent = translated.notes[index] || line;
+        ul.appendChild(li);
+      });
+      detailsNotes.append(h3, ul);
+    }
+  }
+
+  async function openDetails(button) {
     const id = button.dataset.productId;
     detailsProduct = (window.ALEX_PRODUCTS || []).find(p => p.id === id);
     if (!detailsProduct || !detailsModal) return;
+
     trackAnalyticsEvent('details', {product_id:detailsProduct.id, product_name:detailsProduct.name});
-    detailsTitle.textContent = detailsProduct.name;
-    detailsDescription.textContent = detailsProduct.description || '';
-    detailsPlans.innerHTML = (detailsProduct.plans || []).length
-      ? `<div class="details-plan-title">${activeLanguage==='en'?'AVAILABLE OPTIONS':activeLanguage==='pt'?'OPÇÕES DISPONÍVEIS':'MODALIDADES DISPONIBLES'}</div>` + (detailsProduct.plans || []).map(plan =>
-          `<div class="details-plan-name"><span>${plan.name}</span></div>`
-        ).join('')
-      : '';
-    detailsInfo.innerHTML = (detailsProduct.details || []).length
-      ? `<h3>${t('includes')}</h3><ul>${detailsProduct.details.map(x => `<li>${x}</li>`).join('')}</ul>` : '';
-    detailsNotes.innerHTML = (detailsProduct.notes || []).length
-      ? `<h3>${t('conditions')}</h3><ul>${detailsProduct.notes.map(x => `<li>${x}</li>`).join('')}</ul>` : '';
+
+    // Abrimos de inmediato con el contenido original para que no haya retraso visual.
+    renderDetailsTranslated(detailsProduct, {
+      description: detailsProduct.description || '',
+      plans: (detailsProduct.plans || []).map(p => p.name || ''),
+      details: [...(detailsProduct.details || [])],
+      notes: [...(detailsProduct.notes || [])]
+    });
+
     detailsModal.classList.add('open');
     detailsModal.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
+
+    // Si el usuario no usa español, traducimos automáticamente el contenido
+    // del modal al idioma detectado al entrar o seleccionado manualmente.
+    const langAtOpen = activeLanguage;
+    if (langAtOpen !== 'es') {
+      detailsDescription.dataset.translationState = 'loading';
+      try {
+        const translated = await translateProductDetails(detailsProduct, langAtOpen);
+
+        // Evitar actualizar el modal si el usuario cambió de producto o idioma.
+        if (
+          detailsProduct &&
+          detailsProduct.id === id &&
+          activeLanguage === langAtOpen &&
+          detailsModal.classList.contains('open')
+        ) {
+          renderDetailsTranslated(detailsProduct, translated);
+        }
+      } finally {
+        delete detailsDescription.dataset.translationState;
+      }
+    }
   }
 
   function closeDetails() {
@@ -748,6 +1234,7 @@
   const enterBtn = document.getElementById('accessEnter');
   const aliasInput = document.getElementById('accessAlias');
   const accessStatus = document.getElementById('accessStatus');
+  const accessNameError = document.getElementById('accessNameError');
   const accessCountryLine = document.getElementById('accessCountryLine');
   const accessCountryValue = document.getElementById('accessCountryValue');
   const mascot = document.getElementById('animeGuide');
@@ -855,7 +1342,7 @@
           ? String.fromCodePoint(...[...code].map(char => 127397 + char.charCodeAt(0)))
           : '🌐';
         let country = code;
-        try { country = new Intl.DisplayNames(['es'], {type:'region'}).of(code) || code; } catch (_) {}
+        try { const locale = window.ALEX_GLOBAL_LOCALE?.locale?.() || navigator.language || 'en'; country = new Intl.DisplayNames([locale], {type:'region'}).of(code) || code; } catch (_) {}
         return `${flag} ${country}`.toUpperCase();
       }
     } catch (_) {}
@@ -870,9 +1357,117 @@
     try { return localStorage.getItem('alex-alias') || ''; } catch (_) { return ''; }
   }
 
+
+  // V33 — Validación de nombre real / bloqueo de nombres genéricos.
+  // No puede comprobar legalmente la identidad, pero sí rechaza alias obvios,
+  // variantes con números, espacios, signos, acentos o leetspeak.
+  function normalizeAliasForCheck(value){
+    return String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'')
+      .toLowerCase()
+      .replace(/0/g,'o')
+      .replace(/[1!|]/g,'i')
+      .replace(/3/g,'e')
+      .replace(/4|@/g,'a')
+      .replace(/5|\$/g,'s')
+      .replace(/7/g,'t')
+      .replace(/8/g,'b')
+      .replace(/9/g,'g')
+      .replace(/[^a-z\u00c0-\u024f\u0400-\u04ff\u0600-\u06ff\u0900-\u097f\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/g,'');
+  }
+
+  const BLOCKED_ALIAS_WORDS = new Set([
+    // Español
+    'visitante','visitantes','usuario','usuarios','invitado','invitada','anonimo','anonima',
+    'desconocido','desconocida','prueba','testeo',
+    // Inglés
+    'visitor','visitors','guest','guests','user','users','anonymous','anon','unknown','test',
+    // Portugués
+    'visitante','usuario','convidado','convidada','anonimo','anonima',
+    // Francés
+    'visiteur','visiteuse','utilisateur','invite','invitee','anonyme',
+    // Italiano
+    'visitatore','utente','ospite','anonimo','anonima',
+    // Alemán
+    'besucher','benutzer','gast','anonym',
+    // Otros nombres genéricos frecuentes
+    'admin','administrator','root','webmaster','cliente','client','customer'
+  ]);
+
+  function aliasLooksGeneric(alias){
+    const normalized = normalizeAliasForCheck(alias);
+    if (!normalized) return true;
+
+    // Coincidencia exacta.
+    if (BLOCKED_ALIAS_WORDS.has(normalized)) return true;
+
+    // Bloquea variantes como visitante123, vi-si-tan-te, v1s1tante, guest2026, etc.
+    for (const word of BLOCKED_ALIAS_WORDS) {
+      if (normalized === word) return true;
+      if (normalized.startsWith(word) && normalized.length <= word.length + 5) return true;
+      if (normalized.endsWith(word) && normalized.length <= word.length + 5) return true;
+    }
+
+    return false;
+  }
+
+  function aliasLooksLikeRealName(alias){
+    const value = String(alias || '').trim().replace(/\s+/g,' ');
+
+    if (value.length < 2 || value.length > 40) return false;
+    if (aliasLooksGeneric(value)) return false;
+
+    // No permitir números en el nombre.
+    if (/\d/.test(value)) return false;
+
+    // Solo letras Unicode, espacios, apóstrofes y guiones.
+    try {
+      if (!/^[\p{L}\p{M}][\p{L}\p{M}'’\- ]*$/u.test(value)) return false;
+    } catch (_) {
+      if (!/^[A-Za-zÀ-ÖØ-öø-ÿ'’\- ]+$/.test(value)) return false;
+    }
+
+    // Evitar entradas del tipo "aaaaaa", "xxxxx", etc.
+    const compact = normalizeAliasForCheck(value);
+    if (/^(.)\1{3,}$/.test(compact)) return false;
+
+    // Debe contener al menos 2 letras reales.
+    const letters = value.match(/\p{L}/gu) || [];
+    if (letters.length < 2) return false;
+
+    return true;
+  }
+
   function grantAccess(){
     if (!gate || gate.classList.contains('exit')) return;
-    const alias=(aliasInput?.value||'').trim().slice(0,24) || 'Visitante';
+    const alias=(aliasInput?.value||'').trim().replace(/\s+/g,' ').slice(0,24);
+    if (alias.length < 2) {
+      if (accessNameError) accessNameError.textContent = window.ALEX_GLOBAL_LOCALE?.t?.('name_required') || 'Enter your name to continue.';
+      if (accessStatus) accessStatus.textContent = window.ALEX_GLOBAL_LOCALE?.t?.('registration_required') || 'REGISTRATION REQUIRED';
+      gate.classList.remove('granted');
+      gate.classList.add('name-missing');
+      aliasInput?.focus();
+      setTimeout(() => gate.classList.remove('name-missing'), 650);
+      return;
+    }
+
+    if (!aliasLooksLikeRealName(alias)) {
+      if (accessNameError) {
+        accessNameError.textContent = window.ALEX_GLOBAL_LOCALE?.t?.('real_name_required')
+          || 'Use your real name. Generic names such as Guest or Visitor are not allowed.';
+      }
+      if (accessStatus) {
+        accessStatus.textContent = window.ALEX_GLOBAL_LOCALE?.t?.('registration_required') || 'REGISTRATION REQUIRED';
+      }
+      gate.classList.remove('granted');
+      gate.classList.add('name-missing');
+      aliasInput?.focus();
+      try { localStorage.removeItem('alex-alias'); } catch (_) {}
+      setTimeout(() => gate.classList.remove('name-missing'), 650);
+      return;
+    }
+    if (accessNameError) accessNameError.textContent = '';
     saveAlias(alias);
 
     const countryLabel = accessCountryLabel();
@@ -897,7 +1492,16 @@
       if(strong) strong.textContent=`${alias} · ${countryLabel} ✦`;
     },520);
   }
-  if(aliasInput){ aliasInput.value=loadAlias(); }
+  if(aliasInput){
+    const savedAlias = loadAlias();
+    aliasInput.value = aliasLooksLikeRealName(savedAlias) ? savedAlias : '';
+    if (!aliasInput.value && savedAlias) {
+      try { localStorage.removeItem('alex-alias'); } catch (_) {}
+    }
+    aliasInput.addEventListener('input',()=>{
+      if(accessNameError) accessNameError.textContent='';
+    });
+  }
   enterBtn?.addEventListener('click',grantAccess);
   aliasInput?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();grantAccess();}});
 

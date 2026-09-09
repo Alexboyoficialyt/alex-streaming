@@ -1,19 +1,21 @@
 # ============================================================
-# ALEX STREAMING — V22 GLOBAL
+# ALEX STREAMING — V26 GLOBAL + SEGURIDAD MÓVIL LEGÍTIMA
 # Edita este archivo para cambiar productos, precios y datos.
+# Se omiten servicios que impliquen acceso no autorizado, doxxing,
+# interferencia de líneas/equipos o evasión de controles.
 # ============================================================
 
 STORE = {'name': 'ALEX STREAMING',
- 'domain': 'https://alex-streaming.onrender.com',
+ 'domain': 'https://alexstreaming.store',
  'whatsapp': '51984933571',
  'currency': 'S/',
  'currency_code': 'PEN',
  'support_text': 'Atención directa por WhatsApp',
  'status_text': 'ALEX STREAMING // PREMIUM ACCESS ONLINE',
  'edition_text': 'PREMIUM ACCESS',
- 'entry_tagline': 'STREAMING • IA • SOFTWARE • REDES • LIVE'}
+ 'entry_tagline': 'STREAMING • IA • SOFTWARE • REDES • GLOBAL',
+ 'registration_required': True}
 
-# Catálogo principal. Los planes con price=None muestran “Consultar”.
 PRODUCTS = [{'id': 'max',
   'name': 'HBO Max',
   'icon': 'simple-icons:hbomax',
@@ -56,9 +58,12 @@ PRODUCTS = [{'id': 'max',
   'category': 'Streaming',
   'badge': 'APPLE',
   'description': 'Producciones originales y estrenos seleccionados.',
-  'plans': [{'name': 'Cuenta completa', 'price': 12}, {'name': 'Perfil', 'price': 5}],
-  'details': ['Disponible en cuenta completa o perfil individual.',
-              'Compatible con dispositivos admitidos por Apple TV+.'],
+  'plans': [{'name': 'Cuenta completa', 'price': 12},
+            {'name': 'Perfil', 'price': 5},
+            {'name': 'Cuenta / acceso · 3 meses · 1 dispositivo', 'price': 15}],
+  'details': ['Disponible en cuenta completa, perfil individual y plan de 3 meses según disponibilidad.',
+              'El plan de 3 meses es para un solo dispositivo.',
+              'Para mantener la garantía no cambies contraseña, método de pago ni plan del acceso entregado.'],
   'notes': [],
   'logo_url': 'https://cdn.simpleicons.org/appletv/FFFFFF',
   'logo_class': 'brand-logo brand-logo-wide',
@@ -177,14 +182,17 @@ PRODUCTS = [{'id': 'max',
   'accent': '#E50914',
   'category': 'Streaming',
   'badge': 'NETFLIX',
-  'description': 'Accesos y activaciones coordinadas para Netflix.',
-  'plans': [{'name': 'Activación TV · 30 días · acceso autorizado', 'price': 6},
+  'description': 'Accesos y activaciones autorizadas coordinadas para Netflix.',
+  'plans': [{'name': 'Activación a TV · acceso autorizado · 30 días', 'price': 6},
             {'name': 'Premium · activación a TV', 'price': 15},
             {'name': 'Cuenta completa · 1 mes', 'price': 48}],
-  'details': ['Activación para TV por 30 días disponible cuando el acceso sea legítimo y autorizado.',
-              'También disponible Premium para TV y cuenta completa por 1 mes según el plan elegido.',
-              'La activación y entrega se coordinan por WhatsApp.'],
-  'notes': ['No incluye acceso a cuentas ajenas, credenciales obtenidas sin permiso ni métodos tipo “hit”.'],
+  'details': ['Activación exclusiva para TV con espera máxima aproximada de 10 minutos según disponibilidad.',
+              'No modificar el nombre del perfil, no eliminar contenido, no cambiar membresía ni realizar '
+              'modificaciones en la cuenta.',
+              'El idioma se cambia directamente dentro de la película o serie que estés viendo.',
+              'Solo se ofrecen accesos y activaciones autorizadas.'],
+  'notes': ['No incluye acceso a cuentas ajenas, credenciales obtenidas sin permiso ni métodos de acceso no '
+            'autorizado.'],
   'logo_url': 'https://cdn.simpleicons.org/netflix/E50914',
   'logo_class': 'brand-logo brand-logo-wide',
   'display_name': 'Netflix'},
@@ -711,36 +719,304 @@ PRODUCTS = [{'id': 'max',
   'description': 'Consulta de reporte crediticio únicamente para el propio titular o con autorización verificable.',
   'plans': [{'name': 'Consulta autorizada', 'price': 10}],
   'details': ['Puede incluir información reportada por entidades correspondientes.'],
-  'notes': ['No se realizan consultas sobre terceros sin autorización.']}]
+  'notes': ['No se realizan consultas sobre terceros sin autorización.']},
+ {'id': 'claude-personal',
+  'name': 'Claude · Uso personal',
+  'icon': 'simple-icons:anthropic',
+  'accent': '#D97757',
+  'category': 'IA',
+  'badge': 'CLAUDE',
+  'description': 'Acceso o contenido de Claude para uso personal, con entrega coordinada por WhatsApp.',
+  'plans': [{'name': 'Uso personal', 'price': 15}],
+  'details': ['Después de la compra, contacta por WhatsApp enviando tu código de compra.',
+              'La entrega se coordina de forma privada; si incluye material digital, puede facilitarse mediante un '
+              'Google Drive privado.',
+              'Soporte incluido durante el proceso de entrega.'],
+  'notes': ['Ofrecer únicamente accesos, licencias o materiales que tengas autorización para distribuir.'],
+  'logo_url': 'https://cdn.simpleicons.org/anthropic/D97757',
+  'logo_class': 'brand-logo brand-logo-wide',
+  'display_name': 'Claude'},
+ {'id': 'sketchup-pro-2024',
+  'name': 'SketchUp Pro 2024',
+  'icon': 'simple-icons:sketchup',
+  'accent': '#005F9E',
+  'category': 'Software',
+  'badge': 'SKETCHUP',
+  'description': 'SketchUp Pro 2024 para diseño y modelado 3D, con entrega coordinada por correo.',
+  'plans': [{'name': 'Cuenta / licencia original · 1 dispositivo', 'price': 80}],
+  'details': ['Entrega al correo electrónico con manual de instalación.',
+              'Tiempo estimado de entrega: 1 a 2 horas, dentro del horario de atención indicado.',
+              'Uso en un solo dispositivo por perfil.'],
+  'notes': ['No modificar el plan ni los métodos de pago asociados. La garantía aplica únicamente a licencias '
+            'originales y transferibles/autorizadas.'],
+  'logo_url': 'https://cdn.simpleicons.org/sketchup/005F9E',
+  'logo_class': 'brand-logo brand-logo-wide',
+  'display_name': 'SketchUp Pro 2024'},
+ {'id': 'gemini-ultra-flow',
+  'name': 'Gemini Ultra + Flow / Veo 3',
+  'icon': 'simple-icons:googlegemini',
+  'accent': '#8E75FF',
+  'category': 'IA',
+  'badge': 'VIDEO AI',
+  'description': 'Herramientas de IA de Google orientadas a creación de contenido y video.',
+  'plans': [{'name': '1 mes · 1 dispositivo', 'price': 25}],
+  'details': ['Acceso premium por 1 mes para un solo dispositivo.',
+              'Incluye funciones de creación de video según la disponibilidad del plan contratado.',
+              'Garantía referencial de 25 días y soporte por WhatsApp.'],
+  'notes': ['No compartir el acceso ni modificar información de facturación o cuenta si eso invalida la garantía.'],
+  'logo_url': 'https://cdn.simpleicons.org/googlegemini/8E75FF',
+  'logo_class': 'brand-logo brand-logo-wide',
+  'display_name': 'Gemini'},
+ {'id': 'powerbi-ppu',
+  'name': 'Microsoft Power BI Premium Per User',
+  'icon': 'simple-icons:powerbi',
+  'accent': '#F2C811',
+  'category': 'Productividad empresarial',
+  'badge': 'POWER BI PPU',
+  'description': 'Licencia individual de Power BI con capacidades avanzadas Premium Per User.',
+  'plans': [{'name': 'Cuenta personal · 1 año · 1 dispositivo', 'price': 180}],
+  'details': ['Incluye capacidades avanzadas de Power BI Premium Per User además de funciones de Power BI Pro, según '
+              'la licencia entregada.',
+              'Útil para análisis, modelos de datos, informes avanzados y actualización frecuente de datos.',
+              'Entrega de cuenta y contraseña; tiempo estimado de entrega de 1 a 12 horas.'],
+  'notes': ['Uso profesional y responsable. Utiliza únicamente licencias originales y autorizadas.'],
+  'logo_url': 'https://cdn.simpleicons.org/powerbi/F2C811',
+  'logo_class': 'brand-logo brand-logo-wide brand-logo-whiteplate',
+  'display_name': 'Power BI'},
+ {'id': 'curso-defensa-manipulacion',
+  'name': 'Curso: Detección y defensa ante manipulación',
+  'icon': 'lucide:shield-check',
+  'accent': '#A855F7',
+  'category': 'Educación',
+  'badge': 'PSICOLOGÍA',
+  'description': 'Curso educativo sobre identificación de técnicas manipulativas y autodefensa psicológica.',
+  'plans': [{'name': 'Curso completo · acceso digital', 'price': 20}],
+  'details': ['Incluye contenidos para reconocer gaslighting, proyección, aislamiento, refuerzo, castigo y otras '
+              'señales de manipulación.',
+              'Incluye material sobre límites personales, pensamiento crítico y herramientas de autodefensa '
+              'psicológica.',
+              'Acceso por Google Drive tras coordinar la compra por WhatsApp.'],
+  'notes': ['Contenido planteado con fines educativos y de protección personal, no para controlar, intimidar o '
+            'perjudicar a otras personas.']},
+ {'id': 'eset-internet-security',
+  'name': 'ESET Internet Security',
+  'icon': 'simple-icons:eset',
+  'accent': '#00A6A6',
+  'category': 'Software',
+  'badge': 'ANTIVIRUS',
+  'description': 'Protección contra malware, phishing y amenazas online para uso autorizado.',
+  'plans': [{'name': 'Licencia digital · 1 año', 'price': 50}],
+  'details': ['Protección contra virus, spyware, troyanos y phishing.',
+              'Incluye firewall personal, protección de navegación y herramientas de seguridad según la edición '
+              'entregada.',
+              'Entrega de licencia digital; tiempo referencial de atención de hasta 45 minutos.'],
+  'notes': ['Utiliza únicamente claves o licencias originales y autorizadas.'],
+  'logo_url': 'https://cdn.simpleicons.org/eset/00A6A6',
+  'logo_class': 'brand-logo brand-logo-wide',
+  'display_name': 'ESET'},
+ {'id': 'turnitin-1m',
+  'name': 'Turnitin · Cuenta a tu correo',
+  'icon': 'lucide:file-check-2',
+  'accent': '#E64A19',
+  'category': 'Educación',
+  'badge': 'TURNITIN',
+  'description': 'Cuenta para análisis de similitud académica, creada en el correo autorizado del cliente.',
+  'plans': [{'name': '1 mes · análisis según plan', 'price': 80}],
+  'details': ['Para la activación se solicita correo personal del cliente y nombre/apellido para crear el acceso.',
+              'Uso exclusivo para análisis de similitud e integridad académica.',
+              'Entrega estimada entre 1 y 2 horas según disponibilidad y horario de atención.'],
+  'notes': ['No utilizar con fines ilícitos ni para acceder a información de terceros sin autorización.']},
+ {'id': 'supergrok-7d',
+  'name': 'SuperGrok',
+  'icon': 'simple-icons:x',
+  'accent': '#FFFFFF',
+  'category': 'IA',
+  'badge': 'GROK',
+  'description': 'Acceso privado de corta duración para funciones avanzadas de Grok, sujeto al plan entregado.',
+  'plans': [{'name': 'Cuenta privada · 7 días', 'price': 30}],
+  'details': ['Acceso por 7 días con garantía referencial de 5 días.',
+              'Orientado a productividad, aprendizaje, investigación y generación de ideas.',
+              'Soporte por WhatsApp durante la activación.'],
+  'notes': ['Ofrecer únicamente accesos autorizados y respetar las condiciones del proveedor.'],
+  'logo_url': 'https://cdn.simpleicons.org/x/FFFFFF',
+  'logo_class': 'brand-logo brand-logo-wide',
+  'display_name': 'SuperGrok'},
+ {'id': 'megapack-excel',
+  'name': 'MegaPack de Cursos de Excel',
+  'icon': 'simple-icons:microsoftexcel',
+  'accent': '#217346',
+  'category': 'Educación',
+  'badge': 'EXCEL',
+  'description': 'Material educativo de Excel desde nivel básico hasta avanzado y analítica.',
+  'plans': [{'name': 'Acceso digital por Drive', 'price': 20}],
+  'details': ['Incluye Excel básico, intermedio, avanzado, experto, financiero, fórmulas, tablas, gráficos, macros '
+              'VBA, Power Pivot, Power BI y dashboards.',
+              'Incluye plantillas y recursos extra según el paquete entregado.',
+              'Acceso digital por Google Drive para estudiar a tu ritmo.'],
+  'notes': ['Distribuir únicamente material propio, con licencia o con autorización de reventa.'],
+  'logo_url': 'https://cdn.simpleicons.org/microsoftexcel/217346',
+  'logo_class': 'brand-logo brand-logo-wide',
+  'display_name': 'Excel'}]
+
+
+# ------------------------------------------------------------------
+# SEGURIDAD MÓVIL — SOLO PARA TITULARES / PROPIETARIOS LEGÍTIMOS
+# ------------------------------------------------------------------
+_OPERATOR_LOGOS = [
+    {"name":"Movistar","logo_url":"https://cdn.simpleicons.org/movistar/019DF4","logo_class":"brand-logo","icon":"simple-icons:movistar"},
+    {"name":"Bitel","logo_url":"https://bitel.com.pe/favicon.ico","logo_class":"brand-logo","icon":"lucide:signal"},
+    {"name":"Entel","logo_url":"https://www.entel.pe/favicon.ico","logo_class":"brand-logo","icon":"lucide:signal"},
+    {"name":"Claro","logo_url":"https://www.claro.com.pe/favicon.ico","logo_class":"brand-logo","icon":"lucide:signal"},
+]
+
+PRODUCTS.extend([
+    {
+        "id":"bloqueo-linea-equipo-titular-30",
+        "name":"Bloqueo de línea y equipo · titular",
+        "icon":"lucide:shield-check",
+        "accent":"#25D366",
+        "category":"Seguridad móvil",
+        "badge":"TITULAR",
+        "description":"Gestión de bloqueo oficial para tu propia línea y equipo perdido o robado.",
+        "plans":[{"name":"Gestión oficial", "price":30}],
+        "details":[
+            "Operadores disponibles para orientación: Movistar, Bitel, Entel y Claro.",
+            "Movistar y Bitel pueden tener tiempos de atención más largos según el operador.",
+            "El servicio cubre el bloqueo del número y del equipo del titular; no incluye paneles ni métodos para terceros.",
+            "Tiempo orientativo de gestión: 24 a 48 horas, sujeto a validación y tiempos del operador.",
+            "Si el operador rechaza la gestión por falta de requisitos, se coordina la solución o reembolso según el caso.",
+            "Para iniciar debes acreditar que eres titular de la línea o propietario legítimo del equipo."
+        ],
+        "notes":["Uso responsable. No se gestionan bloqueos sobre líneas o equipos ajenos."],
+        "combo_logos": _OPERATOR_LOGOS,
+    },
+    {
+        "id":"bloqueo-prioritario-titular-30",
+        "name":"Bloqueo prioritario de línea y equipo · titular",
+        "icon":"lucide:smartphone-lock-keyhole",
+        "accent":"#7C5CFF",
+        "category":"Seguridad móvil",
+        "badge":"A PEDIDO",
+        "description":"Consulta previa y acompañamiento para tramitar el bloqueo oficial de tu propia línea/equipo.",
+        "plans":[{"name":"Gestión prioritaria", "price":30}],
+        "details":[
+            "Consulta primero por WhatsApp si el operador puede procesar el caso.",
+            "Disponible para Movistar, Bitel, Entel y Claro.",
+            "Después de validar la titularidad, se coordina el número de pedido y la documentación necesaria.",
+            "Objetivo de atención inicial: 2 a 5 horas; la resolución final depende del operador.",
+            "Contacto oficial de la tienda: +51 984 933 571."
+        ],
+        "notes":["Solo para el titular o propietario legítimo. No se admiten solicitudes sobre terceros."],
+        "combo_logos": _OPERATOR_LOGOS,
+    },
+    {
+        "id":"guia-bloqueo-oficial-soporte-50",
+        "name":"Guía de bloqueo oficial + soporte",
+        "icon":"lucide:file-shield-2",
+        "accent":"#00D4FF",
+        "category":"Seguridad móvil",
+        "badge":"GUÍA",
+        "description":"Guía paso a paso para que el titular solicite el bloqueo por los canales oficiales de su operador.",
+        "plans":[{"name":"Guía + soporte", "price":50}],
+        "details":[
+            "Incluye una guía en formato digital con los pasos para gestionar el bloqueo oficial.",
+            "Incluye acompañamiento por WhatsApp si necesitas ayuda para entender el procedimiento.",
+            "Compatible con Movistar, Bitel, Entel y Claro, sujeto a los requisitos de cada operador.",
+            "Entrega coordinada por WhatsApp enviando el ID del producto.",
+            "Tiempo de entrega estimado: hasta 1 hora; en alta demanda puede tardar hasta 2 horas."
+        ],
+        "notes":[
+            "No incluye paneles privados, credenciales ni herramientas para bloquear líneas o equipos de terceros.",
+            "La gestión debe realizarla el titular usando canales autorizados."
+        ],
+        "combo_logos": _OPERATOR_LOGOS,
+    },
+    {
+        "id":"asesoria-imei-linea-titular-50",
+        "name":"Asesoría IMEI / línea · titular",
+        "icon":"lucide:badge-check",
+        "accent":"#FFB020",
+        "category":"Seguridad móvil",
+        "badge":"VERIFICADO",
+        "description":"Asesoría para preparar y presentar correctamente una solicitud de bloqueo de tu IMEI/línea.",
+        "plans":[{"name":"Asesoría completa", "price":50}],
+        "details":[
+            "Orientación para Movistar, Bitel, Entel y Claro.",
+            "Se revisan los datos que normalmente solicita el operador para acreditar titularidad o propiedad.",
+            "Se acompaña al titular durante el trámite por canales oficiales.",
+            "Entrega inmediata de la orientación después de validar el pedido por WhatsApp."
+        ],
+        "notes":["No se ofrece acceso a paneles de bloqueo ni procedimientos para afectar equipos ajenos."],
+        "combo_logos": _OPERATOR_LOGOS,
+    }
+])
+
+
+
+# Logos reforzados con recursos oficiales/brand assets. Si un recurso remoto falla,
+# la interfaz conserva el icono de marca como fallback.
+for _p in PRODUCTS:
+    if _p.get("id") == "gamma-pro":
+        _p["logo_url"] = "https://static.gamma.app/images/ui/footer-logo-gradient-565fc8e9.svg"
+        _p["logo_class"] = "brand-logo brand-logo-wide"
+        _p["icon"] = "lucide:presentation"
+    elif _p.get("id") == "lovable":
+        _p["logo_url"] = "https://lovable.dev/favicon.ico"
+        _p["logo_class"] = "brand-logo"
+        _p["icon"] = "lucide:heart"
+    elif _p.get("id") == "turnitin-1m":
+        _p["logo_url"] = "https://www.turnitin.com/favicon.ico"
+        _p["logo_class"] = "brand-logo"
+        _p["icon"] = "lucide:file-check-2"
+    elif _p.get("id") == "supergrok-7d":
+        _p["logo_url"] = "https://grok.com/favicon.ico"
+        _p["logo_class"] = "brand-logo"
+        _p["icon"] = "lucide:bot"
 
 PAYMENT_METHODS = [{'id': 'yape',
   'name': 'Yape',
-  'detail': 'Billetera móvil • Perú',
+  'detail': 'Yape • 918 532 738 • TEDDY',
   'logo_url': 'https://www.yape.com.pe/_next/image?q=100&url=%2Fimages%2Fcomponents%2Fcomponent-25%2Flogo.png&w=256',
   'logo_fallback': 'img/payments/yape.svg',
   'logo_class': 'pay-logo-yape',
-  'brand_color': '#7C238C'},
+  'brand_color': '#7C238C',
+  'account': '918532738',
+  'holder': 'TEDDY',
+  'instructions': 'Yapea exactamente el monto que aparece en tu pedido al 918 532 738. Titular: TEDDY. Guarda tu '
+                  'comprobante.'},
  {'id': 'plin',
   'name': 'Plin',
-  'detail': 'Transferencias inmediatas • Perú',
+  'detail': 'Plin • 931 768 182 • TEDDY IBERICO',
   'logo_url': 'https://www.bbva.pe/content/dam/public-web/peru/images/promo-sliders/promo-plin.im1585949297034im.png?imwidth=960',
   'logo_fallback': 'img/payments/plin.svg',
   'logo_class': 'pay-logo-plin',
-  'brand_color': '#00D3C7'},
+  'brand_color': '#00D3C7',
+  'account': '931768182',
+  'holder': 'TEDDY IBERICO',
+  'instructions': 'En Plin ingresa 931 768 182 y paga exactamente el monto mostrado. Si tu app pide banco/billetera, '
+                  'busca Plin/Ligo según aparezca. Verifica que el titular mostrado sea TEDDY IBERICO antes de pagar.'},
  {'id': 'bcp',
   'name': 'BCP',
-  'detail': 'Banco de Crédito del Perú',
+  'detail': 'BCP • datos por WhatsApp',
   'logo_url': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo-bcp-vector.svg',
   'logo_fallback': 'img/payments/bcp.svg',
   'logo_class': 'pay-logo-bcp',
-  'brand_color': '#FF6B2C'},
+  'brand_color': '#FF6B2C',
+  'account': 'Solicitar por WhatsApp',
+  'holder': 'ALEX STREAMING',
+  'instructions': 'Para pagar por BCP, solicita los datos bancarios directamente por WhatsApp antes de realizar la '
+                  'transferencia.'},
  {'id': 'binance',
   'name': 'Binance',
-  'detail': 'Cripto • pago coordinado por WhatsApp',
+  'detail': 'Binance ID • 474217268 • nightvorn',
   'logo_url': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Binance_logo.svg',
   'logo_fallback': 'img/payments/binance.svg',
   'logo_class': 'pay-logo-binance',
-  'brand_color': '#F0B90B'}]
+  'brand_color': '#F0B90B',
+  'account': '474217268',
+  'holder': 'nightvorn',
+  'instructions': 'Usa Binance ID 474217268. Verifica que el perfil muestre nightvorn antes de confirmar. El monto '
+                  'final se coordina según el pedido.'}]
 
 SOCIAL_PLATFORMS = [{'id': 'instagram',
   'name': 'Instagram',
@@ -817,3 +1093,474 @@ SOCIAL_PLATFORMS = [{'id': 'instagram',
   'icon': 'simple-icons:kick',
   'accent': '#53FC18',
   'services': ['Seguidores', 'Vistas', 'Espectadores', 'Interacciones', 'Chat']}]
+
+
+# ============================================================
+# V28 — CATEGORÍA BLOQUEO
+# Solo para el titular/propietario legítimo y mediante canales
+# oficiales del operador. No se incluyen paneles privados ni
+# métodos para bloquear equipos o líneas de terceros.
+# ============================================================
+PRODUCTS = [p for p in PRODUCTS if p.get("category") != "Seguridad móvil"]
+
+PRODUCTS.extend([
+    {
+        "id": "bloqueo-linea-equipo-30",
+        "name": "BLOQUEO DE LINEA y EQUIPO",
+        "icon": "lucide:shield-alert",
+        "accent": "#ff375f",
+        "category": "BLOQUEO",
+        "badge": "S/30",
+        "description": "Asistencia para gestionar el bloqueo oficial de una línea y equipo del propio titular.",
+        "plans": [
+            {"name": "Bloqueo de línea y equipo · titular", "price": 30}
+        ],
+        "details": [
+            "Operadores disponibles: Movistar (puede demorar más), Bitel (puede demorar más), Entel y Claro.",
+            "El servicio es únicamente para el número y equipo del titular o propietario legítimo.",
+            "No incluye método ni panel privado.",
+            "Tiempo referencial informado: 24 a 48 horas; puede variar según el operador y la validación de titularidad.",
+            "Si corresponde un reembolso, se aplica según las condiciones comerciales informadas al cliente.",
+            "Antes de iniciar, se debe confirmar que la línea o el equipo pertenecen al solicitante."
+        ],
+        "notes": [
+            "Uso responsable.",
+            "No se aceptan solicitudes sobre líneas o equipos de terceros."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "Bloqueo línea + equipo"
+    },
+    {
+        "id": "bloqueo-lineas-guia-oficial-50",
+        "name": "BLOQUEO DE LINEAS · GUIA OFICIAL Y SOPORTE",
+        "icon": "lucide:file-lock-2",
+        "accent": "#ffb000",
+        "category": "BLOQUEO",
+        "badge": "S/50",
+        "description": "Guía digital y acompañamiento para que el titular tramite el bloqueo por vías oficiales.",
+        "plans": [
+            {"name": "Guía oficial + soporte", "price": 50}
+        ],
+        "details": [
+            "Se entrega una guía digital con pasos para gestionar el bloqueo oficial de tu propia línea/equipo.",
+            "Operadores: Movistar, Bitel, Entel y Claro.",
+            "La orientación se adapta a los requisitos del operador y a la condición de titularidad.",
+            "Entrega de la guía: normalmente dentro de 1 a 2 horas, según disponibilidad.",
+            "Es a pedido: envía por WhatsApp el ID del producto desde un número registrado en la página."
+        ],
+        "notes": [
+            "No incluye paneles privados, credenciales ni herramientas para bloquear líneas/equipos ajenos.",
+            "Uso responsable y únicamente sobre servicios propios."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "Guía de bloqueo oficial"
+    },
+    {
+        "id": "bloqueo-linea-equipo-prioritario-30",
+        "name": "☠️ BLOQUEO DE LINEA y EQUIPO 🎈",
+        "icon": "lucide:smartphone-off",
+        "accent": "#7c4dff",
+        "category": "BLOQUEO",
+        "badge": "S/30",
+        "description": "Consulta previa y gestión prioritaria del bloqueo oficial para el propio titular.",
+        "plans": [
+            {"name": "Bloqueo prioritario · titular", "price": 30}
+        ],
+        "details": [
+            "🔵 Movistar",
+            "🟡 Bitel",
+            "🟣 Entel",
+            "🔴 Claro",
+            "Incluye consulta previa para confirmar si el caso puede tramitarse por el canal oficial correspondiente.",
+            "Tiempo referencial de gestión: 2 a 5 horas en casos compatibles; puede variar.",
+            "Después de la aprobación, el cliente puede proceder con el pedido y enviar el número de orden.",
+            "Vendedor oficial: alexstreaming.store · WhatsApp +51984933571"
+        ],
+        "notes": [
+            "Solo para la línea/equipo del titular.",
+            "No se tramitan bloqueos sobre terceros."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "Bloqueo prioritario"
+    },
+    {
+        "id": "metodo-oficial-bloqueo-linea-equipo-60",
+        "name": "METODO OFICIAL DE BLOQUEO DE LINEAS Y EQUIPO",
+        "icon": "lucide:book-lock",
+        "accent": "#00d4ff",
+        "category": "BLOQUEO",
+        "badge": "S/60",
+        "description": "Tutorial de uso responsable para tramitar bloqueos oficiales de líneas/equipos propios.",
+        "plans": [
+            {"name": "Tutorial oficial + acompañamiento", "price": 60}
+        ],
+        "details": [
+            "Uso manual mediante tutorial con los pasos necesarios para presentar una solicitud oficial.",
+            "Operadores: Movistar, Bitel, Entel y Claro.",
+            "Incluye acompañamiento para entender el proceso y los requisitos del operador.",
+            "Entrega coordinada por WhatsApp +51984933571."
+        ],
+        "notes": [
+            "No incluye acceso a paneles privados ni herramientas para interferir con líneas/equipos de otras personas.",
+            "El uso se limita al titular o propietario legítimo."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "Método oficial de bloqueo"
+    }
+])
+
+
+# ============================================================
+# V29 — BLOQUEO (texto fiel, con límite de titularidad)
+# ============================================================
+PRODUCTS = [p for p in PRODUCTS if p.get("category") != "BLOQUEO"]
+
+PRODUCTS.extend([
+    {
+        "id": "bloqueo-linea-equipo-v29-30",
+        "name": "BLOQUEO DE LINEA y EQUIPO",
+        "icon": "lucide:shield-alert",
+        "accent": "#ff375f",
+        "category": "BLOQUEO",
+        "badge": "S/30",
+        "description": "BLOQUEO DE LÍNEAS: se puede gestionar el bloqueo de una línea y equipo del propio titular a través de los canales oficiales del operador.",
+        "plans": [{"name": "BLOQUEO DE LINEA y EQUIPO", "price": 30}],
+        "details": [
+            "LOS QUE ESTÁN DISPONIBLES",
+            "MOVISTAR (LENTO)",
+            "BITEL (LENTO)",
+            "ENTEL",
+            "CLARO",
+            "TIEMPO APROXIMADO DE BLOQUEO DE 24 HORAS A 48 HORAS O SI NO TÚ REEMBOLSO 👑",
+            "OJO ES SOLO EL BLOQUEO DE NUMERO Y EQUIPO NO METODO NI PANEL",
+            "Detalles de Solicitud",
+            "TIEMPO APROXIMADO DE BLOQUEO DE 24 HORAS A 48 HORAS O SI NO TÚ REEMBOLSO",
+            "BLOQUEO DE LÍNEAS: gestión únicamente para el titular o propietario legítimo del equipo.",
+            "OJO ES SOLO EL BLOQUEO DE NUMERO Y EQUIPO NO METODO NI PANEL"
+        ],
+        "notes": [
+            "USO RESPONSABLE.",
+            "Solo se atienden solicitudes del titular o propietario legítimo."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "BLOQUEO DE LINEA y EQUIPO"
+    },
+    {
+        "id": "bloqueo-lineas-guia-soporte-v29-50",
+        "name": "BLOQUEO DE LINEAS (GUIA OFICIAL Y SOPORTE)",
+        "icon": "lucide:file-lock-2",
+        "accent": "#ffb000",
+        "category": "BLOQUEO",
+        "badge": "S/50",
+        "description": "Se entrega una guía en formato digital para gestionar el bloqueo oficial de tu propia línea/equipo y soporte para entender el proceso.",
+        "plans": [{"name": "GUIA OFICIAL Y SOPORTE", "price": 50}],
+        "details": [
+            "SE TE ENTREGA LA GUIA PARA EFECTUAR UN BLOQUEO OFICIAL A TU PROPIA LINEA EN FORMATO DIGITAL Y EN EL CASO QUE NO ENTIENDAS, SE BRINDA SOPORTE.",
+            "ESTE ANUNCIO NO ES PARA BLOQUEAR DIRECTAMENTE: ES PARA LA ENTREGA DE LA GUIA Y EL ACOMPAÑAMIENTO.",
+            "La entrega del producto demora como máximo 1 HORA, en el peor de los casos 2 horas, sé paciente.",
+            "Es a pedido: debes escribir y mandar el ID del producto. Solo respondo a números registrados en la página.",
+            "Condiciones de Uso",
+            "MOVISTAR (LENTO)",
+            "BITEL (LENTO)",
+            "ENTEL",
+            "CLARO",
+            "USO RESPONSABLE"
+        ],
+        "notes": [
+            "No incluye paneles privados ni credenciales.",
+            "Solo para trámites del titular o propietario legítimo."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "BLOQUEO DE LINEAS"
+    },
+    {
+        "id": "bloqueo-linea-equipo-prioridad-v29-30",
+        "name": "☠️☠️BLOQUEO DE LINEA y EQUIPO🎈🎈",
+        "icon": "lucide:smartphone-off",
+        "accent": "#7c4dff",
+        "category": "BLOQUEO",
+        "badge": "S/30",
+        "description": "🔵 MOVISTAR · 🟡 BITEL · 🟣 ENTEL · 🔴 CLARO — gestión de bloqueo de número y equipo del propio titular.",
+        "plans": [{"name": "BLOQUEO DE NUMERO Y EQUIPO", "price": 30}],
+        "details": [
+            "🔵 MOVISTAR",
+            "🟡 BITEL",
+            "🟣 ENTEL",
+            "🔴 CLARO",
+            "BLOQUEO DE NUMERO Y EQUIPO",
+            "Detalles de Solicitud",
+            "BLOQUEO SE REALIZA EN 2 A 5 HORAS, sujeto a validación y tiempos del operador.",
+            "Condiciones de Uso",
+            "DE PREFERENCIA COMUNICARTE POR MI PRIVADO PARA CONSULTAR POR EL NUMERO SI SE PUEDE REALIZAR EL BLOQUEO O NO.",
+            "UNA VEZ DADA LA APROBACION RECIEN PUEDE PROCEDER POR LA COMPRA Y REENVIARME EL NUMERO DE PEDIDO.",
+            "PARA COMUNICARTE CONMIGO PREGUNTA AL GRUPO DE COMPRA Y VENTA POR EL VENDEDOR OFICIAL ALEXSTREAMING.STORE Y TE PASARAN MI WHATSAPP +51984933571"
+        ],
+        "notes": [
+            "Solo para el titular o propietario legítimo.",
+            "No se atienden solicitudes sobre terceros."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "BLOQUEO DE LINEA y EQUIPO"
+    },
+    {
+        "id": "guia-bloqueo-lineas-equipo-v29-60",
+        "name": "GUIA DE BLOQUEO DE LINEAS Y EQUIPO",
+        "icon": "lucide:book-lock",
+        "accent": "#00d4ff",
+        "category": "BLOQUEO",
+        "badge": "S/60",
+        "description": "Tutorial manual con los pasos necesarios para tramitar el bloqueo oficial de tu propia línea y equipo.",
+        "plans": [{"name": "GUIA + ACOMPAÑAMIENTO", "price": 60}],
+        "details": [
+            "EL USO DE LA GUIA ES DE FORMA MANUAL (TUTORIAL), BRINDANDO LOS PASOS NECESARIOS PARA REALIZAR EL TRAMITE OFICIAL.",
+            "EL USO ES BAJO RESPONSABILIDAD DEL CLIENTE.",
+            "Descripción Completa",
+            "MOVISTAR",
+            "BITEL",
+            "ENTEL",
+            "CLARO",
+            "BAJO RESPONSABILIDAD DEL USUARIO",
+            "Detalles de Solicitud",
+            "ENTREGA INMEDIATA AL ENVIAR AL WHATSAPP +51984933571"
+        ],
+        "notes": [
+            "No incluye acceso a paneles privados.",
+            "Solo para el titular o propietario legítimo."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "GUIA DE BLOQUEO"
+    }
+])
+
+
+# ============================================================
+# V30 — BLOQUEO (nombres/precios exactos, uso legítimo)
+# ============================================================
+PRODUCTS = [p for p in PRODUCTS if p.get("category") != "BLOQUEO"]
+
+PRODUCTS.extend([
+    {
+        "id": "bloqueo-linea-equipo-v30-30",
+        "name": "BLOQUEO DE LINEA y EQUIPO",
+        "icon": "lucide:shield-alert",
+        "accent": "#ff375f",
+        "category": "BLOQUEO",
+        "badge": "S/30",
+        "description": "Asistencia para gestionar el bloqueo oficial de una línea y equipo del propio titular.",
+        "plans": [{"name": "BLOQUEO DE LINEA y EQUIPO", "price": 30}],
+        "details": [
+            "LOS QUE ESTÁN DISPONIBLES",
+            "MOVISTAR (LENTO)",
+            "BITEL (LENTO)",
+            "ENTEL",
+            "CLARO",
+            "TIEMPO APROXIMADO DE 24 HORAS A 48 HORAS, sujeto a validación y tiempos del operador.",
+            "OJO ES SOLO ASISTENCIA PARA EL BLOQUEO DEL NUMERO Y EQUIPO DEL TITULAR, NO METODO NI PANEL.",
+            "Detalles de Solicitud",
+            "La solicitud se realiza únicamente para la línea/equipo del titular o propietario legítimo."
+        ],
+        "notes": [
+            "USO RESPONSABLE.",
+            "No se aceptan solicitudes sobre líneas o equipos de terceros."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "BLOQUEO DE LINEA y EQUIPO"
+    },
+    {
+        "id": "bloqueo-lineas-metodo-panel-v30-50",
+        "name": "BLOQUEO DE LINEAS(METODO Y PANEL)",
+        "icon": "lucide:file-lock-2",
+        "accent": "#ffb000",
+        "category": "BLOQUEO",
+        "badge": "S/50",
+        "description": "Guía y soporte para tramitar bloqueos oficiales de líneas/equipos propios.",
+        "plans": [{"name": "BLOQUEO DE LINEAS(METODO Y PANEL)", "price": 50}],
+        "details": [
+            "Se entrega una guía digital con los pasos para gestionar el bloqueo oficial de tu propia línea/equipo.",
+            "Se brinda soporte para entender el proceso y los requisitos del operador.",
+            "La entrega del producto demora como máximo 1 HORA; en el peor de los casos, 2 horas.",
+            "Es a pedido: debes escribir y mandar el ID del producto desde un número registrado en la página.",
+            "Condiciones de Uso",
+            "MOVISTAR (LENTO)",
+            "BITEL (LENTO)",
+            "ENTEL",
+            "CLARO",
+            "USO RESPONSABLE"
+        ],
+        "notes": [
+            "No incluye acceso a paneles privados ni credenciales.",
+            "Solo para trámites del titular o propietario legítimo."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "BLOQUEO DE LINEAS(METODO Y PANEL)"
+    },
+    {
+        "id": "bloqueo-linea-equipo-skull-v30-30",
+        "name": "☠️☠️BLOQUEO DE LINEA y EQUIPO🎈🎈",
+        "icon": "lucide:smartphone-off",
+        "accent": "#7c4dff",
+        "category": "BLOQUEO",
+        "badge": "S/30",
+        "description": "Consulta previa y gestión de bloqueo oficial para el propio titular.",
+        "plans": [{"name": "☠️☠️BLOQUEO DE LINEA y EQUIPO🎈🎈", "price": 30}],
+        "details": [
+            "🔵 MOVISTAR",
+            "🟡 BITEL",
+            "🟣 ENTEL",
+            "🔴 CLARO",
+            "BLOQUEO DE NUMERO Y EQUIPO DEL TITULAR",
+            "Detalles de Solicitud",
+            "Tiempo referencial de gestión: 2 a 5 horas, sujeto a validación y al operador.",
+            "Condiciones de Uso",
+            "DE PREFERENCIA COMUNICARTE POR PRIVADO PARA CONSULTAR SI EL CASO PUEDE REALIZARSE.",
+            "UNA VEZ DADA LA APROBACION RECIEN PUEDE PROCEDER POR LA COMPRA Y REENVIAR EL NUMERO DE PEDIDO.",
+            "Vendedor oficial alexstreaming.store · WhatsApp +51984933571"
+        ],
+        "notes": [
+            "Solo para el titular o propietario legítimo.",
+            "No se atienden solicitudes sobre terceros."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "☠️☠️BLOQUEO DE LINEA y EQUIPO🎈🎈"
+    },
+    {
+        "id": "metodo-bloqueo-lineas-equipo-panel-v30-60",
+        "name": "METODO DE BLOQUEO DE LINEAS Y EQUIPO (PANEL INCLUIDO EN LA COMPRA)",
+        "icon": "lucide:book-lock",
+        "accent": "#00d4ff",
+        "category": "BLOQUEO",
+        "badge": "S/60",
+        "description": "Tutorial y acompañamiento para tramitar bloqueos oficiales de líneas/equipos propios.",
+        "plans": [{"name": "METODO DE BLOQUEO DE LINEAS Y EQUIPO", "price": 60}],
+        "details": [
+            "EL USO DE LA GUIA ES DE FORMA MANUAL (TUTORIAL), BRINDANDO LOS PASOS NECESARIOS PARA REALIZAR EL TRAMITE OFICIAL.",
+            "EL USO ES BAJO RESPONSABILIDAD DEL CLIENTE.",
+            "Descripción Completa",
+            "MOVISTAR",
+            "BITEL",
+            "ENTEL",
+            "CLARO",
+            "BAJO RESPONSABILIDAD DEL USUARIO",
+            "Detalles de Solicitud",
+            "ENTREGA INMEDIATA AL ENVIAR AL WHATSAPP +51984933571"
+        ],
+        "notes": [
+            "No incluye acceso a paneles privados ni credenciales.",
+            "Solo para el titular o propietario legítimo."
+        ],
+        "logo_url": "",
+        "logo_class": "brand-logo",
+        "display_name": "METODO DE BLOQUEO DE LINEAS Y EQUIPO"
+    }
+])
+
+# ============================================================
+# V31 — CLAUDE / SKETCHUP / GEMINI (texto solicitado)
+# ============================================================
+PRODUCTS = [
+    p for p in PRODUCTS
+    if p.get("id") not in {
+        "claude-uso-personal-v31",
+        "sketchup-pro-2024-v31",
+        "geminis-ultra-veo3-flow-v31"
+    }
+]
+
+PRODUCTS.extend([
+    {
+        "id": "claude-uso-personal-v31",
+        "name": "Claude USO PERSONAL",
+        "icon": "simple-icons:anthropic",
+        "accent": "#D97757",
+        "category": "IA",
+        "badge": "S/15",
+        "description": "Claude USO PERSONAL",
+        "plans": [
+            {"name": "USO PERSONAL", "price": 15}
+        ],
+        "details": [
+            "Proceso de entrega (100% seguro): Una vez realizada la compra, contáctanos por WhatsApp enviando tu CODIGO DE COMPRA.",
+            "Te daremos acceso inmediato a un Google Drive privado con todo el contenido completo.",
+            "Podrás verlo online o descargar lo que necesites.",
+            "Soporte incluido."
+        ],
+        "notes": [
+            "Usa y distribuye únicamente servicios o licencias que estés autorizado a comercializar."
+        ],
+        "logo_url": "https://cdn.simpleicons.org/anthropic",
+        "logo_class": "brand-logo",
+        "display_name": "Claude"
+    },
+    {
+        "id": "sketchup-pro-2024-v31",
+        "name": "🔥SKETCHUP Pro 2024 CUENTA ORIGINAL PERMANENTE 🔥",
+        "icon": "simple-icons:sketchup",
+        "accent": "#005F9E",
+        "category": "Diseño",
+        "badge": "S/80",
+        "description": "Todos nuestros productos son originales e incluyen garantía.",
+        "plans": [
+            {"name": "🔥SKETCHUP Pro 2024 CUENTA ORIGINAL PERMANENTE 🔥", "price": 80}
+        ],
+        "details": [
+            "Entrega inmediata directo a tu correo electrónico con manual de instalación.",
+            "🔥🔥TIEMPO DE ENTREGA 1 A 2 HORAS🔥🔥",
+            "🔥🔥RESPETA LAS REGLAS PARA QUE MANTENGAS LA CUENTA🔥🔥",
+            "🔥🔥HORARIO DE ENTREGA DE 8AM A 5 PM",
+            "🔥🔥LICENCIA ORIGINAL",
+            "🔥🔥 Solo se permite un dispositivo por perfil.",
+            "🔥🔥 No modificar el plan de pago.",
+            "🔥🔥 No manipular el plan de pago",
+            "🔥🔥 El incumplimiento de estas reglas será detectado y resultará en la pérdida de la garantía. ❌"
+        ],
+        "notes": [
+            "Usa y distribuye únicamente servicios o licencias que estés autorizado a comercializar."
+        ],
+        "logo_url": "https://cdn.simpleicons.org/sketchup",
+        "logo_class": "brand-logo",
+        "display_name": "SketchUp Pro 2024"
+    },
+    {
+        "id": "geminis-ultra-veo3-flow-v31",
+        "name": "🎭Geminis ultra veo 3 flow x20/videos ilimitados 1 dispositivo",
+        "icon": "simple-icons:googlegemini",
+        "accent": "#8E75FF",
+        "category": "IA",
+        "badge": "S/25",
+        "description": "🚨⚠️ INFORMACIÓN IMPORTANTE ⚠️🚨",
+        "plans": [
+            {"name": "🎭Geminis ultra veo 3 flow x20/videos ilimitados 1 dispositivo", "price": 25}
+        ],
+        "details": [
+            "🔥 GEMINIS ULTRA + FLOW VIDEOS ILIMITADOS 🔥",
+            "🎬 Videos en Calidad",
+            "📆 Acceso premium por 1 MES",
+            "✅ Uso exclusivo para 1 SOLO DISPOSITIVO",
+            "🔒 Garantía 25 días",
+            "⏳ Después de esa fecha no aplica soporte ni reposición.",
+            "⚡ Acceso inmediato",
+            "⚡ Servicio estable y premium",
+            "⚡ Cupos limitados disponibles",
+            "Al realizar la compra: aceptas las condiciones",
+            "🚫 Evita perder tu acceso. Activa hoy mismo. 🚫",
+            "Despues de la compra escribir al proveedor en WhatsApp +51984933571"
+        ],
+        "notes": [
+            "Usa y distribuye únicamente servicios o licencias que estés autorizado a comercializar."
+        ],
+        "logo_url": "https://cdn.simpleicons.org/googlegemini",
+        "logo_class": "brand-logo",
+        "display_name": "Geminis Ultra + Flow"
+    }
+])

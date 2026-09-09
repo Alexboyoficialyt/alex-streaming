@@ -20,7 +20,7 @@
       <div class="access-card-glow" aria-hidden="true"></div>
       <div class="access-brand">
         <span class="access-logo"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></span>
-        <div><small>ALEX STREAMING</small><strong>ACCESS PORTAL</strong></div>
+        <div><small>ALEX STREAMING</small><strong id="accessPortalLabel">ACCESS PORTAL</strong></div>
         <b><i></i> ONLINE</b>
       </div>
       <div class="access-copy">
@@ -32,8 +32,8 @@
         <label for="accessAlias" id="accessNameLabel">TU NOMBRE</label>
         <div class="access-input-line">
           <iconify-icon icon="lucide:user-round"></iconify-icon>
-          <input id="accessAlias" maxlength="24" autocomplete="nickname" placeholder="Ej.: Alex" value="">
-          <span>READY</span>
+          <input id="accessAlias" maxlength="24" minlength="2" autocomplete="name" placeholder="Ej.: Alex" value="" required aria-required="true">
+          <span id="accessReadyLabel">READY</span>
         </div>
       </div>
       <div class="access-country-live" id="accessCountryLine">
@@ -49,12 +49,13 @@
         <span id="accessEnterText">INICIAR EXPERIENCIA</span><b>ENTER ↗</b>
       </button>
       <div class="access-features">
-        <span><iconify-icon icon="lucide:play-circle"></iconify-icon> STREAMING</span>
-        <span><iconify-icon icon="lucide:bot"></iconify-icon> IA</span>
-        <span><iconify-icon icon="lucide:badge-check"></iconify-icon> CATÁLOGO</span>
-        <span><iconify-icon icon="simple-icons:whatsapp"></iconify-icon> SOPORTE</span>
+        <span><iconify-icon icon="lucide:play-circle"></iconify-icon> <b data-i18n="feature_streaming">STREAMING</b></span>
+        <span><iconify-icon icon="lucide:bot"></iconify-icon> <b data-i18n="feature_ai">IA</b></span>
+        <span><iconify-icon icon="lucide:badge-check"></iconify-icon> <b data-i18n="feature_catalog">CATÁLOGO</b></span>
+        <span><iconify-icon icon="simple-icons:whatsapp"></iconify-icon> <b data-i18n="feature_support">SOPORTE</b></span>
       </div>
-      <div class="access-status"><i></i><span id="accessStatus">AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING</span></div>
+      <div class="access-name-error" id="accessNameError" role="alert" aria-live="polite"></div>
+      <div class="access-status"><i></i><span id="accessStatus">REGISTRO OBLIGATORIO: ESCRIBE TU NOMBRE PARA INGRESAR. TU NOMBRE + PAÍS APARECERÁN EN ALEX STREAMING.</span></div>
     </div>
   </div>
 
@@ -128,14 +129,7 @@
         <label class="locale-control" title="Idioma preferido">
           <iconify-icon icon="lucide:languages"></iconify-icon>
           <select id="languageSelect" aria-label="Idioma">
-            <option value="auto">AUTO</option>
-            <option value="es">ES</option>
-            <option value="en">EN</option>
-            <option value="pt">PT</option>
-            <option value="fr">FR</option>
-            <option value="de">DE</option>
-            <option value="it">IT</option>
-            <option value="vi">VI</option>
+            <option value="auto">AUTO 🌐</option>
           </select>
         </label>
         <label class="locale-control" title="Moneda local">
@@ -158,6 +152,32 @@
             <option value="JPY">JPY</option>
             <option value="KRW">KRW</option>
             <option value="VND">VND</option>
+            <option value="CNY">CNY</option>
+            <option value="HKD">HKD</option>
+            <option value="TWD">TWD</option>
+            <option value="INR">INR</option>
+            <option value="IDR">IDR</option>
+            <option value="THB">THB</option>
+            <option value="MYR">MYR</option>
+            <option value="SGD">SGD</option>
+            <option value="PHP">PHP</option>
+            <option value="TRY">TRY</option>
+            <option value="AED">AED</option>
+            <option value="SAR">SAR</option>
+            <option value="QAR">QAR</option>
+            <option value="ILS">ILS</option>
+            <option value="ZAR">ZAR</option>
+            <option value="EGP">EGP</option>
+            <option value="MAD">MAD</option>
+            <option value="PLN">PLN</option>
+            <option value="CZK">CZK</option>
+            <option value="HUF">HUF</option>
+            <option value="RON">RON</option>
+            <option value="SEK">SEK</option>
+            <option value="NOK">NOK</option>
+            <option value="DKK">DKK</option>
+            <option value="CHF">CHF</option>
+            <option value="UAH">UAH</option>
           </select>
         </label>
       </div>
@@ -389,10 +409,10 @@
 
         <div class="payment-grid">
           {% for method in payment_methods %}
-          <div class="payment-card" style="--payment: {{ method.brand_color }}">
+          <div class="payment-card" data-method-id="{{ method.id }}" style="--payment: {{ method.brand_color }}">
             <div class="payment-icon-wrap {{ method.logo_class|default('') }}"><img src="{{ method.logo_url|default(url_for('static', filename=method.logo_fallback)) }}" data-fallback="{{ url_for('static', filename=method.logo_fallback) }}" alt="{{ method.name }}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){this.src=this.dataset.fallback}"></div>
-            <div class="payment-copy"><strong>{{ method.name }}</strong><span>{{ method.detail }}</span></div>
-            <div class="payment-ready"><i></i> READY</div>
+            <div class="payment-copy"><strong>{{ method.name }}</strong><span class="payment-detail-text" data-source-es="{{ method.detail|e }}">{{ method.detail }}</span>{% if method.holder %}<small>{{ method.holder }}</small>{% endif %}</div>
+            <div class="payment-ready"><i></i> <span data-i18n="payment_ready">READY</span></div>
           </div>
           {% endfor %}
         </div>
@@ -445,19 +465,23 @@
       <p class="modal-label" data-i18n="select_payment">SELECCIONA MÉTODO DE PAGO</p>
       <div class="modal-payments" id="modalPayments">
         {% for method in payment_methods %}
-        <button class="modal-payment" data-method="{{ method.name }}" style="--payment: {{ method.brand_color }}">
+        <button class="modal-payment" data-method="{{ method.name }}" data-method-id="{{ method.id }}" data-instructions="{{ method.instructions|default('')|e }}" data-account="{{ method.account|default('')|e }}" data-holder="{{ method.holder|default('')|e }}" style="--payment: {{ method.brand_color }}">
           <span class="modal-payment-logo {{ method.logo_class|default('') }}"><img src="{{ method.logo_url|default(url_for('static', filename=method.logo_fallback)) }}" data-fallback="{{ url_for('static', filename=method.logo_fallback) }}" alt="{{ method.name }}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){this.src=this.dataset.fallback}"></span>
           <strong>{{ method.name }}</strong>
           <i>○</i>
         </button>
         {% endfor %}
       </div>
+      <div class="payment-instructions" id="paymentInstructions" hidden>
+        <div class="payment-instructions-head"><iconify-icon icon="lucide:badge-check"></iconify-icon><strong id="paymentInstructionTitle">DATOS DE PAGO</strong></div>
+        <p id="paymentInstructionText">Selecciona un método para ver los datos.</p>
+      </div>
 
       <button id="continueWhatsapp" class="checkout-whatsapp" disabled>
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
         <span data-i18n="continue_whatsapp">CONTINUAR POR WHATSAPP</span> <span>↗</span>
       </button>
-      <p class="checkout-note">No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.</p>
+      <p class="checkout-note" id="checkoutSafetyNote" data-i18n="checkout_note">No ingreses contraseñas, códigos bancarios ni datos sensibles en esta web. El pedido se coordina por WhatsApp.</p>
     </div>
   </div>
 
