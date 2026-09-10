@@ -28,6 +28,10 @@
   const entryProgressBar = document.getElementById('entryProgressBar');
   const entryProgressText = document.getElementById('entryProgressText');
   const entryStatusText = document.getElementById('entryStatusText');
+  const epicWelcomeName = document.getElementById('epicWelcomeName');
+  const epicWelcomeCountry = document.getElementById('epicWelcomeCountry');
+  const epicWelcomePhrase = document.getElementById('epicWelcomePhrase');
+  const epicSkipButton = document.getElementById('epicSkipButton');
   const currentVisitorCountry = document.getElementById('currentVisitorCountry');
   const visitorSessionLabel = document.getElementById('visitorSessionLabel');
   const visitorFeedMini = document.getElementById('visitorFeedMini');
@@ -40,6 +44,13 @@
   const purchaseToastIcon = document.getElementById('purchaseToastIcon');
   const purchaseToastTitle = document.getElementById('purchaseToastTitle');
   const purchaseToastMeta = document.getElementById('purchaseToastMeta');
+  const welcomeLiveToast = document.getElementById('welcomeLiveToast');
+  const welcomeLiveName = document.getElementById('welcomeLiveName');
+  const welcomeLiveMeta = document.getElementById('welcomeLiveMeta');
+  const purchaseEffect = document.getElementById('purchaseEffect');
+  const purchaseEffectTag = document.getElementById('purchaseEffectTag');
+  const purchaseEffectTitle = document.getElementById('purchaseEffectTitle');
+  const purchaseEffectText = document.getElementById('purchaseEffectText');
   const liveVisitorTicker = document.getElementById('liveVisitorTicker');
   const languageSelect = document.getElementById('languageSelect');
   const currencySelect = document.getElementById('currencySelect');
@@ -96,8 +107,8 @@
 
   const LANGUAGE_NAMES = {es:'ESPAÑOL',en:'ENGLISH',pt:'PORTUGUÊS',fr:'FRANÇAIS',de:'DEUTSCH',it:'ITALIANO',vi:'TIẾNG VIỆT',ru:'РУССКИЙ',tr:'TÜRKÇE',ar:'العربية',zh:'中文',ja:'日本語',ko:'한국어',hi:'हिन्दी',id:'BAHASA INDONESIA',th:'ไทย',nl:'NEDERLANDS',pl:'POLSKI'};
   const I18N = {
-    es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'CONTINUAR COMPRA POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COMPRAR',online:'ONLINE',consult:'Por confirmar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX'},
-    en:{nav_catalog:'CATALOG',nav_social:'SOCIAL',nav_payments:'PAYMENTS',nav_how:'HOW TO BUY',catalog_title:'Full catalog',catalog_subtitle:'Streaming, AI, productivity, software, education, VPN, authorized services and bundles.',search_placeholder:'Search HBO Max, Gamma, Canva, Office...',filter_all:'ALL',payment_title:'Payment methods',payment_note:'Choose a payment method when ordering. Final confirmation is handled on WhatsApp.',steps_title:'Buy in 3 steps',step1_title:'Choose a platform',step1_text:'Find the service and select the plan you want.',step2_title:'Choose payment',step2_text:'Select Yape, Plin, BCP or Binance.',step3_title:'Confirm on WhatsApp',step3_text:'Your order is prepared automatically and ready to send.',checkout_title:'Complete order',select_payment:'SELECT PAYMENT METHOD',continue_whatsapp:'CONTINUE ON WHATSAPP',consult_whatsapp:'ASK ON WHATSAPP',social_prepare:'Prepare campaign',send_quote:'SEND QUOTE ON WHATSAPP',contact:'CONTACT',choose_plan:'SELECT PLAN',from:'FROM',details:'DETAILS',buy:'BUY',quote:'QUOTE',online:'ONLINE',consult:'To confirm',product:'PRODUCT',plan:'PLAN',total:'TOTAL',includes:'INCLUDES',conditions:'TERMS',price_approx:'approx. price',access_title:'ENTER THE DIGITAL UNIVERSE',access_desc:'Premium catalog, AI tools, productivity, social services and direct WhatsApp support.',your_name:'YOUR NAME',start_experience:'START EXPERIENCE',country_detected:'DETECTED COUNTRY',enter_status:'WHEN YOU ENTER, YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING',hero_lead:'Your digital catalog with a high-impact premium experience. Streaming, AI, productivity, software and bundles in one place. Choose a plan and finish the order on WhatsApp.',enter_catalog:'OPEN CATALOG',talk_alex:'TALK TO ALEX'},
+    es:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGOS',nav_how:'CÓMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, productividad, software, educación, VPN, consultas autorizadas y combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TODO',payment_title:'Métodos de pago',payment_note:'Elige el método al comprar. La confirmación final se coordina por WhatsApp.',steps_title:'Compra en 3 pasos',step1_title:'Elige plataforma',step1_text:'Busca el servicio y selecciona el plan que quieres.',step2_title:'Elige el pago',step2_text:'Selecciona Yape, Plin, BCP o Binance.',step3_title:'Confirma por WhatsApp',step3_text:'Tu pedido se arma automáticamente y queda listo para enviar.',checkout_title:'Finalizar pedido',select_payment:'SELECCIONA MÉTODO DE PAGO',continue_whatsapp:'CONTINUAR POR WHATSAPP',consult_whatsapp:'CONSULTAR POR WHATSAPP',social_prepare:'Preparar campaña',send_quote:'CONTINUAR COMPRA POR WHATSAPP',contact:'CONTACTAR',choose_plan:'SELECCIONAR PLAN',from:'DESDE',details:'DETALLES',buy:'COMPRAR',quote:'COMPRAR',online:'ONLINE',consult:'Por confirmar',product:'PRODUCTO',plan:'PLAN',total:'TOTAL',includes:'INCLUYE',conditions:'CONDICIONES',price_approx:'precio aproximado',access_title:'ENTRA AL UNIVERSO DIGITAL',access_desc:'Catálogo premium, herramientas de IA, productividad, redes y atención directa por WhatsApp.',your_name:'TU NOMBRE',start_experience:'INICIAR EXPERIENCIA',country_detected:'PAÍS DETECTADO',enter_status:'AL ENTRAR VERÁS TU NOMBRE + PAÍS EN ALEX STREAMING',hero_lead:'Tu catálogo digital con una experiencia premium de alto impacto. Streaming, IA, productividad, software y combos en un solo lugar. Selecciona un plan y termina el pedido por WhatsApp.',enter_catalog:'ENTRAR AL CATÁLOGO',talk_alex:'HABLAR CON ALEX',purchase_effect_tag:'COMPRA REGISTRADA',purchase_effect_title:'Tu compra fue registrada',purchase_effect_text:'Tu compra de {product} fue registrada. Continúa por WhatsApp para coordinar con Alex Streaming.',purchase_recent_small:'COMPRA RECIENTE · EN VIVO',purchase_recent_title:'Un cliente compró una plataforma',purchase_recent_action:'compró'},
+    en:{nav_catalog:'CATALOG',nav_social:'SOCIAL',nav_payments:'PAYMENTS',nav_how:'HOW TO BUY',catalog_title:'Full catalog',catalog_subtitle:'Streaming, AI, productivity, software, education, VPN, authorized services and bundles.',search_placeholder:'Search HBO Max, Gamma, Canva, Office...',filter_all:'ALL',payment_title:'Payment methods',payment_note:'Choose a payment method when ordering. Final confirmation is handled on WhatsApp.',steps_title:'Buy in 3 steps',step1_title:'Choose a platform',step1_text:'Find the service and select the plan you want.',step2_title:'Choose payment',step2_text:'Select Yape, Plin, BCP or Binance.',step3_title:'Confirm on WhatsApp',step3_text:'Your order is prepared automatically and ready to send.',checkout_title:'Complete order',select_payment:'SELECT PAYMENT METHOD',continue_whatsapp:'CONTINUE ON WHATSAPP',consult_whatsapp:'ASK ON WHATSAPP',social_prepare:'Prepare campaign',send_quote:'SEND QUOTE ON WHATSAPP',contact:'CONTACT',choose_plan:'SELECT PLAN',from:'FROM',details:'DETAILS',buy:'BUY',quote:'QUOTE',online:'ONLINE',consult:'To confirm',product:'PRODUCT',plan:'PLAN',total:'TOTAL',includes:'INCLUDES',conditions:'TERMS',price_approx:'approx. price',access_title:'ENTER THE DIGITAL UNIVERSE',access_desc:'Premium catalog, AI tools, productivity, social services and direct WhatsApp support.',your_name:'YOUR NAME',start_experience:'START EXPERIENCE',country_detected:'DETECTED COUNTRY',enter_status:'WHEN YOU ENTER, YOUR NAME + COUNTRY WILL APPEAR IN ALEX STREAMING',hero_lead:'Your digital catalog with a high-impact premium experience. Streaming, AI, productivity, software and bundles in one place. Choose a plan and finish the order on WhatsApp.',enter_catalog:'OPEN CATALOG',talk_alex:'TALK TO ALEX',purchase_effect_tag:'PURCHASE REGISTERED',purchase_effect_title:'Your purchase was registered',purchase_effect_text:'Your purchase of {product} was registered. Continue on WhatsApp to coordinate with Alex Streaming.',purchase_recent_small:'RECENT PURCHASE · LIVE',purchase_recent_title:'A customer bought a platform',purchase_recent_action:'bought'},
     pt:{nav_catalog:'CATÁLOGO',nav_social:'REDES',nav_payments:'PAGAMENTOS',nav_how:'COMO COMPRAR',catalog_title:'Catálogo completo',catalog_subtitle:'Streaming, IA, produtividade, software, educação, VPN, serviços autorizados e combos.',search_placeholder:'Buscar HBO Max, Gamma, Canva, Office...',filter_all:'TUDO',payment_title:'Métodos de pagamento',payment_note:'Escolha o método ao comprar. A confirmação final é feita pelo WhatsApp.',steps_title:'Compre em 3 passos',step1_title:'Escolha a plataforma',step1_text:'Procure o serviço e selecione o plano desejado.',step2_title:'Escolha o pagamento',step2_text:'Selecione Yape, Plin, BCP ou Binance.',step3_title:'Confirme no WhatsApp',step3_text:'Seu pedido é preparado automaticamente e fica pronto para envio.',checkout_title:'Finalizar pedido',select_payment:'SELECIONE O MÉTODO DE PAGAMENTO',continue_whatsapp:'CONTINUAR NO WHATSAPP',consult_whatsapp:'CONSULTAR NO WHATSAPP',social_prepare:'Preparar campanha',send_quote:'ENVIAR COTAÇÃO PELO WHATSAPP',contact:'CONTATO',choose_plan:'SELECIONAR PLANO',from:'A PARTIR DE',details:'DETALHES',buy:'COMPRAR',quote:'COTAR',online:'ONLINE',consult:'A confirmar',product:'PRODUTO',plan:'PLANO',total:'TOTAL',includes:'INCLUI',conditions:'CONDIÇÕES',price_approx:'preço aproximado',access_title:'ENTRE NO UNIVERSO DIGITAL',access_desc:'Catálogo premium, ferramentas de IA, produtividade, redes e atendimento direto pelo WhatsApp.',your_name:'SEU NOME',start_experience:'INICIAR EXPERIÊNCIA',country_detected:'PAÍS DETECTADO',enter_status:'AO ENTRAR, SEU NOME + PAÍS APARECERÃO NO ALEX STREAMING',hero_lead:'Seu catálogo digital com uma experiência premium de alto impacto. Streaming, IA, produtividade, software e combos em um só lugar. Escolha um plano e finalize pelo WhatsApp.',enter_catalog:'ABRIR CATÁLOGO',talk_alex:'FALAR COM ALEX'},
     fr:{nav_catalog:'CATALOGUE',nav_social:'RÉSEAUX',nav_payments:'PAIEMENTS',nav_how:'COMMENT ACHETER',catalog_title:'Catalogue complet',catalog_subtitle:'Streaming, IA, productivité, logiciels, éducation, VPN, services autorisés et packs.',search_placeholder:'Rechercher HBO Max, Gamma, Canva, Office...',filter_all:'TOUT',payment_title:'Modes de paiement',payment_note:'Choisissez le mode de paiement. La confirmation finale se fait sur WhatsApp.',steps_title:'Achetez en 3 étapes',step1_title:'Choisissez la plateforme',step1_text:'Trouvez le service et sélectionnez le forfait souhaité.',step2_title:'Choisissez le paiement',step2_text:'Sélectionnez Yape, Plin, BCP ou Binance.',step3_title:'Confirmez sur WhatsApp',step3_text:'Votre commande est préparée automatiquement.',checkout_title:'Finaliser la commande',select_payment:'SÉLECTIONNEZ LE MODE DE PAIEMENT',continue_whatsapp:'CONTINUER SUR WHATSAPP',consult_whatsapp:'DEMANDER SUR WHATSAPP',social_prepare:'Préparer la campagne',send_quote:'ENVOYER LE DEVIS SUR WHATSAPP',contact:'CONTACT',choose_plan:'CHOISIR LE FORFAIT',from:'À PARTIR DE',details:'DÉTAILS',buy:'ACHETER',quote:'DEVIS',online:'EN LIGNE',consult:'À confirmer',product:'PRODUIT',plan:'FORFAIT',total:'TOTAL',includes:'INCLUS',conditions:'CONDITIONS',price_approx:'prix approximatif',access_title:'ENTREZ DANS L’UNIVERS NUMÉRIQUE',access_desc:'Catalogue premium, outils IA, productivité, réseaux et assistance directe sur WhatsApp.',your_name:'VOTRE NOM',start_experience:'DÉMARRER L’EXPÉRIENCE',country_detected:'PAYS DÉTECTÉ',enter_status:'À L’ENTRÉE, VOTRE NOM + PAYS APPARAÎTRONT DANS ALEX STREAMING',hero_lead:'Votre catalogue numérique avec une expérience premium à fort impact. Streaming, IA, productivité, logiciels et packs en un seul endroit.',enter_catalog:'OUVRIR LE CATALOGUE',talk_alex:'PARLER À ALEX'},
     de:{nav_catalog:'KATALOG',nav_social:'SOCIAL',nav_payments:'ZAHLUNGEN',nav_how:'SO KAUFST DU',catalog_title:'Vollständiger Katalog',catalog_subtitle:'Streaming, KI, Produktivität, Software, Bildung, VPN, autorisierte Dienste und Bundles.',search_placeholder:'HBO Max, Gamma, Canva, Office suchen...',filter_all:'ALLE',payment_title:'Zahlungsmethoden',payment_note:'Wähle beim Kauf die Zahlungsmethode. Die Bestätigung erfolgt über WhatsApp.',steps_title:'Kaufen in 3 Schritten',step1_title:'Plattform wählen',step1_text:'Suche den Dienst und wähle deinen Plan.',step2_title:'Zahlung wählen',step2_text:'Wähle Yape, Plin, BCP oder Binance.',step3_title:'Über WhatsApp bestätigen',step3_text:'Deine Bestellung wird automatisch vorbereitet.',checkout_title:'Bestellung abschließen',select_payment:'ZAHLUNGSMETHODE WÄHLEN',continue_whatsapp:'WEITER ÜBER WHATSAPP',consult_whatsapp:'ÜBER WHATSAPP ANFRAGEN',social_prepare:'Kampagne vorbereiten',send_quote:'ANGEBOT ÜBER WHATSAPP SENDEN',contact:'KONTAKT',choose_plan:'PLAN WÄHLEN',from:'AB',details:'DETAILS',buy:'KAUFEN',quote:'ANGEBOT',online:'ONLINE',consult:'Zu bestätigen',product:'PRODUKT',plan:'PLAN',total:'GESAMT',includes:'ENTHÄLT',conditions:'BEDINGUNGEN',price_approx:'ungefährer Preis',access_title:'BETRITT DAS DIGITALE UNIVERSUM',access_desc:'Premium-Katalog, KI-Tools, Produktivität, soziale Dienste und direkter WhatsApp-Support.',your_name:'DEIN NAME',start_experience:'ERLEBNIS STARTEN',country_detected:'ERKANNTES LAND',enter_status:'BEIM EINTRITT WERDEN DEIN NAME + LAND IN ALEX STREAMING ANGEZEIGT',hero_lead:'Dein digitaler Katalog mit Premium-Erlebnis: Streaming, KI, Produktivität, Software und Bundles an einem Ort.',enter_catalog:'KATALOG ÖFFNEN',talk_alex:'MIT ALEX SPRECHEN'},
@@ -288,7 +299,7 @@
     'access_portal','access_kicker','access_title','access_desc','your_name','name_placeholder',
     'start_experience','country_detected','registration_required','name_required','real_name_required','ready',
     'feature_streaming','feature_ai','feature_catalog','feature_support',
-    'payment_title','payment_note','checkout_title','select_payment','continue_whatsapp',
+    'payment_title','payment_note','checkout_title','select_payment','continue_whatsapp','purchase_effect_tag','purchase_effect_title','purchase_effect_text','purchase_recent_small','purchase_recent_title','purchase_recent_action',
     'payment_ready','payment_data','pay_with','payment_choose','payment_base_amount',
     'payment_local_amount','payment_method_help','checkout_note','whatsapp_language_note','accept_terms','terms_required','customer_language','chat_open','chat_community','chat_title','chat_safety','chat_empty','chat_placeholder','chat_send','chat_registration_required','chat_private_contact','chat_slow_down','chat_send_error','chat_as','game_open','game_title','game_explain','game_start','game_player','game_score','game_best','game_time','game_ready','game_ready_hint','game_combo','game_restart','game_finished','game_new_record','social_worldwide','social_not_country','social_notice_title','social_metrics_title','social_details_note','social_worldwide_notice'
   ];
@@ -676,42 +687,161 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  // Entrada Premium Access: se inicia DESPUÉS del portal de acceso.
+  // Entrada Premium Access: robusta y con cierre forzado.
+  // Ningún fallo de red, país, audio o animación puede dejar la pantalla bloqueada.
   let epicFinished = false;
   let epicStarted = false;
+  let epicWatchdog = null;
+
+  function forceRemoveEpicEntry(){
+    if (!epicEntry) return;
+    try {
+      document.body.classList.remove('access-locked');
+      epicEntry.classList.add('exit');
+      epicEntry.style.pointerEvents = 'none';
+    } catch (_) {}
+
+    setTimeout(() => {
+      try { epicEntry.remove(); } catch (_) {}
+    }, 500);
+  }
+
   function finishEpicEntry(){
     if (!epicEntry || epicFinished) return;
+
     epicFinished = true;
-    if (entryProgressBar) entryProgressBar.classList.add('ready');
-    if (entryProgressText) entryProgressText.textContent = '100%';
-    if (entryStatusText) entryStatusText.textContent = 'ACCESO PREMIUM LISTO';
+
+    if (epicWatchdog) {
+      clearTimeout(epicWatchdog);
+      epicWatchdog = null;
+    }
+
+    try {
+      const name = String(epicWelcomeName?.textContent || 'USUARIO').toUpperCase();
+
+      if (entryProgressBar) {
+        entryProgressBar.style.setProperty('width', '100%', 'important');
+        entryProgressBar.classList.add('ready');
+      }
+      if (entryProgressText) entryProgressText.textContent = '100%';
+
+      if (entryStatusText) {
+        entryStatusText.textContent = `BIENVENIDO · ${name}`;
+      }
+
+      epicEntry.classList.add('progress-complete');
+
+      if (epicWelcomePhrase) {
+        epicWelcomePhrase.textContent = `${name}, YA PUEDES ENTRAR A TU PANEL`;
+      }
+    } catch (_) {}
+
+    setTimeout(forceRemoveEpicEntry, 1100);
     setTimeout(() => {
-      epicEntry.classList.add('exit');
-      setTimeout(() => epicEntry.remove(), 750);
-    }, 420);
+      try {
+        const finalName = String(loadAlias() || epicWelcomeName?.textContent || 'USUARIO').trim();
+        showRegisteredWelcome(finalName);
+        sessionStorage.removeItem('alex-welcome-pending');
+      } catch (_) {}
+    }, 1300);
   }
-  function startEpicEntry(){
+
+  function startEpicEntry(event){
     if (!epicEntry || epicStarted) return;
+
     epicStarted = true;
-    epicEntry.style.opacity = '';
-    epicEntry.style.visibility = '';
-    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const started = performance.now();
-    const duration = reduceMotion ? 250 : 3600;
-    const tick = (now) => {
-      if (epicFinished) return;
-      const p = Math.min(96, Math.floor(((now - started) / duration) * 100));
-      if (entryProgressBar) entryProgressBar.style.setProperty('width', `${p}%`, 'important');
-      if (entryProgressText) entryProgressText.textContent = `${p}%`;
-      if (p < 28 && entryStatusText) entryStatusText.textContent = 'CARGANDO CATÁLOGO PREMIUM';
-      else if (p < 58 && entryStatusText) entryStatusText.textContent = 'SINCRONIZANDO STREAMING E IA';
-      else if (p < 84 && entryStatusText) entryStatusText.textContent = 'VERIFICANDO CONEXIÓN';
-      else if (entryStatusText) entryStatusText.textContent = 'PREPARANDO EXPERIENCIA';
-      if (p < 96) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-    setTimeout(finishEpicEntry, reduceMotion ? 350 : 4050);
+
+    // Seguridad máxima: aun si ocurre un error, la intro se quita sola.
+    epicWatchdog = setTimeout(() => {
+      epicFinished = true;
+      forceRemoveEpicEntry();
+    }, 4500);
+
+    try {
+      const registeredName = String(
+        event?.detail?.alias
+        || loadAlias()
+        || 'USUARIO'
+      ).trim();
+
+      const countryValue = document.getElementById('accessCountryValue');
+      const countryText = String(
+        countryValue?.textContent
+        || currentVisitorCountry?.textContent
+        || 'CONEXIÓN ACTIVA'
+      ).trim();
+
+      if (epicWelcomeName) {
+        epicWelcomeName.textContent = registeredName.toUpperCase();
+      }
+
+      if (epicWelcomePhrase) {
+        epicWelcomePhrase.textContent = `${registeredName.toUpperCase()}, TU ACCESO PERSONAL ESTÁ LISTO`;
+      }
+
+      if (epicWelcomeCountry) {
+        epicWelcomeCountry.textContent =
+          countryText && !/DETECTANDO/i.test(countryText)
+            ? countryText.toUpperCase()
+            : '🌐 CONEXIÓN ACTIVA';
+      }
+
+      document.body.classList.remove('access-locked');
+      epicEntry.style.opacity = '';
+      epicEntry.style.visibility = '';
+      epicEntry.style.pointerEvents = 'auto';
+      epicEntry.classList.add('welcome-active');
+
+      const reduceMotion =
+        window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+
+      const duration = reduceMotion ? 250 : 2400;
+      const started = performance.now();
+
+      const tick = (now) => {
+        if (epicFinished || !epicEntry?.isConnected) return;
+
+        const p = Math.min(
+          99,
+          Math.floor((Math.max(0, now - started) / duration) * 100)
+        );
+
+        try {
+          if (entryProgressBar) {
+            entryProgressBar.style.setProperty('width', `${p}%`, 'important');
+          }
+          if (entryProgressText) entryProgressText.textContent = `${p}%`;
+
+          const name = String(epicWelcomeName?.textContent || 'USUARIO').toUpperCase();
+
+          if (entryStatusText) {
+            if (p < 25) entryStatusText.textContent = 'INICIALIZANDO TU ACCESO';
+            else if (p < 55) entryStatusText.textContent = 'SINCRONIZANDO TU EXPERIENCIA';
+            else if (p < 82) entryStatusText.textContent = 'VERIFICANDO TU CUENTA';
+            else if (p < 100) entryStatusText.textContent = 'PREPARANDO TU PANEL';
+            else entryStatusText.textContent = `BIENVENIDO · ${name}`;
+          }
+        } catch (_) {}
+
+        if (p < 99) requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+
+      setTimeout(finishEpicEntry, reduceMotion ? 650 : 3000);
+
+      // Aparece por si el usuario desea saltar la animación.
+      setTimeout(() => {
+        try { epicSkipButton?.classList.add('visible'); } catch (_) {}
+      }, 800);
+
+    } catch (_) {
+      // Fallback: si algo falla, abrir el sitio casi de inmediato.
+      setTimeout(finishEpicEntry, 150);
+    }
   }
+
+  epicSkipButton?.addEventListener('click', finishEpicEntry);
   window.addEventListener('alex:access-granted', startEpicEntry, {once:true});
 
 
@@ -785,11 +915,22 @@
   let visitorToastTimer = null;
   function showVisitorToast(event){
     if (!visitorToast || !visitorToastText || !event) return;
+
+    const name = safeVisitorName(event.visitor_name);
     const flag = countryFlag(event.country_code);
-    visitorToastText.textContent = `${safeVisitorName(event.visitor_name)} entró desde ${flag} ${safeCountry(event.country, event.country_code)}`;
+    const country = safeCountry(event.country, event.country_code);
+
+    visitorToastText.textContent =
+      `${name} terminó de registrarse${country && country !== 'País no disponible' ? ` · ${flag} ${country}` : ''}`;
+
+    visitorToast.hidden = false;
+    visitorToast.style.display = 'flex';
+    visitorToast.classList.remove('show');
+    void visitorToast.offsetWidth;
     visitorToast.classList.add('show');
+
     clearTimeout(visitorToastTimer);
-    visitorToastTimer = setTimeout(() => visitorToast.classList.remove('show'), 3600);
+    visitorToastTimer = setTimeout(() => visitorToast.classList.remove('show'), 5200);
   }
 
   function localeCountryFallback(){
@@ -1004,7 +1145,7 @@
     const product = String(item?.product_name || '').trim();
     if (item?.action === 'view_product' && product) return `está viendo ${product}`;
     if (item?.action === 'checkout' && product) return `está por comprar ${product}`;
-    if (item?.action === 'order' && product) return `inició una compra de ${product}`;
+    if (item?.action === 'order' && product) return `${t('purchase_recent_action')} ${product}`;
     return 'está explorando el catálogo';
   }
 
@@ -1222,23 +1363,86 @@
     const time = recentOrderTimeAgo(order.created_at);
 
     purchaseToastIcon?.setAttribute('icon', recentOrderIcon(product));
-    if (purchaseToastTitle) purchaseToastTitle.textContent = `${customer} inició un pedido de ${product}`;
+    const purchaseSmall = purchaseToast?.querySelector('small');
+    if (purchaseSmall) purchaseSmall.textContent = 'COMPRA DE PLATAFORMA · EN VIVO';
+    if (purchaseToastTitle) purchaseToastTitle.textContent = `${customer} compró ${product}`;
     if (purchaseToastMeta) {
       purchaseToastMeta.textContent = [place, plan.replace(/^ · /,''), time].filter(Boolean).join(' · ');
     }
 
+    purchaseToast.hidden = false;
+    purchaseToast.style.display = 'flex';
+    purchaseToast.classList.remove('force-hide');
+    void purchaseToast.offsetWidth;
     purchaseToast.classList.add('show');
 
     setTimeout(() => {
       purchaseToast.classList.remove('show');
-      setTimeout(showNextRecentOrder, 500);
-    }, 5200);
+      setTimeout(() => {
+        if (!purchaseQueue.length) {
+          purchaseToastVisible = false;
+        }
+        showNextRecentOrder();
+      }, 500);
+    }, 6500);
+  }
+
+  let lastRecentOrderId = 0;
+
+  function buildLocalOrderNotification(order, payment){
+    const registeredName = String(
+      (typeof loadAlias === 'function' ? loadAlias() : '')
+      || document.getElementById('visitorSessionLabel')?.textContent
+      || 'Cliente'
+    ).trim();
+
+    let country = String(
+      currentVisitorCountry?.textContent
+      || document.getElementById('accessCountryValue')?.textContent
+      || ''
+    ).trim();
+
+    // Evitar textos de estado como "detectando..."
+    if (/detectando|detecting|cargando|loading/i.test(country)) country = '';
+
+    const countryCode = String(
+      document.body?.dataset?.countryCode
+      || ''
+    ).trim().toUpperCase();
+
+    return {
+      id: `local-${Date.now()}`,
+      product: order?.product || 'Producto',
+      plan: order?.plan || '',
+      payment: payment || '',
+      visitor_name: registeredName || 'Cliente',
+      country,
+      country_code: countryCode,
+      created_at: new Date().toISOString(),
+      local_only: true
+    };
+  }
+
+  function orderAgeMinutes(order){
+    const date = new Date(order?.created_at || '');
+    if (Number.isNaN(date.getTime())) return Number.POSITIVE_INFINITY;
+    return Math.max(0, (Date.now() - date.getTime()) / 60000);
+  }
+
+  function markRecentOrderSeen(order){
+    const id = String(order?.id || '');
+    if (!id) return;
+    seenPurchaseIds.add(id);
+    lastRecentOrderId = Math.max(lastRecentOrderId, Number(order.id) || 0);
   }
 
   async function pollRecentOrders(initial=false){
     if (window.ALEX_PREVIEW_MODE) return;
 
-    const url = window.ALEX_STORE?.recentOrdersUrl || '/api/recent-orders';
+    const baseUrl = window.ALEX_STORE?.recentOrdersUrl || '/api/recent-orders';
+    const url = lastRecentOrderId > 0
+      ? `${baseUrl}?after=${encodeURIComponent(lastRecentOrderId)}`
+      : baseUrl;
 
     try {
       const response = await fetch(url, {cache:'no-store'});
@@ -1247,24 +1451,46 @@
       const data = await response.json();
       const orders = Array.isArray(data.orders) ? data.orders : [];
 
-      if (initial) {
-        orders.forEach(order => seenPurchaseIds.add(String(order.id)));
+      if (initial && lastRecentOrderId === 0) {
+        // Endpoint returns newest first when no "after" is supplied.
+        orders.forEach(markRecentOrderSeen);
+
+        // Show the latest REAL order when it is recent, so the notification
+        // is visible even if the visitor opened the site after the order.
+        const latest = orders[0];
+        if (latest && orderAgeMinutes(latest) <= 30) {
+          let alreadyShown = false;
+          try {
+            alreadyShown = sessionStorage.getItem('alex-last-purchase-toast') === String(latest.id);
+          } catch (_) {}
+
+          if (!alreadyShown) {
+            queueRecentOrder(latest);
+            try {
+              sessionStorage.setItem('alex-last-purchase-toast', String(latest.id));
+            } catch (_) {}
+          }
+        }
         return;
       }
 
       const fresh = orders
         .filter(order => !seenPurchaseIds.has(String(order.id)))
-        .reverse();
+        .sort((a,b) => Number(a.id || 0) - Number(b.id || 0));
 
       fresh.forEach(order => {
-        seenPurchaseIds.add(String(order.id));
+        markRecentOrderSeen(order);
         queueRecentOrder(order);
       });
+
+      if (Number(data.latest_id) > lastRecentOrderId) {
+        lastRecentOrderId = Number(data.latest_id);
+      }
     } catch (_) {}
   }
 
   pollRecentOrders(true);
-  setInterval(() => pollRecentOrders(false), 8000);
+  setInterval(() => pollRecentOrders(false), 3000);
 
   async function trackOrderIntent(order, payment){
     const url = window.ALEX_STORE?.trackOrderUrl || '/api/track-order';
@@ -1272,12 +1498,36 @@
       const response = await fetch(url, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ product: order.product, product_id: order.productId || '', plan: order.plan, payment })
+        body: JSON.stringify({
+          product: order.product,
+          product_id: order.productId || '',
+          plan: order.plan,
+          payment
+        }),
+        cache:'no-store'
       });
-      if (!response.ok) return;
+
+      if (!response.ok) return null;
+
       const data = await response.json();
-      if (orderCount && Number.isFinite(Number(data.orders))) orderCount.textContent = Number(data.orders).toLocaleString('es-PE');
-    } catch (_) {}
+
+      if (orderCount && Number.isFinite(Number(data.orders))) {
+        orderCount.textContent = Number(data.orders).toLocaleString('es-PE');
+      }
+
+      // El comprador ya vio el aviso local inmediatamente.
+      // Aquí solo marcamos el ID real del servidor para evitar duplicados.
+      if (data.event) {
+        markRecentOrderSeen(data.event);
+        try {
+          sessionStorage.setItem('alex-last-purchase-toast', String(data.event.id || ''));
+        } catch (_) {}
+      }
+
+      return data.event || null;
+    } catch (_) {
+      return null;
+    }
   }
 
   function applyFilters() {
@@ -1370,6 +1620,35 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 1500);
     }
+  }
+
+  let purchaseEffectTimer = null;
+
+  function triggerPurchaseEffect(order){
+    if (!purchaseEffect || !order) return;
+
+    const product = String(order.product || '').trim() || 'tu plataforma';
+    const plan = String(order.plan || '').trim();
+    const payment = String(order.payment || '').trim();
+
+    if (purchaseEffectTag) purchaseEffectTag.textContent = t('purchase_effect_tag');
+    if (purchaseEffectTitle) purchaseEffectTitle.textContent = t('purchase_effect_title');
+
+    const template = String(t('purchase_effect_text') || '');
+    const baseText = template.replace('{product}', product);
+    const finalText = [baseText, plan ? `${t('plan')}: ${plan}` : '', payment ? `${t('select_payment')}: ${payment}` : ''].filter(Boolean).join(' · ');
+    if (purchaseEffectText) purchaseEffectText.textContent = finalText;
+
+    purchaseEffect.classList.remove('show');
+    purchaseEffect.setAttribute('aria-hidden','false');
+    void purchaseEffect.offsetWidth;
+    purchaseEffect.classList.add('show');
+
+    if (purchaseEffectTimer) clearTimeout(purchaseEffectTimer);
+    purchaseEffectTimer = setTimeout(() => {
+      purchaseEffect.classList.remove('show');
+      purchaseEffect.setAttribute('aria-hidden','true');
+    }, 2500);
   }
 
 
@@ -1513,10 +1792,22 @@
 
     toast?.classList.add('show');
     setTimeout(() => toast?.classList.remove('show'), 1300);
+
+    // 1) Mostrar el efecto y la notificación usando el nombre con que se registró.
+    //    Esto no depende de internet ni de la respuesta de la API.
+    const localOrderEvent = buildLocalOrderNotification(selectedOrder, selectedPayment);
+    triggerPurchaseEffect({...selectedOrder, payment:selectedPayment});
+    queueRecentOrder(localOrderEvent);
+
+    // 2) Registrar el pedido real en el servidor para que los demás visitantes
+    //    también reciban el aviso mediante /api/recent-orders.
     trackOrderIntent(selectedOrder, selectedPayment);
     setLiveActivity('order', selectedOrder.productId, selectedOrder.product);
+
+    // 3) Abrir WhatsApp con una pequeña pausa para que el cliente alcance
+    //    a ver la animación/notificación.
     const url = `https://wa.me/${window.ALEX_STORE.whatsapp}?text=${encodeURIComponent(message)}`;
-    setTimeout(() => window.open(url, '_blank', 'noopener'), 180);
+    setTimeout(() => window.open(url, '_blank', 'noopener'), 950);
   });
 
 
@@ -2213,6 +2504,82 @@
   musicBtn?.addEventListener('click',()=>musicOn?stopMusic():startMusic());
   window.AlexPulse={start:startMusic,stop:stopMusic};
 
+  let welcomeLiveTimer = null;
+  let welcomeLiveShownFor = '';
+
+  function getRegisteredAccessName(){
+    try {
+      return String(localStorage.getItem('alex-alias') || '').trim();
+    } catch (_) {
+      return '';
+    }
+  }
+
+  function showRegisteredWelcome(name){
+    if (!welcomeLiveToast || !welcomeLiveName) return;
+
+    const registeredName = String(name || getRegisteredAccessName() || '').trim();
+    if (!registeredName) return;
+
+    // Evita duplicar exactamente la misma bienvenida durante la misma entrada.
+    if (welcomeLiveShownFor === registeredName && welcomeLiveToast.classList.contains('show')) return;
+    welcomeLiveShownFor = registeredName;
+
+    welcomeLiveName.textContent = registeredName.toUpperCase();
+
+    let countryText = String(
+      document.getElementById('currentVisitorCountry')?.textContent
+      || document.getElementById('accessCountryValue')?.textContent
+      || ''
+    ).trim();
+
+    if (/detectando|detecting|cargando|loading/i.test(countryText)) countryText = '';
+
+    if (welcomeLiveMeta) {
+      welcomeLiveMeta.textContent = countryText
+        ? `${countryText} · TU EXPERIENCIA YA ESTÁ ACTIVA`
+        : 'TU EXPERIENCIA YA ESTÁ ACTIVA';
+    }
+
+    welcomeLiveToast.hidden = false;
+    welcomeLiveToast.style.display = 'flex';
+    welcomeLiveToast.classList.remove('show', 'leaving');
+    void welcomeLiveToast.offsetWidth;
+    welcomeLiveToast.classList.add('show');
+
+    if (welcomeLiveTimer) clearTimeout(welcomeLiveTimer);
+    welcomeLiveTimer = setTimeout(() => {
+      welcomeLiveToast.classList.add('leaving');
+      welcomeLiveToast.classList.remove('show');
+      setTimeout(() => {
+        welcomeLiveToast.classList.remove('leaving');
+      }, 500);
+    }, 6500);
+  }
+
+  function queueRegisteredWelcome(name){
+    const registeredName = String(name || getRegisteredAccessName() || '').trim();
+    if (!registeredName) return;
+
+    try {
+      sessionStorage.setItem('alex-welcome-pending', registeredName);
+    } catch (_) {}
+
+    // Fallback duro: aunque falle o no termine otra animación,
+    // esta bienvenida aparecerá en la interfaz.
+    setTimeout(() => {
+      try {
+        const pending = sessionStorage.getItem('alex-welcome-pending') || registeredName;
+        if (pending) {
+          showRegisteredWelcome(pending);
+          sessionStorage.removeItem('alex-welcome-pending');
+        }
+      } catch (_) {
+        showRegisteredWelcome(registeredName);
+      }
+    }, 4700);
+  }
+
   // ---------- Access portal ----------
   // V21: totalmente independiente de la geolocalización para que el botón
   // de entrada nunca quede bloqueado si un proveedor externo falla.
@@ -2354,15 +2721,25 @@
       setTimeout(() => gate.classList.remove('name-missing'), 650);
       return;
     }
+
+    const shareConsent = document.getElementById('shareLiveIdentity');
+    if (!shareConsent?.checked) {
+      if (accessNameError) {
+        accessNameError.textContent = 'Debes marcar “MOSTRAR MI NOMBRE Y PAÍS EN ACTIVIDAD EN VIVO” para ingresar.';
+      }
+      if (accessStatus) {
+        accessStatus.textContent = 'ACCESO BLOQUEADO · FALTA ACEPTAR LA ACTIVIDAD EN VIVO';
+      }
+      gate.classList.remove('granted');
+      gate.classList.add('consent-missing');
+      shareConsent?.focus();
+      setTimeout(() => gate.classList.remove('consent-missing'), 700);
+      return;
+    }
+
     if (accessNameError) accessNameError.textContent = '';
     saveAlias(alias);
-    try {
-      localStorage.setItem(
-        'alex-share-live-identity',
-        document.getElementById('shareLiveIdentity')?.checked ? '1' : '0'
-      );
-    } catch (_) {}
-
+    queueRegisteredWelcome(alias);
     const countryLabel = accessCountryLabel();
     if(accessStatus) accessStatus.textContent=`ACCESO CONCEDIDO · ${alias.toUpperCase()} · ${countryLabel}`;
     gate.classList.add('granted');
@@ -2385,9 +2762,7 @@
   }
   const shareLiveIdentity = document.getElementById('shareLiveIdentity');
   if (shareLiveIdentity) {
-    try {
-      shareLiveIdentity.checked = localStorage.getItem('alex-share-live-identity') === '1';
-    } catch (_) {}
+    shareLiveIdentity.checked = false;
   }
 
   if(aliasInput){
@@ -2400,12 +2775,48 @@
       if(accessNameError) accessNameError.textContent='';
     });
   }
+  function updateAccessButtonState(){
+    if (!enterBtn) return;
+    const consentOk = Boolean(shareLiveIdentity?.checked);
+    enterBtn.disabled = !consentOk;
+    enterBtn.setAttribute('aria-disabled', consentOk ? 'false' : 'true');
+
+    const consentBox = shareLiveIdentity?.closest('.live-share-consent');
+    consentBox?.classList.toggle('accepted', consentOk);
+
+    if (consentOk) {
+      if (accessStatus && !gate?.classList.contains('granted')) {
+        accessStatus.textContent = 'CASILLA ACEPTADA · ESCRIBE TU NOMBRE Y PULSA INICIAR EXPERIENCIA';
+      }
+      if (accessNameError?.textContent?.includes('MOSTRAR MI NOMBRE')) {
+        accessNameError.textContent = '';
+      }
+    } else {
+      if (accessStatus && !gate?.classList.contains('granted')) {
+        accessStatus.textContent = 'ACCESO BLOQUEADO · MARCA LA CASILLA OBLIGATORIA PARA CONTINUAR';
+      }
+    }
+  }
+
+  shareLiveIdentity?.addEventListener('change', updateAccessButtonState);
+  updateAccessButtonState();
+
   enterBtn?.addEventListener('click',grantAccess);
-  aliasInput?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();grantAccess();}});
+  aliasInput?.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      grantAccess();
+    }
+  });
 
   window.addEventListener('alex:access-granted', (event) => {
     const registeredName = String(event?.detail?.alias || chatOwnName() || '').trim();
     if (chatIdentity) chatIdentity.textContent = registeredName || '—';
+  });
+
+  window.addEventListener('alex:access-granted', (event) => {
+    const registeredName = String(event?.detail?.alias || getRegisteredAccessName() || '').trim();
+    queueRegisteredWelcome(registeredName);
   });
 
 
@@ -2617,8 +3028,11 @@
   const chatSend = document.getElementById('globalChatSend');
   const chatError = document.getElementById('globalChatError');
   const chatIdentity = document.getElementById('globalChatIdentity');
+  const chatHistory = document.getElementById('globalChatHistory');
 
   let chatLatestId = 0;
+  let chatOldestId = 0;
+  let chatHasMore = false;
   let chatLoaded = false;
   let chatPolling = null;
 
@@ -2640,23 +3054,28 @@
     try{return String(localStorage.getItem('alex-alias')||'').trim();}catch(_){return '';}
   }
 
-  function renderChatMessage(item){
+  function renderChatMessage(item, prepend=false){
     if(!chatMessages || !item || document.querySelector(`[data-chat-id="${item.id}"]`)) return;
     if(chatEmpty) chatEmpty.hidden=true;
 
     const wrap=document.createElement('article');
     wrap.className='global-chat-message';
     wrap.dataset.chatId=item.id;
+
     if(chatOwnName() && String(item.display_name||'').toLowerCase()===chatOwnName().toLowerCase()){
       wrap.classList.add('own');
     }
 
     const meta=document.createElement('div');
     meta.className='global-chat-meta';
+
     const name=document.createElement('strong');
+    // Mostrar exactamente el nombre guardado al registrarse.
     name.textContent=item.display_name||'—';
+
     const region=document.createElement('span');
     region.textContent=`${escapeFlag(item.country_code)} ${item.country||''}`.trim();
+
     const time=document.createElement('span');
     time.textContent=chatTimeLabel(item.created_at);
 
@@ -2666,23 +3085,90 @@
 
     meta.append(name,region,time);
     wrap.append(meta,body);
-    chatMessages.appendChild(wrap);
+
+    if (prepend) {
+      const firstMessage = chatMessages.querySelector('.global-chat-message');
+      if (firstMessage) chatMessages.insertBefore(wrap, firstMessage);
+      else chatMessages.appendChild(wrap);
+    } else {
+      chatMessages.appendChild(wrap);
+    }
   }
 
   async function loadChat(initial=false){
     if(!window.ALEX_STORE?.chatUrl || !chatMessages) return;
+
     try{
-      const suffix=(!initial && chatLatestId)?`?after=${encodeURIComponent(chatLatestId)}`:'';
+      const suffix=(!initial && chatLatestId)
+        ? `?after=${encodeURIComponent(chatLatestId)}`
+        : '';
+
       const res=await fetch(`${window.ALEX_STORE.chatUrl}${suffix}`,{cache:'no-store'});
       if(!res.ok) return;
+
       const data=await res.json();
-      (data.messages||[]).forEach(renderChatMessage);
-      chatLatestId=Math.max(chatLatestId,Number(data.latest_id||0));
+      const messages=data.messages||[];
+
+      messages.forEach(item => renderChatMessage(item, false));
+
+      if (messages.length) {
+        chatLatestId=Math.max(chatLatestId, Number(data.latest_id||0), ...messages.map(m=>Number(m.id||0)));
+        const batchOldest=Math.min(...messages.map(m=>Number(m.id||0)).filter(Boolean));
+        if (batchOldest) chatOldestId = chatOldestId ? Math.min(chatOldestId,batchOldest) : batchOldest;
+      }
+
+      if (initial) {
+        chatHasMore=Boolean(data.has_more);
+        if (chatHistory) chatHistory.hidden=!chatHasMore;
+      }
+
       if(initial && chatMessages.scrollHeight) chatMessages.scrollTop=chatMessages.scrollHeight;
-      else if((data.messages||[]).length) chatMessages.scrollTop=chatMessages.scrollHeight;
+      else if(messages.length) chatMessages.scrollTop=chatMessages.scrollHeight;
+
       chatLoaded=true;
     }catch(_){}
   }
+
+  async function loadOlderChat(){
+    if(!chatOldestId || !window.ALEX_STORE?.chatUrl || !chatMessages) return;
+
+    if(chatHistory) chatHistory.disabled=true;
+
+    const previousHeight=chatMessages.scrollHeight;
+
+    try{
+      const res=await fetch(
+        `${window.ALEX_STORE.chatUrl}?before=${encodeURIComponent(chatOldestId)}`,
+        {cache:'no-store'}
+      );
+      if(!res.ok) return;
+
+      const data=await res.json();
+      const messages=data.messages||[];
+
+      // Insertar del más nuevo al más viejo delante del primer mensaje,
+      // para conservar el orden cronológico final.
+      [...messages].reverse().forEach(item => renderChatMessage(item, true));
+
+      if(messages.length){
+        chatOldestId=Math.min(
+          chatOldestId,
+          ...messages.map(m=>Number(m.id||0)).filter(Boolean)
+        );
+      }
+
+      chatHasMore=Boolean(data.has_more);
+      if(chatHistory) chatHistory.hidden=!chatHasMore;
+
+      // Mantener la posición visual mientras aparecen mensajes antiguos arriba.
+      chatMessages.scrollTop=chatMessages.scrollHeight-previousHeight;
+    }catch(_){
+    }finally{
+      if(chatHistory) chatHistory.disabled=false;
+    }
+  }
+
+  chatHistory?.addEventListener('click',loadOlderChat);
 
   function openGlobalChat(){
     if(!chatPanel) return;
@@ -2726,8 +3212,7 @@
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          message,
-          name: chatOwnName()
+          message
         })
       });
       const data=await res.json().catch(()=>({}));

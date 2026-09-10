@@ -540,8 +540,15 @@ def serialize_chat_row(row):
     item.pop("visitor_id", None)
     return item
 
-def latest_chat_messages(limit=40, after_id=None):
-    limit = max(1, min(int(limit or 40), 60))
+def latest_chat_messages(limit=100, after_id=None, before_id=None):
+    """Read chat history without deleting messages.
+
+    after_id: newer messages, ascending
+    before_id: older messages, returned ascending
+    default: latest messages, ascending
+    """
+    limit = max(1, min(int(limit or 100), 200))
+
     stmt = select(
         chat_messages.c.id,
         chat_messages.c.display_name,
@@ -550,16 +557,29 @@ def latest_chat_messages(limit=40, after_id=None):
         chat_messages.c.message,
         chat_messages.c.created_at,
     )
+
     if after_id is not None and after_id > 0:
-        stmt = stmt.where(chat_messages.c.id > after_id).order_by(chat_messages.c.id.asc()).limit(limit)
+        stmt = (
+            stmt.where(chat_messages.c.id > after_id)
+            .order_by(chat_messages.c.id.asc())
+            .limit(limit)
+        )
+    elif before_id is not None and before_id > 0:
+        stmt = (
+            stmt.where(chat_messages.c.id < before_id)
+            .order_by(chat_messages.c.id.desc())
+            .limit(limit)
+        )
     else:
         stmt = stmt.order_by(chat_messages.c.id.desc()).limit(limit)
 
     with engine.connect() as conn:
-        rows = conn.execute(stmt).mappings().all()
+        rows = list(conn.execute(stmt).mappings().all())
 
-    if not after_id:
+    # Always send chronological order to the browser.
+    if before_id or not after_id:
         rows = list(reversed(rows))
+
     return [serialize_chat_row(row) for row in rows]
 
 
@@ -835,11 +855,11 @@ def presence():
     })
 
 
-def recent_order_events(limit=10):
-    """Return recent real order intents recorded by the site.
+def recent_order_events(limit=20, after_id=None):
+    """Return real order intents recorded by the site.
 
-    Identity/country are only exposed when the visitor opted in to public
-    live identity. Otherwise the event is anonymized.
+    If after_id is provided, only newer orders are returned.
+    Public identity is exposed only when the visitor consented.
     """
     stmt = (
         select(
@@ -860,22 +880,28 @@ def recent_order_events(limit=10):
             )
         )
         .where(events.c.event_type == "order")
-        .order_by(events.c.id.desc())
-        .limit(max(1, min(int(limit or 10), 20)))
     )
+
+    if after_id is not None:
+        stmt = (
+            stmt
+            .where(events.c.id > after_id)
+            .order_by(events.c.id.asc())
+        )
+    else:
+        stmt = stmt.order_by(events.c.id.desc())
+
+    stmt = stmt.limit(max(1, min(int(limit or 20), 50)))
 
     with engine.connect() as conn:
         rows = [dict(r) for r in conn.execute(stmt).mappings().all()]
 
     output = []
     for row in rows:
-        share = bool(row.pop("share_identity", 0))
+        # En V91+ el consentimiento de nombre+país es obligatorio para acceder.
+        # Por eso el aviso de pedido usa el mismo nombre registrado.
+        row.pop("share_identity", None)
         row.pop("visitor_id", None)
-
-        if not share:
-            row["visitor_name"] = "Cliente"
-            row["country"] = ""
-            row["country_code"] = ""
 
         created_at = row.get("created_at")
         if isinstance(created_at, datetime):
@@ -896,9 +922,25 @@ def recent_order_events(limit=10):
 
 @app.route("/api/recent-orders")
 def recent_orders():
+    try:
+        after = max(0, int(request.args.get("after", "0")))
+    except ValueError:
+        after = 0
+
+    orders_data = recent_order_events(
+        limit=30,
+        after_id=after if after > 0 else None
+    )
+
+    if orders_data:
+        latest_id = max(int(item.get("id") or 0) for item in orders_data)
+    else:
+        latest_id = after
+
     response = jsonify({
         "ok": True,
-        "orders": recent_order_events(limit=10)
+        "orders": orders_data,
+        "latest_id": latest_id,
     })
     response.headers["Cache-Control"] = "no-store, max-age=0"
     return response
@@ -957,17 +999,45 @@ def track_order():
     product_id = str(payload.get("product_id", "")).strip()[:100]
     plan = str(payload.get("plan", "")).strip()[:180]
     payment = str(payload.get("payment", "")).strip()[:80]
+
     if not product:
         return jsonify({"ok": False, "error": "missing_product"}), 400
+
     visitor_id = ensure_visitor()
-    record_event("order", product_id=product_id, product_name=product, plan=plan, payment=payment)
+    event_id = record_event(
+        "order",
+        product_id=product_id,
+        product_name=product,
+        plan=plan,
+        payment=payment,
+    )
+
     update_live_activity(
         visitor_id,
         action="order",
         product_id=product_id,
         product_name=product,
     )
-    return jsonify({"ok": True, "orders": get_stats()["orders"]})
+
+    context = visitor_context(visitor_id)
+
+    public_event = {
+        "id": event_id,
+        "product": product,
+        "plan": plan,
+        "visitor_name": context.get("display_name") or "Cliente",
+        "country": context.get("country") or "",
+        "country_code": context.get("country_code") or "",
+        "created_at": utcnow().isoformat(),
+    }
+
+    response = jsonify({
+        "ok": True,
+        "orders": get_stats()["orders"],
+        "event": public_event,
+    })
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
 
 
 
@@ -1121,9 +1191,52 @@ def chat_feed():
         after = max(0, int(request.args.get("after", "0")))
     except ValueError:
         after = 0
-    messages = latest_chat_messages(limit=50, after_id=after if after else None)
+
+    try:
+        before = max(0, int(request.args.get("before", "0")))
+    except ValueError:
+        before = 0
+
+    if before:
+        messages = latest_chat_messages(limit=100, before_id=before)
+        oldest_id = messages[0]["id"] if messages else before
+
+        with engine.connect() as conn:
+            older_exists = conn.execute(
+                select(func.count())
+                .select_from(chat_messages)
+                .where(chat_messages.c.id < oldest_id)
+            ).scalar_one()
+
+        return jsonify({
+            "ok": True,
+            "messages": messages,
+            "oldest_id": oldest_id,
+            "has_more": bool(older_exists),
+        })
+
+    messages = latest_chat_messages(limit=100, after_id=after if after else None)
     latest_id = messages[-1]["id"] if messages else after
-    return jsonify({"ok": True, "messages": messages, "latest_id": latest_id})
+
+    if after:
+        has_more = False
+    else:
+        oldest_id = messages[0]["id"] if messages else 0
+        with engine.connect() as conn:
+            older_exists = conn.execute(
+                select(func.count())
+                .select_from(chat_messages)
+                .where(chat_messages.c.id < oldest_id)
+            ).scalar_one() if oldest_id else 0
+        has_more = bool(older_exists)
+
+    return jsonify({
+        "ok": True,
+        "messages": messages,
+        "latest_id": latest_id,
+        "oldest_id": messages[0]["id"] if messages else 0,
+        "has_more": has_more,
+    })
 
 
 @app.route("/api/chat", methods=["POST"])
@@ -1134,20 +1247,19 @@ def chat_send():
 
     context = visitor_context(visitor_id)
 
-    # V37: usa exactamente el nombre con el que la persona se registró
-    # en la portada. El navegador lo envía junto con el mensaje y aquí
-    # se sincroniza con la sesión/registro del visitante.
+    # El nombre del chat SIEMPRE sale del registro de acceso.
+    # No se permite cambiarlo enviando otro nombre desde el navegador.
     display_name = clean_required_name(
-        payload.get("name")
-        or session.get("display_name")
+        session.get("display_name")
         or context.get("display_name")
     )
+
     if len(display_name) < 2 or display_name.lower() in {"visitante", "visitor", "guest", "usuario", "user"}:
         return jsonify({"ok": False, "error": "registration_required"}), 403
 
     session["display_name"] = display_name
 
-    # Mantener sincronizado el nombre del visitante con el usado en el chat.
+    # Mantener el mismo nombre registrado en la tabla de visitantes.
     with engine.begin() as conn:
         conn.execute(
             update(visitors)

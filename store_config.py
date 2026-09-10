@@ -14,7 +14,36 @@ STORE = {'name': 'ALEX STREAMING',
  'status_text': 'ALEX STREAMING // PREMIUM ACCESS ONLINE',
  'edition_text': 'PREMIUM ACCESS',
  'entry_tagline': 'STREAMING • IA • SOFTWARE • REDES • GLOBAL',
- 'registration_required': True}
+ 'registration_required': True,
+ 'official_socials': [
+   {
+     'id': 'facebook-oficial',
+     'name': 'Facebook oficial',
+     'handle': 'Página oficial de Alex Streaming',
+     'url': 'https://www.facebook.com/profile.php?id=61593975724572',
+     'icon': 'simple-icons:facebook',
+     'accent': '#1877F2',
+     'action': 'VISITAR FACEBOOK'
+   },
+   {
+     'id': 'whatsapp-grupo',
+     'name': 'Grupo oficial de WhatsApp',
+     'handle': 'Comunidad Alex Streaming',
+     'url': 'https://chat.whatsapp.com/JXPoVY6ViMjH5c9FbqSwWX',
+     'icon': 'simple-icons:whatsapp',
+     'accent': '#25D366',
+     'action': 'UNIRME AL GRUPO'
+   },
+   {
+     'id': 'tiktok-oficial',
+     'name': 'TikTok oficial',
+     'handle': '@thecoldknows',
+     'url': 'https://www.tiktok.com/@thecoldknows',
+     'icon': 'simple-icons:tiktok',
+     'accent': '#FE2C55',
+     'action': 'VER TIKTOK'
+   }
+ ]}
 
 PRODUCTS = [{'id': 'max',
   'name': 'HBO Max',

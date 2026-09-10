@@ -40,11 +40,14 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
+    "@type": "Organization",
     "name": "ALEX STREAMING",
-    "alternateName": "ALEXSTREAMING.STORE",
     "url": "https://alexstreaming.store/",
-    "inLanguage": "es-PE"
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61593975724572",
+      "https://chat.whatsapp.com/JXPoVY6ViMjH5c9FbqSwWX",
+      "https://www.tiktok.com/@thecoldknows"
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,17 +104,17 @@
         <strong id="accessCountryValue">DETECTANDO...</strong>
       </div>
       <label class="live-share-consent">
-        <input id="shareLiveIdentity" type="checkbox">
+        <input id="shareLiveIdentity" type="checkbox" required aria-required="true">
         <span>
           <strong>MOSTRAR MI NOMBRE Y PAÍS EN ACTIVIDAD EN VIVO</strong>
-          <small>Opcional. Si no lo activas, aparecerás como “Visitante”.</small>
+          <small>OBLIGATORIO. Debes marcar esta casilla para poder ingresar al sitio.</small>
         </span>
       </label>
       <div class="access-locale-live" id="accessLocaleLine">
         <span><iconify-icon icon="lucide:languages"></iconify-icon><b id="accessLanguageValue">ESPAÑOL</b></span>
         <span><iconify-icon icon="lucide:coins"></iconify-icon><b id="accessCurrencyValue">PEN · S/</b></span>
       </div>
-      <button class="access-enter" id="accessEnter" type="button">
+      <button class="access-enter" id="accessEnter" type="button" disabled aria-disabled="true">
         <span id="accessEnterText">INICIAR EXPERIENCIA</span><b>ENTER ↗</b>
       </button>
       <div class="access-features">
@@ -121,7 +124,7 @@
         <span><iconify-icon icon="simple-icons:whatsapp"></iconify-icon> <b data-i18n="feature_support">SOPORTE</b></span>
       </div>
       <div class="access-name-error" id="accessNameError" role="alert" aria-live="polite"></div>
-      <div class="access-status"><i></i><span id="accessStatus">ACCESO OBLIGATORIO: ESCRIBE TU NOMBRE REAL PARA ENTRAR A LA MATRIX DE ALEX STREAMING.</span></div>
+      <div class="access-status"><i></i><span id="accessStatus">ACCESO OBLIGATORIO: ESCRIBE TU NOMBRE Y MARCA LA CASILLA PARA MOSTRAR TU NOMBRE Y PAÍS EN LA ACTIVIDAD EN VIVO.</span></div>
     </div>
   </div>
 
@@ -148,16 +151,30 @@
         <div class="epic-logo-shell"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></div>
       </div>
       <p class="epic-kicker">{{ store.name }} // ELITE ACCESS</p>
+      <div class="epic-welcome-user">
+        <small>IDENTIDAD VERIFICADA // ACCESS GRANTED</small>
+        <span class="epic-welcome-label">ACCESO COMPLETADO</span>
+        <strong id="epicWelcomeName">USUARIO</strong>
+        <div class="epic-personal-line">
+          <iconify-icon icon="lucide:user-check"></iconify-icon>
+          <b id="epicWelcomePhrase">TU ACCESO PERSONAL ESTÁ LISTO</b>
+        </div>
+        <em id="epicWelcomeCountry">CONECTANDO...</em>
+      </div>
+
       <div class="entry-v12-title">
         <span>ACCESO A TODO TU</span>
         <strong>UNIVERSO DIGITAL</strong>
-        <em>DESDE LA MATRIX</em>
+        <em>TU PANEL ESTÁ LISTO</em>
       </div>
       <p class="entry-subtitle">Streaming, inteligencia artificial, software, productividad y redes con atención directa por WhatsApp.</p>
       <div class="entry-service-rail"><span>STREAMING</span><i></i><span>IA</span><i></i><span>SOFTWARE</span><i></i><span>REDES</span></div>
       <div class="entry-country" id="entryCountry"><b></b><span>LOCALIZANDO USUARIO...</span></div>
       <div class="epic-progress"><i id="entryProgressBar"></i></div>
-      <div class="entry-progress-meta"><span id="entryStatusText">INICIALIZANDO ALEXSTREAMING.STORE</span><strong id="entryProgressText">0%</strong></div>
+      <div class="entry-progress-meta"><span id="entryStatusText">INICIALIZANDO TU ACCESO</span><strong id="entryProgressText">0%</strong></div>
+      <button class="epic-skip-button" id="epicSkipButton" type="button">
+        ENTRAR AHORA <b>↗</b>
+      </button>
       <small>{{ products|length }} SERVICIOS // {{ social_platforms|length }} REDES // 04 MÉTODOS DE PAGO</small>
     </div>
   </div>
@@ -186,6 +203,7 @@
       <nav class="nav" aria-label="Navegación principal">
         <a href="#catalogo" data-i18n="nav_catalog">CATÁLOGO</a>
         <a href="#redes" data-i18n="nav_social">REDES</a>
+        <a href="#canales-oficiales">OFICIALES</a>
         <a href="#pagos" data-i18n="nav_payments">PAGOS</a>
         <a href="#como-comprar" data-i18n="nav_how">CÓMO COMPRAR</a>
       </nav>
@@ -264,6 +282,36 @@
     </div>
   </header>
 
+  <section class="official-top-strip" id="canales-oficiales" aria-label="Canales oficiales de Alex Streaming">
+    <div class="shell official-top-inner">
+      <div class="official-top-label">
+        <span><i></i> CANALES OFICIALES</span>
+        <small>Estos enlaces pertenecen a Alex Streaming · NO SON PRODUCTOS EN VENTA</small>
+      </div>
+
+      <div class="official-top-links">
+        {% for channel in store.official_socials %}
+        <a class="official-top-link"
+           href="{{ channel.url }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="--official: {{ channel.accent }}"
+           aria-label="Abrir {{ channel.name }}">
+          <span class="official-top-icon">
+            <iconify-icon icon="{{ channel.icon }}"></iconify-icon>
+          </span>
+          <span class="official-top-copy">
+            <small>OFICIAL</small>
+            <strong>{{ channel.name }}</strong>
+            <em>{{ channel.handle }}</em>
+          </span>
+          <b>↗</b>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
   <main id="inicio">
     <section class="hero-super-section" id="inicio">
       <div class="hacker-grid-overlay" aria-hidden="true"></div>
@@ -284,6 +332,7 @@
       </div>
 
       <div class="hero-super-shell shell">
+
         <div class="hero-super-copy">
           <div class="super-topline">
             <span>気</span>
@@ -691,6 +740,14 @@
         <span class="brand-mark small brand-mark-image" aria-hidden="true"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></span>
         <div><strong>{{ store.name }}</strong><p>{{ store.name }} // {{ store.edition_text|default("ELITE ACCESS") }} // 2026</p></div>
       </div>
+      <div class="footer-official-links">
+        {% for channel in store.official_socials %}
+        <a href="{{ channel.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ channel.name }}">
+          <iconify-icon icon="{{ channel.icon }}"></iconify-icon>
+          <span>{{ channel.name }}</span>
+        </a>
+        {% endfor %}
+      </div>
       <p>© <span id="year"></span> {{ store.name }}. Usa este sitio únicamente para ofertas y servicios que estés autorizado a comercializar.</p>
     </div>
   </footer>
@@ -899,6 +956,11 @@
       <strong id="globalChatIdentity">—</strong>
     </div>
 
+    <button class="global-chat-history" id="globalChatHistory" type="button" hidden>
+      <iconify-icon icon="lucide:history"></iconify-icon>
+      <span>CARGAR MENSAJES ANTERIORES</span>
+    </button>
+
     <div class="global-chat-messages" id="globalChatMessages" aria-live="polite">
       <div class="global-chat-empty" id="globalChatEmpty" data-i18n="chat_empty">Todavía no hay mensajes. Inicia la conversación.</div>
     </div>
@@ -987,18 +1049,44 @@
     <i></i>
   </button>
 
-  <div class="visitor-toast" id="visitorToast" role="status" aria-live="polite">
-    <span class="visitor-toast-icon"><iconify-icon icon="lucide:radio-tower"></iconify-icon></span>
-    <div><small>NUEVA CONEXIÓN</small><strong id="visitorToastText">Visitante conectado</strong></div>
+  <div class="welcome-live-toast" id="welcomeLiveToast" role="status" aria-live="polite" hidden>
+    <div class="welcome-live-scan"></div>
+    <span class="welcome-live-icon">
+      <iconify-icon icon="lucide:shield-check"></iconify-icon>
+    </span>
+    <div class="welcome-live-copy">
+      <small>ACCESO COMPLETADO · ALEX STREAMING</small>
+      <span>BIENVENIDO</span>
+      <strong id="welcomeLiveName">USUARIO</strong>
+      <em id="welcomeLiveMeta">TU EXPERIENCIA YA ESTÁ ACTIVA</em>
+    </div>
+  </div>
+
+  <div class="visitor-toast visitor-entry-toast" id="visitorToast" role="status" aria-live="polite">
+    <span class="visitor-toast-icon"><iconify-icon icon="lucide:log-in"></iconify-icon></span>
+    <div>
+      <small>REGISTRO COMPLETADO · EN VIVO</small>
+      <strong id="visitorToastText">Un cliente terminó de registrarse</strong>
+    </div>
   </div>
   <div class="purchase-toast" id="purchaseToast" role="status" aria-live="polite">
     <span class="purchase-toast-icon">
       <iconify-icon id="purchaseToastIcon" icon="lucide:shopping-bag"></iconify-icon>
     </span>
     <div class="purchase-toast-copy">
-      <small>PEDIDO RECIENTE</small>
-      <strong id="purchaseToastTitle">Un cliente inició un pedido</strong>
+      <small>COMPRA DE PLATAFORMA · EN VIVO</small>
+      <strong id="purchaseToastTitle">Un cliente compró una plataforma</strong>
       <span id="purchaseToastMeta">Hace unos segundos</span>
+    </div>
+  </div>
+
+  <div class="purchase-effect" id="purchaseEffect" aria-hidden="true">
+    <div class="purchase-effect-card">
+      <div class="purchase-effect-glow"></div>
+      <div class="purchase-effect-icon"><iconify-icon icon="lucide:badge-check"></iconify-icon></div>
+      <small id="purchaseEffectTag">PEDIDO REGISTRADO</small>
+      <strong id="purchaseEffectTitle">Tu pedido fue preparado</strong>
+      <p id="purchaseEffectText">Tu selección está lista para continuar por WhatsApp.</p>
     </div>
   </div>
 
