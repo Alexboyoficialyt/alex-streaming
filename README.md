@@ -1,3 +1,158 @@
+# ALEX STREAMING V90 — PRECIOS EN MONEDA DEL USUARIO
+
+DISEÑO (WEB / REDES) y CONSULTORÍA Y DISEÑO:
+- Conservan exactamente los precios base en USD de las capturas.
+- El sitio detecta el país del visitante.
+- Convierte esos precios desde USD a la moneda correspondiente.
+- Si el usuario cambia manualmente la moneda del selector, los precios se recalculan.
+- Usa tasas recientes mediante Frankfurter y un proveedor de respaldo.
+- Si una tasa falla temporalmente, muestra el precio original en USD en lugar de inventar una conversión.
+- El precio convertido también se usa en el checkout y en el mensaje de WhatsApp.
+
+Ejemplos:
+- Perú -> PEN / S/
+- Estados Unidos -> USD
+- España -> EUR
+- México -> MXN
+- Colombia -> COP
+
+# ALEX STREAMING V89 — PEDIDOS RECIENTES
+
+Se agregó la notificación flotante inferior izquierda.
+
+- Usa pedidos reales registrados por /api/track-order.
+- No inventa compras.
+- Muestra producto, plan y tiempo.
+- Nombre + país/bandera solo se muestran si el visitante aceptó compartir identidad.
+- Sin consentimiento, aparece como “Cliente”.
+- La notificación revisa nuevos pedidos cada 8 segundos.
+- En el preview se muestra una DEMOSTRACIÓN visual automática.
+
+ACTUALIZACIÓN V88
+Ahora sí quedó puesto DENTRO DEL SITIO WEB (no solo en el README) en las 2 tarjetas:
+
+DISEÑO (WEB / REDES)
+- Pagina web informativa = $99 USD
+- Pagina web negocio = $150 USD
+- Pagina Blog = $99 USD
+- Tienda online eCommerce = $199 USD
+- ------------------------
+- Actualización Wordpress = $30 USD
+- Mantenimiento Web = $25 USD
+- Mantenimiento Hosting = $40 USD
+
+CONSULTORÍA Y DISEÑO
+- Campaña publicitaria Búsqueda = $40 USD
+- Campaña publicitaria Redes = $35 USD
+- ------------------------
+- Diseño de publicación (1) = $7 USD
+- Diseño de publicación (3) = $19 USD
+- Diseño de marca = $99 USD
+- Branding de Red social = $70 USD
+- Diseño de logotipo = $25 USD
+- Consultoría en Redes = $99 USD
+- ------------------------
+- Informe SEO = $29 USD
+- SEO informe+consultoría = $60 USD
+
+
+ACTUALIZACIÓN V87:
+Se dejaron los 2 bloques con LOS MISMOS PRECIOS de las capturas del usuario.
+
+DISEÑO (WEB / REDES)
+- Pagina web informativa = $99 USD
+- Pagina web negocio = $150 USD
+- Pagina Blog = $99 USD
+- Tienda online eCommerce = $199 USD
+- Actualización Wordpress = $30 USD
+- Mantenimiento Web = $25 USD
+- Mantenimiento Hosting = $40 USD
+
+CONSULTORÍA Y DISEÑO
+- Campaña publicitaria Búsqueda = $40 USD
+- Campaña publicitaria Redes = $35 USD
+- Diseño de publicación (1) = $7 USD
+- Diseño de publicación (3) = $19 USD
+- Diseño de marca = $99 USD
+- Branding de Red social = $70 USD
+- Diseño de logotipo = $25 USD
+- Consultoría en Redes = $99 USD
+- Informe SEO = $29 USD
+- SEO informe+consultoría = $60 USD
+
+# ALEX STREAMING V86 — WEB / REDES / CONSULTORÍA
+
+Se actualizaron los servicios de la categoría de sitios web y dominios.
+
+AHORA SOLO QUEDAN ESTOS 2 BLOQUES:
+
+1. DISEÑO (WEB / REDES)
+- Pagina web informativa = $99 USD
+- Pagina web negocio = $150 USD
+- Pagina Blog = $99 USD
+- Tienda online eCommerce = $199 USD
+- Actualización Wordpress = $30 USD
+- Mantenimiento Web = $25 USD
+- Mantenimiento Hosting = $40 USD
+
+2. CONSULTORÍA Y DISEÑO
+- Campaña publicitaria Búsqueda = $40 USD
+- Campaña publicitaria Redes = $35 USD
+- Diseño de publicación (1) = $7 USD
+- Diseño de publicación (3) = $19 USD
+- Diseño de marca = $99 USD
+- Branding de Red social = $70 USD
+- Diseño de logotipo = $25 USD
+- Consultoría en Redes = $99 USD
+- Informe SEO = $29 USD
+- SEO informe+consultoría = $60 USD
+
+También se eliminaron los demás servicios web anteriores de esa categoría.
+
+
+# ALEX STREAMING V85 — ACTIVIDAD EN VIVO + WEB & DOMINIOS
+
+Se agregó:
+- vistas reales
+- usuarios online reales
+- actividad en vivo cada 3 segundos
+- detecta qué producto está viendo el visitante
+- muestra cuando abre la compra
+- muestra cuando inicia un pedido
+- nombre + bandera solo con consentimiento opcional
+- sin consentimiento aparece como Visitante
+- no publica IP, ciudad ni ubicación exacta
+
+Nueva categoría:
+SITIOS WEB Y DOMINIOS
+- Landing Page Profesional
+- Sitio Web Profesional
+- Catálogo / Tienda Online
+- Registro y Configuración de Dominio
+- Hosting y Despliegue Web
+- Sitio Web + Dominio
+
+IMPORTANTE:
+En Railway usa PostgreSQL/DATABASE_URL para que las métricas sean persistentes
+y compartidas correctamente entre instancias.
+
+# ALEX STREAMING V84 — VISTAS Y ONLINE REALES
+
+Se agregó:
+- contador de VISTAS reales
+- contador de usuarios ONLINE reales
+- una vista se registra al cargar la página desde un navegador
+- ONLINE significa sesión activa con heartbeat en los últimos 45 segundos
+- actualización visual cada 5 segundos
+- heartbeat cada 15 segundos
+- cada sesión se cuenta una sola vez como online aunque actualice varias veces
+- no se muestra ubicación exacta ni IP
+
+IMPORTANTE EN RAILWAY:
+Para que el total de vistas sobreviva a redeploys/reinicios, usa PostgreSQL
+y asegúrate de tener DATABASE_URL configurado. Con SQLite local el contador
+puede reiniciarse cuando Railway recrea el contenedor.
+
 # ALEX STREAMING V83 — HACKER NATURAL TEXT
 
 Cambios de texto:

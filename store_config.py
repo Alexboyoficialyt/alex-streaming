@@ -1721,6 +1721,78 @@ PRODUCTS.extend([
     }
 ])
 
+# ============================================================
+# V86 — SERVICIOS WEB, REDES Y CONSULTORÍA
+# ============================================================
+PRODUCTS.extend([
+    {
+        "id": "diseno-web-redes",
+        "name": "DISEÑO (WEB / REDES)",
+        "icon": "lucide:globe",
+        "accent": "#FF7A00",
+        "category": "SITIOS WEB Y DOMINIOS",
+        "badge": "WEB",
+        "description": "Servicios de páginas web, blogs, tiendas online y mantenimiento.",
+        "plans": [
+            {"name": "Pagina web informativa", "price": 99, "price_currency": "USD"},
+            {"name": "Pagina web negocio", "price": 150, "price_currency": "USD"},
+            {"name": "Pagina Blog", "price": 99, "price_currency": "USD"},
+            {"name": "Tienda online eCommerce", "price": 199, "price_currency": "USD"},
+            {"name": "------------------------", "price": None},
+            {"name": "Actualización Wordpress", "price": 30, "price_currency": "USD"},
+            {"name": "Mantenimiento Web", "price": 25, "price_currency": "USD"},
+            {"name": "Mantenimiento Hosting", "price": 40, "price_currency": "USD"}
+        ],
+        "details": [
+            "Diseño y desarrollo de sitios web informativos, de negocio, blogs y eCommerce.",
+            "Actualización de Wordpress y mantenimiento técnico.",
+            "Soporte y coordinación directa por WhatsApp."
+        ],
+        "notes": [
+            "Los precios están expresados en USD.",
+            "El alcance final de cada proyecto se coordina antes de iniciar."
+        ],
+        "logo_url": "",
+        "logo_class": "",
+        "display_name": "Diseño Web / Redes"
+    },
+    {
+        "id": "consultoria-diseno",
+        "name": "CONSULTORÍA Y DISEÑO",
+        "icon": "lucide:paintbrush-vertical",
+        "accent": "#FF7A00",
+        "category": "SITIOS WEB Y DOMINIOS",
+        "badge": "MEDIA",
+        "description": "Campañas, branding, publicaciones, logos, redes y consultoría SEO.",
+        "plans": [
+            {"name": "Campaña publicitaria Búsqueda", "price": 40, "price_currency": "USD"},
+            {"name": "Campaña publicitaria Redes", "price": 35, "price_currency": "USD"},
+            {"name": "------------------------", "price": None},
+            {"name": "Diseño de publicación (1)", "price": 7, "price_currency": "USD"},
+            {"name": "Diseño de publicación (3)", "price": 19, "price_currency": "USD"},
+            {"name": "Diseño de marca", "price": 99, "price_currency": "USD"},
+            {"name": "Branding de Red social", "price": 70, "price_currency": "USD"},
+            {"name": "Diseño de logotipo", "price": 25, "price_currency": "USD"},
+            {"name": "Consultoría en Redes", "price": 99, "price_currency": "USD"},
+            {"name": "------------------------", "price": None},
+            {"name": "Informe SEO", "price": 29, "price_currency": "USD"},
+            {"name": "SEO informe+consultoría", "price": 60, "price_currency": "USD"}
+        ],
+        "details": [
+            "Campañas publicitarias, publicaciones, branding y logotipos.",
+            "Consultoría en redes y reportes SEO.",
+            "Atención y coordinación directa por WhatsApp."
+        ],
+        "notes": [
+            "Los precios están expresados en USD.",
+            "Los entregables y tiempos se coordinan según el servicio elegido."
+        ],
+        "logo_url": "",
+        "logo_class": "",
+        "display_name": "Consultoría y Diseño"
+    }
+])
+
 # ESET: conserva la tarjeta, pero usa un icono de seguridad neutral.
 # El logo oficial no se incrusta automáticamente porque ESET exige aprobación previa
 # para su uso comercial según su guía de marca.

@@ -106,6 +106,20 @@ product_reviews = Table(
 )
 
 
+live_activity = Table(
+    "live_activity", metadata,
+    Column("visitor_id", String(64), primary_key=True),
+    Column("action", String(24), nullable=False, default="browsing"),
+    Column("product_id", String(100), nullable=True),
+    Column("product_name", String(180), nullable=True),
+    Column("display_name", String(80), nullable=False, default="Visitante"),
+    Column("country", String(80), nullable=False, default="País no disponible"),
+    Column("country_code", String(2), nullable=False, default=""),
+    Column("share_identity", Integer, nullable=False, default=0),
+    Column("updated_at", DateTime(timezone=True), nullable=False),
+)
+
+
 metadata.create_all(engine)
 
 
@@ -215,13 +229,136 @@ def record_event(event_type, product_id=None, product_name=None, plan=None, paym
     return event_id
 
 
-def get_stats():
+LIVE_ACTIVITY_ACTIONS = {"browsing", "view_product", "checkout", "order"}
+
+
+def update_live_activity(visitor_id, action="browsing", product_id=None, product_name=None, share_identity=None):
+    if not visitor_id:
+        visitor_id = ensure_visitor()
+
+    context = visitor_context(visitor_id)
+    if share_identity is None:
+        share_identity = bool(session.get("share_live_identity", False))
+
+    values = {
+        "action": action if action in LIVE_ACTIVITY_ACTIONS else "browsing",
+        "product_id": str(product_id or "")[:100] or None,
+        "product_name": str(product_name or "")[:180] or None,
+        "display_name": (context.get("display_name") or "Visitante")[:80],
+        "country": (context.get("country") or "País no disponible")[:80],
+        "country_code": (context.get("country_code") or "")[:2],
+        "share_identity": 1 if share_identity else 0,
+        "updated_at": utcnow(),
+    }
+
+    with engine.begin() as conn:
+        exists = conn.execute(
+            select(live_activity.c.visitor_id)
+            .where(live_activity.c.visitor_id == visitor_id)
+        ).first()
+
+        if exists:
+            conn.execute(
+                update(live_activity)
+                .where(live_activity.c.visitor_id == visitor_id)
+                .values(**values)
+            )
+        else:
+            conn.execute(
+                insert(live_activity).values(visitor_id=visitor_id, **values)
+            )
+
+
+def current_live_activity(limit=24):
+    cutoff = utcnow() - timedelta(seconds=ONLINE_WINDOW_SECONDS)
+
+    stmt = (
+        select(
+            visitors.c.display_name,
+            visitors.c.country,
+            visitors.c.country_code,
+            visitors.c.last_seen,
+            live_activity.c.action,
+            live_activity.c.product_id,
+            live_activity.c.product_name,
+            live_activity.c.share_identity,
+            live_activity.c.updated_at,
+        )
+        .select_from(
+            visitors.outerjoin(
+                live_activity,
+                visitors.c.visitor_id == live_activity.c.visitor_id
+            )
+        )
+        .where(visitors.c.last_seen >= cutoff)
+        .order_by(visitors.c.last_seen.desc())
+        .limit(max(1, min(int(limit or 24), 50)))
+    )
+
     with engine.connect() as conn:
-        visitor_total = conn.execute(select(func.count()).select_from(visitors)).scalar_one()
+        rows = [dict(r) for r in conn.execute(stmt).mappings().all()]
+
+    now = utcnow()
+    output = []
+
+    for row in rows:
+        action = row.get("action") or "browsing"
+        updated_at = row.get("updated_at")
+
+        if action in {"checkout", "order"} and isinstance(updated_at, datetime):
+            if now - updated_at > timedelta(seconds=60):
+                action = "browsing"
+
+        share = bool(row.get("share_identity"))
+
+        output.append({
+            "name": (row.get("display_name") or "Visitante") if share else "Visitante",
+            "country": (row.get("country") or "País no disponible") if share else "",
+            "country_code": (row.get("country_code") or "") if share else "",
+            "action": action,
+            "product_id": row.get("product_id") if action != "browsing" else None,
+            "product_name": row.get("product_name") if action != "browsing" else None,
+            "share_identity": share,
+        })
+
+    return output
+
+
+ONLINE_WINDOW_SECONDS = 45
+
+
+def get_stats():
+    """Real site metrics.
+
+    visitors: unique browser sessions stored in the visitors table
+    page_views: real page-load events recorded by the browser
+    online: unique visitor sessions with a heartbeat in the last 45 seconds
+    orders: order intents already tracked by the site
+    """
+    cutoff = utcnow() - timedelta(seconds=ONLINE_WINDOW_SECONDS)
+    with engine.connect() as conn:
+        visitor_total = conn.execute(
+            select(func.count()).select_from(visitors)
+        ).scalar_one()
+
         order_total = conn.execute(
             select(func.count()).select_from(events).where(events.c.event_type == "order")
         ).scalar_one()
-    return {"visitors": int(visitor_total or 0), "orders": int(order_total or 0)}
+
+        page_view_total = conn.execute(
+            select(func.count()).select_from(events).where(events.c.event_type == "page_view")
+        ).scalar_one()
+
+        online_total = conn.execute(
+            select(func.count()).select_from(visitors).where(visitors.c.last_seen >= cutoff)
+        ).scalar_one()
+
+    return {
+        "visitors": int(visitor_total or 0),
+        "page_views": int(page_view_total or 0),
+        "online": int(online_total or 0),
+        "orders": int(order_total or 0),
+    }
 
 
 # -----------------------------------------------------------------------------
@@ -324,20 +461,47 @@ def detect_country_from_ip(ip):
 
 def latest_visitor_events(limit=8, after_id=None):
     stmt = (
-        select(events.c.id, events.c.visitor_name, events.c.country, events.c.country_code, events.c.created_at)
+        select(
+            events.c.id,
+            events.c.visitor_id,
+            events.c.visitor_name,
+            events.c.country,
+            events.c.country_code,
+            events.c.created_at,
+            live_activity.c.share_identity,
+        )
+        .select_from(
+            events.outerjoin(
+                live_activity,
+                events.c.visitor_id == live_activity.c.visitor_id
+            )
+        )
         .where(events.c.event_type == "visit")
         .order_by(events.c.id.asc() if after_id is not None else events.c.id.desc())
         .limit(limit)
     )
+
     if after_id is not None:
         stmt = stmt.where(events.c.id > after_id)
+
     with engine.connect() as conn:
         rows = [dict(r) for r in conn.execute(stmt).mappings().all()]
+
     if after_id is None:
         rows.reverse()
+
     for row in rows:
+        share = bool(row.pop("share_identity", 0))
+        row.pop("visitor_id", None)
+
+        if not share:
+            row["visitor_name"] = "Visitante"
+            row["country"] = ""
+            row["country_code"] = ""
+
         if isinstance(row.get("created_at"), datetime):
             row["created_at"] = row["created_at"].isoformat()
+
     return rows
 
 
@@ -535,7 +699,74 @@ def catalog():
 
 @app.route("/api/stats")
 def stats():
-    return jsonify(get_stats())
+    response = jsonify(get_stats())
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
+
+
+@app.route("/api/page-view", methods=["POST"])
+def page_view():
+    """Record one real browser page view.
+
+    A very small cooldown prevents accidental duplicate JavaScript calls while
+    still allowing a normal refresh/navigation to be counted as another view.
+    """
+    ensure_visitor()
+    now_epoch = time.time()
+    last_page_view = float(session.get("last_page_view", 0) or 0)
+
+    if now_epoch - last_page_view >= 2:
+        record_event("page_view")
+        session["last_page_view"] = now_epoch
+
+    response = jsonify({"ok": True, **get_stats()})
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
+
+
+@app.route("/api/heartbeat", methods=["POST"])
+def heartbeat():
+    """Keep the current browser session marked as online."""
+    visitor_id = ensure_visitor()
+
+    with engine.connect() as conn:
+        exists = conn.execute(
+            select(live_activity.c.visitor_id)
+            .where(live_activity.c.visitor_id == visitor_id)
+        ).first()
+
+    if not exists:
+        update_live_activity(visitor_id, action="browsing")
+
+    response = jsonify({"ok": True, **get_stats()})
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
+
+
+@app.route("/api/live-activity", methods=["GET", "POST"])
+def live_activity_api():
+    if request.method == "POST":
+        visitor_id = ensure_visitor()
+        payload = request.get_json(silent=True) or {}
+        action = str(payload.get("action") or "browsing").strip().lower()
+
+        if action not in LIVE_ACTIVITY_ACTIONS:
+            return jsonify({"ok": False, "error": "invalid_action"}), 400
+
+        update_live_activity(
+            visitor_id,
+            action=action,
+            product_id=payload.get("product_id"),
+            product_name=payload.get("product_name"),
+        )
+
+    response = jsonify({
+        "ok": True,
+        "stats": get_stats(),
+        "activity": current_live_activity(),
+    })
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
 
 
 @app.route("/api/presence", methods=["POST"])
@@ -547,6 +778,8 @@ def presence():
     if len(display_name) < 2:
         return jsonify({"ok": False, "error": "name_required"}), 400
     session["display_name"] = display_name
+    share_identity = bool(payload.get("share_identity", False))
+    session["share_live_identity"] = share_identity
     if geo["country"] == "País no disponible":
         fallback_country = clean_country(payload.get("country"))
         fallback_code = clean_country_code(payload.get("country_code"))
@@ -565,6 +798,12 @@ def presence():
                 display_name=display_name,
             )
         )
+
+    update_live_activity(
+        visitor_id,
+        action="browsing",
+        share_identity=share_identity,
+    )
 
     now_epoch = int(time.time())
     last_presence = int(session.get("last_presence", 0) or 0)
@@ -596,6 +835,75 @@ def presence():
     })
 
 
+def recent_order_events(limit=10):
+    """Return recent real order intents recorded by the site.
+
+    Identity/country are only exposed when the visitor opted in to public
+    live identity. Otherwise the event is anonymized.
+    """
+    stmt = (
+        select(
+            events.c.id,
+            events.c.visitor_id,
+            events.c.product_name,
+            events.c.plan,
+            events.c.visitor_name,
+            events.c.country,
+            events.c.country_code,
+            events.c.created_at,
+            live_activity.c.share_identity,
+        )
+        .select_from(
+            events.outerjoin(
+                live_activity,
+                events.c.visitor_id == live_activity.c.visitor_id
+            )
+        )
+        .where(events.c.event_type == "order")
+        .order_by(events.c.id.desc())
+        .limit(max(1, min(int(limit or 10), 20)))
+    )
+
+    with engine.connect() as conn:
+        rows = [dict(r) for r in conn.execute(stmt).mappings().all()]
+
+    output = []
+    for row in rows:
+        share = bool(row.pop("share_identity", 0))
+        row.pop("visitor_id", None)
+
+        if not share:
+            row["visitor_name"] = "Cliente"
+            row["country"] = ""
+            row["country_code"] = ""
+
+        created_at = row.get("created_at")
+        if isinstance(created_at, datetime):
+            created_at = created_at.isoformat()
+
+        output.append({
+            "id": row.get("id"),
+            "product": row.get("product_name") or "Producto",
+            "plan": row.get("plan") or "",
+            "visitor_name": row.get("visitor_name") or "Cliente",
+            "country": row.get("country") or "",
+            "country_code": row.get("country_code") or "",
+            "created_at": created_at or "",
+        })
+
+    return output
+
+
+@app.route("/api/recent-orders")
+def recent_orders():
+    response = jsonify({
+        "ok": True,
+        "orders": recent_order_events(limit=10)
+    })
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
+
+
 @app.route("/api/visitor-feed")
 def visitor_feed():
     try:
@@ -623,6 +931,22 @@ def track_event():
         product_name=payload.get("product_name"),
         plan=payload.get("plan"),
     )
+
+    if event_type == "details":
+        update_live_activity(
+            session.get("visitor_id"),
+            action="view_product",
+            product_id=payload.get("product_id"),
+            product_name=payload.get("product_name"),
+        )
+    elif event_type == "checkout":
+        update_live_activity(
+            session.get("visitor_id"),
+            action="checkout",
+            product_id=payload.get("product_id"),
+            product_name=payload.get("product_name"),
+        )
+
     return jsonify({"ok": True, "event_id": event_id})
 
 
@@ -635,7 +959,14 @@ def track_order():
     payment = str(payload.get("payment", "")).strip()[:80]
     if not product:
         return jsonify({"ok": False, "error": "missing_product"}), 400
+    visitor_id = ensure_visitor()
     record_event("order", product_id=product_id, product_name=product, plan=plan, payment=payment)
+    update_live_activity(
+        visitor_id,
+        action="order",
+        product_id=product_id,
+        product_name=product,
+    )
     return jsonify({"ok": True, "orders": get_stats()["orders"]})
 
 

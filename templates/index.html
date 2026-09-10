@@ -100,6 +100,13 @@
         <small id="accessCountryLabel">PAÍS DETECTADO</small>
         <strong id="accessCountryValue">DETECTANDO...</strong>
       </div>
+      <label class="live-share-consent">
+        <input id="shareLiveIdentity" type="checkbox">
+        <span>
+          <strong>MOSTRAR MI NOMBRE Y PAÍS EN ACTIVIDAD EN VIVO</strong>
+          <small>Opcional. Si no lo activas, aparecerás como “Visitante”.</small>
+        </span>
+      </label>
       <div class="access-locale-live" id="accessLocaleLine">
         <span><iconify-icon icon="lucide:languages"></iconify-icon><b id="accessLanguageValue">ESPAÑOL</b></span>
         <span><iconify-icon icon="lucide:coins"></iconify-icon><b id="accessCurrencyValue">PEN · S/</b></span>
@@ -239,6 +246,17 @@
           </select>
         </label>
       </div>
+      <div class="realtime-site-stats" aria-label="Estadísticas en tiempo real">
+        <div class="realtime-stat views">
+          <iconify-icon icon="lucide:eye"></iconify-icon>
+          <span><small>VISTAS</small><strong id="livePageViews">{{ stats.page_views|default(0) }}</strong></span>
+        </div>
+        <div class="realtime-stat online">
+          <i class="live-dot"></i>
+          <span><small>ONLINE</small><strong id="liveOnlineUsers">{{ stats.online|default(0) }}</strong></span>
+        </div>
+      </div>
+
       <a class="wa-header" href="https://wa.me/{{ store.whatsapp }}?text=Hola%20Alex%20Streaming,%20quiero%20información." target="_blank" rel="noopener">
         <iconify-icon icon="simple-icons:whatsapp"></iconify-icon>
         <span>WHATSAPP</span>
@@ -363,6 +381,24 @@
       </div>
     </section>
 
+    <section class="live-activity-section shell" id="actividad-en-vivo">
+      <div class="live-activity-head">
+        <div>
+          <p class="kicker">// ACTIVIDAD EN TIEMPO REAL</p>
+          <h2>Ahora mismo en <span>ALEX STREAMING</span></h2>
+          <p>Vistas, conectados y actividad de productos actualizados automáticamente.</p>
+        </div>
+        <div class="live-metric-row">
+          <div><iconify-icon icon="lucide:eye"></iconify-icon><span><small>VISTAS</small><strong id="activityPageViews">{{ stats.page_views|default(0) }}</strong></span></div>
+          <div><i></i><span><small>ONLINE</small><strong id="activityOnlineUsers">{{ stats.online|default(0) }}</strong></span></div>
+        </div>
+      </div>
+      <div class="live-activity-list" id="liveActivityList" aria-live="polite">
+        <div class="live-activity-empty">Esperando actividad en vivo...</div>
+      </div>
+      <p class="live-privacy-note"><iconify-icon icon="lucide:shield-check"></iconify-icon> El nombre y el país solo se muestran si el visitante acepta compartirlos.</p>
+    </section>
+
     <section class="anime-category-showcase shell">
       <div class="anime-section-title">
         <small>SELECCIONA TU MÓDULO</small>
@@ -395,6 +431,11 @@
           <iconify-icon icon="lucide:wallet-cards"></iconify-icon>
           <div><strong>PAGOS</strong><small>Métodos disponibles</small></div>
           <span>VER MÉTODOS ↗</span>
+        </a>
+        <a href="#catalogo" class="anime-cat-card cat-web" data-category-jump="SITIOS WEB Y DOMINIOS">
+          <iconify-icon icon="lucide:globe-2"></iconify-icon>
+          <div><strong>WEB & DOMINIOS</strong><small>Sitios, hosting y dominios</small></div>
+          <span>VER SERVICIOS ↗</span>
         </a>
       </div>
     </section>
@@ -496,9 +537,20 @@
               <select id="plan-{{ product.id }}" class="plan-select">
                 {% for plan in product.plans %}
                   {% if plan.price is not none %}
-                  <option value="{{ loop.index0 }}" data-price="{{ '%.2f'|format(plan.price) }}" data-base-price="{{ '%.2f'|format(plan.price) }}" data-plan-name="{{ plan.name }}" data-price-label="{{ store.currency }} {{ '%.2f'|format(plan.price) }}">{{ plan.name }} · {{ store.currency }} {{ '%.2f'|format(plan.price) }}</option>
+                  {% set source_currency = plan.price_currency if plan.price_currency is defined else store.currency_code|default('PEN') %}
+                  {% if source_currency == 'USD' %}
+                    {% set initial_label = '$' ~ ('%.2f'|format(plan.price)) ~ ' USD' %}
                   {% else %}
-                  <option value="{{ loop.index0 }}" data-price="" data-base-price="" data-plan-name="{{ plan.name }}" data-price-label="">{{ plan.name }}</option>
+                    {% set initial_label = store.currency ~ ' ' ~ ('%.2f'|format(plan.price)) %}
+                  {% endif %}
+                  <option value="{{ loop.index0 }}"
+                          data-price="{{ '%.2f'|format(plan.price) }}"
+                          data-base-price="{{ '%.2f'|format(plan.price) }}"
+                          data-source-currency="{{ source_currency }}"
+                          data-plan-name="{{ plan.name }}"
+                          data-price-label="{{ initial_label }}">{{ plan.name }} · {{ initial_label }}</option>
+                  {% else %}
+                  <option value="{{ loop.index0 }}" data-price="" data-base-price="" data-source-currency="" data-plan-name="{{ plan.name }}" data-price-label="">{{ plan.name }}</option>
                   {% endif %}
                 {% endfor %}
               </select>
@@ -508,7 +560,17 @@
               {% set priced_plans = product.plans | selectattr("price", "ne", none) | list %}
               <div class="price-wrap"{% if not priced_plans %} hidden{% endif %}>
                 <span>DESDE</span>
-                <strong>{% if priced_plans %}{{ store.currency }} {{ '%.2f'|format(priced_plans | map(attribute="price") | min) }}{% endif %}</strong>
+                <strong>
+                  {% if priced_plans %}
+                    {% set first_plan = priced_plans[0] %}
+                    {% set first_currency = first_plan.price_currency if first_plan.price_currency is defined else store.currency_code|default('PEN') %}
+                    {% if first_currency == 'USD' %}
+                      ${{ '%.2f'|format(first_plan.price) }} USD
+                    {% else %}
+                      {{ store.currency }} {{ '%.2f'|format(first_plan.price) }}
+                    {% endif %}
+                  {% endif %}
+                </strong>
               </div>
               <div class="card-actions card-actions-reviews">
                 <button class="details-btn" type="button" data-product-id="{{ product.id }}">DETALLES</button>
@@ -929,6 +991,17 @@
     <span class="visitor-toast-icon"><iconify-icon icon="lucide:radio-tower"></iconify-icon></span>
     <div><small>NUEVA CONEXIÓN</small><strong id="visitorToastText">Visitante conectado</strong></div>
   </div>
+  <div class="purchase-toast" id="purchaseToast" role="status" aria-live="polite">
+    <span class="purchase-toast-icon">
+      <iconify-icon id="purchaseToastIcon" icon="lucide:shopping-bag"></iconify-icon>
+    </span>
+    <div class="purchase-toast-copy">
+      <small>PEDIDO RECIENTE</small>
+      <strong id="purchaseToastTitle">Un cliente inició un pedido</strong>
+      <span id="purchaseToastMeta">Hace unos segundos</span>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite">PEDIDO PREPARADO</div>
 
   <script>
@@ -938,10 +1011,14 @@
       currency: "{{ store.currency }}",
       baseCurrencyCode: "{{ store.currency_code|default('PEN') }}",
       statsUrl: "/api/stats",
+      pageViewUrl: "/api/page-view",
+      heartbeatUrl: "/api/heartbeat",
       trackOrderUrl: "/api/track-order",
       trackEventUrl: "/api/track-event",
       presenceUrl: "/api/presence",
       visitorFeedUrl: "/api/visitor-feed",
+      liveActivityUrl: "/api/live-activity",
+      recentOrdersUrl: "/api/recent-orders",
       chatUrl: "/api/chat"
     };
   </script>

@@ -19,6 +19,8 @@
   const clock = document.getElementById('liveClock');
   const visitorCount = document.getElementById('visitorCount');
   const orderCount = document.getElementById('orderCount');
+  const livePageViews = document.getElementById('livePageViews');
+  const liveOnlineUsers = document.getElementById('liveOnlineUsers');
   const epicEntry = document.getElementById('epicEntry');
   const entryCountry = document.getElementById('entryCountry');
   const accessCountryLineMain = document.getElementById('accessCountryLine');
@@ -31,6 +33,13 @@
   const visitorFeedMini = document.getElementById('visitorFeedMini');
   const visitorToast = document.getElementById('visitorToast');
   const visitorToastText = document.getElementById('visitorToastText');
+  const liveActivityList = document.getElementById('liveActivityList');
+  const activityPageViews = document.getElementById('activityPageViews');
+  const activityOnlineUsers = document.getElementById('activityOnlineUsers');
+  const purchaseToast = document.getElementById('purchaseToast');
+  const purchaseToastIcon = document.getElementById('purchaseToastIcon');
+  const purchaseToastTitle = document.getElementById('purchaseToastTitle');
+  const purchaseToastMeta = document.getElementById('purchaseToastMeta');
   const liveVisitorTicker = document.getElementById('liveVisitorTicker');
   const languageSelect = document.getElementById('languageSelect');
   const currencySelect = document.getElementById('currencySelect');
@@ -446,6 +455,57 @@
     } catch (_) { return null; }
   }
 
+  async function loadRateBetween(sourceCurrency, targetCurrency){
+    const source = String(sourceCurrency || BASE_CURRENCY).toUpperCase();
+    const target = String(targetCurrency || activeCurrency).toUpperCase();
+
+    if (source === target) return 1;
+    if (source === BASE_CURRENCY) return loadRate(target);
+
+    const cacheKey = `alex-fx-pair-${source}-${target}`;
+    try {
+      const saved = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+      if (saved && Date.now() - saved.time < 6*60*60*1000 && Number(saved.rate) > 0) {
+        return Number(saved.rate);
+      }
+    } catch (_) {}
+
+    // Principal: Frankfurter, usando directamente moneda origen -> moneda destino.
+    try {
+      const response = await fetch(
+        `https://api.frankfurter.dev/v2/rate/${encodeURIComponent(source)}/${encodeURIComponent(target)}`,
+        {cache:'no-store'}
+      );
+      if (!response.ok) throw new Error('fx');
+      const data = await response.json();
+      let rate = Number(data?.rate);
+      if (!(rate > 0) && Array.isArray(data)) rate = Number(data[0]?.rate);
+      if (!(rate > 0)) throw new Error('fx');
+      try {
+        localStorage.setItem(cacheKey, JSON.stringify({rate,time:Date.now(),source:'frankfurter'}));
+      } catch (_) {}
+      return rate;
+    } catch (_) {}
+
+    // Respaldo: todas las tasas respecto a USD y cálculo cruzado.
+    try {
+      const response = await fetch('https://open.er-api.com/v6/latest/USD', {cache:'no-store'});
+      if (!response.ok) throw new Error('fx');
+      const data = await response.json();
+      const rates = data?.rates || {};
+      const sourceRate = source === 'USD' ? 1 : Number(rates[source]);
+      const targetRate = target === 'USD' ? 1 : Number(rates[target]);
+      if (!(sourceRate > 0) || !(targetRate > 0)) throw new Error('fx');
+      const rate = targetRate / sourceRate;
+      try {
+        localStorage.setItem(cacheKey, JSON.stringify({rate,time:Date.now(),source:'fallback'}));
+      } catch (_) {}
+      return rate;
+    } catch (_) {
+      return null;
+    }
+  }
+
   async function setCurrency(code, manual=false){
     const next = String(code||BASE_CURRENCY).toUpperCase();
     if (currencySelect && ![...currencySelect.options].some(o=>o.value===next)) {
@@ -461,35 +521,106 @@
     }
     if (manual) currencyManual=true;
     if (accessCurrencyValue) accessCurrencyValue.textContent = activeCurrency === 'PEN' ? 'PEN · S/' : activeCurrency;
-    refreshAllPriceLabels();
+    await refreshAllPriceLabels();
   }
 
   function localPriceFromBase(base){ return Number(base) * currencyRate; }
+
   function priceLabelFromBase(base){
     if (base === '' || base == null || !Number.isFinite(Number(base))) return '';
     return formatMoney(localPriceFromBase(Number(base)), activeCurrency);
   }
 
-  function refreshAllPriceLabels(){
-    document.querySelectorAll('.plan-select').forEach(select => {
+  async function priceLabelFromSource(base, sourceCurrency){
+    if (base === '' || base == null || !Number.isFinite(Number(base))) return '';
+    const source = String(sourceCurrency || BASE_CURRENCY).toUpperCase();
+
+    if (source === BASE_CURRENCY) {
+      return priceLabelFromBase(base);
+    }
+
+    const rate = await loadRateBetween(source, activeCurrency);
+    if (!(Number(rate) > 0)) {
+      // Si temporalmente falla la tasa, conserva el precio original en su moneda.
+      return formatMoney(Number(base), source);
+    }
+
+    return formatMoney(Number(base) * Number(rate), activeCurrency);
+  }
+
+  async function refreshAllPriceLabels(){
+    const selects = [...document.querySelectorAll('.plan-select')];
+
+    // Cargar una sola vez la tasa para cada moneda origen usada en el catálogo.
+    const sourceCurrencies = [...new Set(
+      selects.flatMap(select =>
+        [...select.options]
+          .filter(option => option.dataset.basePrice !== '')
+          .map(option => String(option.dataset.sourceCurrency || BASE_CURRENCY).toUpperCase())
+      )
+    )];
+
+    const rateMap = new Map();
+    await Promise.all(sourceCurrencies.map(async source => {
+      if (source === BASE_CURRENCY) {
+        rateMap.set(source, currencyRate);
+      } else if (source === activeCurrency) {
+        rateMap.set(source, 1);
+      } else {
+        rateMap.set(source, await loadRateBetween(source, activeCurrency));
+      }
+    }));
+
+    selects.forEach(select => {
       [...select.options].forEach(option => {
-        const base=option.dataset.basePrice ?? option.dataset.price;
-        const planName=option.dataset.planName || option.textContent.split('·')[0].trim();
-        option.dataset.planName=planName;
-        const label=priceLabelFromBase(base);
-        option.dataset.priceLabel=label || '';
-        option.textContent=`${planName} · ${label}`;
+        const base = option.dataset.basePrice ?? option.dataset.price;
+        const planName = option.dataset.planName || option.textContent.split('·')[0].trim();
+        const sourceCurrency = String(option.dataset.sourceCurrency || BASE_CURRENCY).toUpperCase();
+
+        option.dataset.planName = planName;
+
+        if (base === '' || base == null || !Number.isFinite(Number(base))) {
+          option.dataset.priceLabel = '';
+          option.textContent = planName;
+          return;
+        }
+
+        const rate = rateMap.get(sourceCurrency);
+        let label = '';
+
+        if (sourceCurrency === BASE_CURRENCY) {
+          label = formatMoney(Number(base) * currencyRate, activeCurrency);
+        } else if (sourceCurrency === activeCurrency) {
+          label = formatMoney(Number(base), activeCurrency);
+        } else if (Number(rate) > 0) {
+          label = formatMoney(Number(base) * Number(rate), activeCurrency);
+        } else {
+          label = formatMoney(Number(base), sourceCurrency);
+        }
+
+        option.dataset.priceLabel = label;
+        option.textContent = `${planName} · ${label}`;
       });
-      const card=select.closest('.product-card');
-      const option=select.options[select.selectedIndex];
-      const priceWrap=card?.querySelector('.price-wrap');
-      const strong=priceWrap?.querySelector('strong');
-      const label=option?.dataset.priceLabel || '';
-      if(priceWrap) priceWrap.hidden=!label;
-      if(strong) strong.textContent=label;
+
+      const card = select.closest('.product-card');
+      const option = select.options[select.selectedIndex];
+      const priceWrap = card?.querySelector('.price-wrap');
+      const strong = priceWrap?.querySelector('strong');
+      const label = option?.dataset.priceLabel || '';
+
+      if (priceWrap) priceWrap.hidden = !label;
+      if (strong) strong.textContent = label;
     });
+
     if (selectedOrder && modalPrice) {
-      modalPrice.textContent = selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : (activeLanguage === 'es' ? 'POR CONFIRMAR' : t('consult'));
+      const selectedCard = document.querySelector(
+        `.product-card[data-product-id="${CSS.escape(selectedOrder.productId || '')}"]`
+      );
+      const selectedOption = selectedCard?.querySelector('.plan-select')?.selectedOptions?.[0];
+      const currentLabel = selectedOption?.dataset.priceLabel || selectedOrder.priceLabel || '';
+
+      selectedOrder.priceLabel = currentLabel;
+      modalPrice.textContent = currentLabel || (activeLanguage === 'es' ? 'POR CONFIRMAR' : t('consult'));
     }
   }
 
@@ -731,7 +862,12 @@
       const response = await fetch(url, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name:safeVisitorName(displayName), country:fallback.country, country_code:fallback.country_code}),
+        body:JSON.stringify({
+          name:safeVisitorName(displayName),
+          country:fallback.country,
+          country_code:fallback.country_code,
+          share_identity:Boolean(document.getElementById('shareLiveIdentity')?.checked)
+        }),
         cache:'no-store'
       });
       if (!response.ok) throw new Error('presence');
@@ -797,12 +933,220 @@
       const data = await response.json();
       if (visitorCount && Number.isFinite(Number(data.visitors))) visitorCount.textContent = Number(data.visitors).toLocaleString('es-PE');
       if (orderCount && Number.isFinite(Number(data.orders))) orderCount.textContent = Number(data.orders).toLocaleString('es-PE');
+      if (livePageViews && Number.isFinite(Number(data.page_views))) livePageViews.textContent = Number(data.page_views).toLocaleString('es-PE');
+      if (liveOnlineUsers && Number.isFinite(Number(data.online))) liveOnlineUsers.textContent = Number(data.online).toLocaleString('es-PE');
     } catch (_) {
       // La vista previa en archivo local no tiene API; simplemente conserva los valores iniciales.
     }
   }
   refreshStats();
-  setInterval(refreshStats, 15000);
+  setInterval(refreshStats, 5000);
+
+
+  function applyRealtimeStats(data){
+    if (!data) return;
+    if (visitorCount && Number.isFinite(Number(data.visitors))) {
+      visitorCount.textContent = Number(data.visitors).toLocaleString('es-PE');
+    }
+    if (orderCount && Number.isFinite(Number(data.orders))) {
+      orderCount.textContent = Number(data.orders).toLocaleString('es-PE');
+    }
+    if (livePageViews && Number.isFinite(Number(data.page_views))) {
+      livePageViews.textContent = Number(data.page_views).toLocaleString('es-PE');
+    }
+    if (liveOnlineUsers && Number.isFinite(Number(data.online))) {
+      liveOnlineUsers.textContent = Number(data.online).toLocaleString('es-PE');
+    }
+  }
+
+  async function registerRealPageView(){
+    if (window.ALEX_PREVIEW_MODE) return;
+    const url = window.ALEX_STORE?.pageViewUrl || '/api/page-view';
+    try {
+      const response = await fetch(url, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:'{}',
+        cache:'no-store',
+        keepalive:true
+      });
+      if (!response.ok) return;
+      applyRealtimeStats(await response.json());
+    } catch (_) {}
+  }
+
+  async function sendPresenceHeartbeat(){
+    if (window.ALEX_PREVIEW_MODE || document.visibilityState === 'hidden') return;
+    const url = window.ALEX_STORE?.heartbeatUrl || '/api/heartbeat';
+    try {
+      const response = await fetch(url, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:'{}',
+        cache:'no-store',
+        keepalive:true
+      });
+      if (!response.ok) return;
+      applyRealtimeStats(await response.json());
+    } catch (_) {}
+  }
+
+  registerRealPageView();
+  sendPresenceHeartbeat();
+  setInterval(sendPresenceHeartbeat, 15000);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') sendPresenceHeartbeat();
+  });
+
+
+  function liveActivityLabel(item){
+    const product = String(item?.product_name || '').trim();
+    if (item?.action === 'view_product' && product) return `está viendo ${product}`;
+    if (item?.action === 'checkout' && product) return `está por comprar ${product}`;
+    if (item?.action === 'order' && product) return `inició una compra de ${product}`;
+    return 'está explorando el catálogo';
+  }
+
+  function renderLiveActivity(items){
+    if (!liveActivityList) return;
+    liveActivityList.textContent = '';
+
+    const rows = Array.isArray(items) ? items.slice(0, 16) : [];
+
+    if (!rows.length) {
+      const empty = document.createElement('div');
+      empty.className = 'live-activity-empty';
+      empty.textContent = 'Esperando actividad en vivo...';
+      liveActivityList.appendChild(empty);
+      return;
+    }
+
+    rows.forEach(item => {
+      const card = document.createElement('div');
+      card.className = `live-activity-item action-${item.action || 'browsing'}`;
+
+      const avatar = document.createElement('span');
+      avatar.className = 'live-activity-avatar';
+      avatar.textContent = item.share_identity && item.country_code
+        ? countryFlag(item.country_code)
+        : '●';
+
+      const copy = document.createElement('span');
+      copy.className = 'live-activity-copy';
+
+      const name = document.createElement('strong');
+      name.textContent = item.name || 'Visitante';
+
+      const action = document.createElement('small');
+      action.textContent = liveActivityLabel(item);
+
+      copy.append(name, action);
+      card.append(avatar, copy);
+
+      if (item.action === 'checkout' || item.action === 'order') {
+        const tag = document.createElement('b');
+        tag.className = 'live-buy-tag';
+        tag.textContent = item.action === 'order' ? 'PEDIDO' : 'COMPRA';
+        card.appendChild(tag);
+      }
+
+      liveActivityList.appendChild(card);
+    });
+  }
+
+  async function pollLiveActivity(){
+    if (window.ALEX_PREVIEW_MODE) return;
+
+    const url = window.ALEX_STORE?.liveActivityUrl || '/api/live-activity';
+
+    try {
+      const response = await fetch(url, {cache:'no-store'});
+      if (!response.ok) return;
+
+      const data = await response.json();
+      renderLiveActivity(data.activity || []);
+      applyRealtimeStats(data.stats || {});
+
+      if (activityPageViews && data.stats?.page_views != null) {
+        activityPageViews.textContent = Number(data.stats.page_views).toLocaleString('es-PE');
+      }
+
+      if (activityOnlineUsers && data.stats?.online != null) {
+        activityOnlineUsers.textContent = Number(data.stats.online).toLocaleString('es-PE');
+      }
+    } catch (_) {}
+  }
+
+  let lastLiveActivityKey = '';
+  let liveActivityTimer = null;
+
+  async function setLiveActivity(action, productId='', productName=''){
+    if (window.ALEX_PREVIEW_MODE) return;
+
+    const key = `${action}|${productId}|${productName}`;
+    if (key === lastLiveActivityKey) return;
+
+    lastLiveActivityKey = key;
+
+    const url = window.ALEX_STORE?.liveActivityUrl || '/api/live-activity';
+
+    try {
+      const response = await fetch(url, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          action,
+          product_id:productId || '',
+          product_name:productName || ''
+        }),
+        cache:'no-store',
+        keepalive:true
+      });
+
+      if (!response.ok) return;
+
+      const data = await response.json();
+      renderLiveActivity(data.activity || []);
+      applyRealtimeStats(data.stats || {});
+    } catch (_) {}
+  }
+
+  const productRatios = new Map();
+
+  if ('IntersectionObserver' in window) {
+    const productObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        productRatios.set(entry.target, entry.intersectionRatio || 0);
+      });
+
+      let bestCard = null;
+      let bestRatio = 0;
+
+      productRatios.forEach((ratio, card) => {
+        if (ratio > bestRatio) {
+          bestRatio = ratio;
+          bestCard = card;
+        }
+      });
+
+      clearTimeout(liveActivityTimer);
+
+      liveActivityTimer = setTimeout(() => {
+        if (bestCard && bestRatio >= .55) {
+          const name = bestCard.querySelector('.product-copy h3')?.textContent?.trim() || '';
+          setLiveActivity('view_product', bestCard.dataset.productId || '', name);
+        } else {
+          setLiveActivity('browsing');
+        }
+      }, 650);
+    }, {threshold:[0,.25,.55,.75,1]});
+
+    cards.forEach(card => productObserver.observe(card));
+  }
+
+  pollLiveActivity();
+  setInterval(pollLiveActivity, 3000);
 
   async function trackAnalyticsEvent(eventType, payload = {}){
     const url = window.ALEX_STORE?.trackEventUrl || '/api/track-event';
@@ -815,6 +1159,112 @@
       });
     } catch (_) {}
   }
+
+
+  const seenPurchaseIds = new Set();
+  const purchaseQueue = [];
+  let purchaseToastVisible = false;
+
+  function purchaseCountryFlag(code=''){
+    const clean = String(code || '').trim().toUpperCase();
+    if (!/^[A-Z]{2}$/.test(clean)) return '';
+    return String.fromCodePoint(...[...clean].map(char => 127397 + char.charCodeAt(0)));
+  }
+
+  function recentOrderIcon(name=''){
+    const value = String(name || '').toLowerCase();
+    if (/(netflix|disney|hbo|max|prime|spotify|paramount|viki|streaming)/.test(value)) return 'lucide:tv';
+    if (/(web|dominio|hosting|seo|wordpress|blog|ecommerce)/.test(value)) return 'lucide:globe-2';
+    if (/(canva|chatgpt|google|gamma|office|elevenlabs|notion|ia)/.test(value)) return 'lucide:sparkles';
+    return 'lucide:shopping-bag';
+  }
+
+  function recentOrderTimeAgo(iso=''){
+    if (!iso) return 'Hace unos segundos';
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return 'Hace unos segundos';
+
+    const seconds = Math.max(0, Math.floor((Date.now() - date.getTime()) / 1000));
+    if (seconds < 60) return 'Hace unos segundos';
+
+    const minutes = Math.floor(seconds / 60);
+    if (minutes === 1) return 'Hace 1 minuto';
+    if (minutes < 60) return `Hace ${minutes} minutos`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours === 1) return 'Hace 1 hora';
+    if (hours < 24) return `Hace ${hours} horas`;
+
+    const days = Math.floor(hours / 24);
+    return days === 1 ? 'Hace 1 día' : `Hace ${days} días`;
+  }
+
+  function queueRecentOrder(order){
+    if (!purchaseToast || !order) return;
+    purchaseQueue.push(order);
+    if (!purchaseToastVisible) showNextRecentOrder();
+  }
+
+  function showNextRecentOrder(){
+    if (!purchaseToast || !purchaseQueue.length) {
+      purchaseToastVisible = false;
+      return;
+    }
+
+    purchaseToastVisible = true;
+    const order = purchaseQueue.shift();
+
+    const customer = order.visitor_name || 'Cliente';
+    const product = order.product || 'un producto';
+    const flag = purchaseCountryFlag(order.country_code);
+    const place = order.country ? `${flag ? flag + ' ' : ''}${order.country}` : '';
+    const plan = order.plan ? ` · ${order.plan}` : '';
+    const time = recentOrderTimeAgo(order.created_at);
+
+    purchaseToastIcon?.setAttribute('icon', recentOrderIcon(product));
+    if (purchaseToastTitle) purchaseToastTitle.textContent = `${customer} inició un pedido de ${product}`;
+    if (purchaseToastMeta) {
+      purchaseToastMeta.textContent = [place, plan.replace(/^ · /,''), time].filter(Boolean).join(' · ');
+    }
+
+    purchaseToast.classList.add('show');
+
+    setTimeout(() => {
+      purchaseToast.classList.remove('show');
+      setTimeout(showNextRecentOrder, 500);
+    }, 5200);
+  }
+
+  async function pollRecentOrders(initial=false){
+    if (window.ALEX_PREVIEW_MODE) return;
+
+    const url = window.ALEX_STORE?.recentOrdersUrl || '/api/recent-orders';
+
+    try {
+      const response = await fetch(url, {cache:'no-store'});
+      if (!response.ok) return;
+
+      const data = await response.json();
+      const orders = Array.isArray(data.orders) ? data.orders : [];
+
+      if (initial) {
+        orders.forEach(order => seenPurchaseIds.add(String(order.id)));
+        return;
+      }
+
+      const fresh = orders
+        .filter(order => !seenPurchaseIds.has(String(order.id)))
+        .reverse();
+
+      fresh.forEach(order => {
+        seenPurchaseIds.add(String(order.id));
+        queueRecentOrder(order);
+      });
+    } catch (_) {}
+  }
+
+  pollRecentOrders(true);
+  setInterval(() => pollRecentOrders(false), 8000);
 
   async function trackOrderIntent(order, payment){
     const url = window.ALEX_STORE?.trackOrderUrl || '/api/track-order';
@@ -844,6 +1294,15 @@
   }
 
   searchInput?.addEventListener('input', applyFilters);
+
+  document.querySelectorAll('[data-category-jump]').forEach(link => {
+    link.addEventListener('click', () => {
+      const category = link.dataset.categoryJump || '';
+      const target = [...filterButtons].find(btn => btn.dataset.filter === category);
+      if (target) setTimeout(() => target.click(), 250);
+    });
+  });
+
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
       filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -921,13 +1380,23 @@
     const planText = option.dataset.planName || option.textContent.split('·')[0].trim();
     const rawPrice = option.dataset.basePrice ?? option.dataset.price;
     const priceLabel = option.dataset.priceLabel || '';
+    const sourceCurrency = String(option.dataset.sourceCurrency || BASE_CURRENCY).toUpperCase();
     const basePrice = rawPrice ? Number(rawPrice).toFixed(2) : '';
-    selectedOrder = { product: button.dataset.product, productId: button.dataset.productId || '', plan: planText, basePrice, priceLabel, currency: activeCurrency };
+    selectedOrder = {
+      product: button.dataset.product,
+      productId: button.dataset.productId || '',
+      plan: planText,
+      basePrice,
+      priceLabel,
+      sourceCurrency,
+      currency: activeCurrency
+    };
     trackAnalyticsEvent('checkout', {product_id:selectedOrder.productId, product_name:selectedOrder.product, plan:selectedOrder.plan});
+    setLiveActivity('checkout', selectedOrder.productId, selectedOrder.product);
     selectedPayment = null;
     modalProduct.textContent = selectedOrder.product;
     modalPlan.textContent = selectedOrder.plan;
-    modalPrice.textContent = selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : selectedOrder.priceLabel;
+    modalPrice.textContent = selectedOrder.priceLabel || (activeLanguage === 'es' ? 'POR CONFIRMAR' : t('consult'));
     paymentButtons.forEach(btn => { btn.classList.remove('selected'); btn.querySelector('i').textContent = '○'; });
     if (paymentInstructions) paymentInstructions.hidden = true;
     if (paymentInstructionText) paymentInstructionText.textContent = '';
@@ -979,9 +1448,16 @@
 
     const lines = [instruction];
     if (selectedOrder?.basePrice) {
-      lines.push(`${t('payment_base_amount')}: S/ ${Number(selectedOrder.basePrice).toFixed(2)}`);
-      if (activeCurrency !== BASE_CURRENCY) {
-        lines.push(`${t('payment_local_amount')}: ${priceLabelFromBase(selectedOrder.basePrice)}`);
+      const sourceCurrency = selectedOrder.sourceCurrency || BASE_CURRENCY;
+      if (sourceCurrency === BASE_CURRENCY) {
+        lines.push(`${t('payment_base_amount')}: S/ ${Number(selectedOrder.basePrice).toFixed(2)}`);
+        if (activeCurrency !== BASE_CURRENCY) {
+          lines.push(`${t('payment_local_amount')}: ${selectedOrder.priceLabel}`);
+        }
+      } else {
+        // Para servicios cotizados originalmente en USD, mostrar al cliente
+        // directamente el equivalente en su moneda actual.
+        lines.push(`${t('payment_local_amount')}: ${selectedOrder.priceLabel}`);
       }
     }
     if (paymentInstructionText) paymentInstructionText.textContent = lines.join('\n');
@@ -1023,7 +1499,7 @@
       'Quiero realizar este pedido:',
       `• Plataforma: ${selectedOrder.product}`,
       `• Plan: ${selectedOrder.plan}`,
-      `• Precio: ${selectedOrder.basePrice ? priceLabelFromBase(selectedOrder.basePrice) : selectedOrder.priceLabel}${selectedOrder.basePrice && activeCurrency !== BASE_CURRENCY ? ` (base S/ ${Number(selectedOrder.basePrice).toFixed(2)})` : ''}`,
+      `• Precio: ${selectedOrder.priceLabel || 'Por confirmar'}${selectedOrder.basePrice && activeCurrency !== BASE_CURRENCY && (selectedOrder.sourceCurrency || BASE_CURRENCY) === BASE_CURRENCY ? ` (base S/ ${Number(selectedOrder.basePrice).toFixed(2)})` : ''}`,
       `• Método de pago: ${selectedPayment}`,
       `• Datos: ${paymentButton?.dataset.instructions || 'Coordinar por WhatsApp'}`,
       `• ${t('customer_language')}: ${customerLanguage}`, '',
@@ -1038,6 +1514,7 @@
     toast?.classList.add('show');
     setTimeout(() => toast?.classList.remove('show'), 1300);
     trackOrderIntent(selectedOrder, selectedPayment);
+    setLiveActivity('order', selectedOrder.productId, selectedOrder.product);
     const url = `https://wa.me/${window.ALEX_STORE.whatsapp}?text=${encodeURIComponent(message)}`;
     setTimeout(() => window.open(url, '_blank', 'noopener'), 180);
   });
@@ -1338,6 +1815,7 @@
       product_name:detailsProduct.name,
       plan:selectedPlan?.name || ''
     });
+    setLiveActivity('view_product', detailsProduct.id, detailsProduct.name);
 
     // Abrimos de inmediato con el contenido original para que no haya retraso visual.
     renderDetailsTranslated(detailsProduct, {
@@ -1878,6 +2356,12 @@
     }
     if (accessNameError) accessNameError.textContent = '';
     saveAlias(alias);
+    try {
+      localStorage.setItem(
+        'alex-share-live-identity',
+        document.getElementById('shareLiveIdentity')?.checked ? '1' : '0'
+      );
+    } catch (_) {}
 
     const countryLabel = accessCountryLabel();
     if(accessStatus) accessStatus.textContent=`ACCESO CONCEDIDO · ${alias.toUpperCase()} · ${countryLabel}`;
@@ -1899,6 +2383,13 @@
       setTimeout(()=>{ try { gate.remove(); } catch (_) {} },700);
     },520);
   }
+  const shareLiveIdentity = document.getElementById('shareLiveIdentity');
+  if (shareLiveIdentity) {
+    try {
+      shareLiveIdentity.checked = localStorage.getItem('alex-share-live-identity') === '1';
+    } catch (_) {}
+  }
+
   if(aliasInput){
     const savedAlias = loadAlias();
     aliasInput.value = aliasLooksLikeRealName(savedAlias) ? savedAlias : '';
