@@ -1986,19 +1986,19 @@ for _social in SOCIAL_PLATFORMS:
 
 
 # ============================================================
-# V109 — ACCESO DIRECTO + FREE FIRE CON PRECIOS ACTUALIZADOS
+# V108 — ACCESO DIRECTO + CATEGORÍA FREE FIRE
 # ============================================================
 
 STORE["registration_required"] = False
 
+# Evitar duplicados si esta versión se reutiliza.
 _FREE_FIRE_IDS = {
     "freefire-diamantes",
     "freefire-membresias",
     "freefire-pase-booyah",
-    "freefire-extras",
-    "freefire-membresia-mensual",
     "freefire-cajas",
     "freefire-fragmentos",
+    "freefire-extras",
 }
 PRODUCTS = [p for p in PRODUCTS if p.get("id") not in _FREE_FIRE_IDS]
 
@@ -2010,7 +2010,7 @@ PRODUCTS.extend([
         "accent": "#28D7FF",
         "category": "Free Fire",
         "badge": "DIAMANTES",
-        "description": "Recargas de diamantes con bonificación y paquete total indicado.",
+        "description": "Recargas de diamantes con bonificación y paquete total según la opción seleccionada.",
         "plans": [
             {"name": "100 + 10 · Paquete 110", "price": 3.00},
             {"name": "310 + 31 · Paquete 341", "price": 8.50},
@@ -2018,23 +2018,23 @@ PRODUCTS.extend([
             {"name": "1060 + 106 · Paquete 1166", "price": 29.00},
             {"name": "2180 + 218 · Paquete 2398", "price": 47.63},
             {"name": "3240 + 324 · Paquete 3564", "price": 75.00},
-            {"name": "5600 + 560 · Paquete 6160", "price": 118.96},
+            {"name": "5600 + 560 · Paquete 6160", "price": 150.00},
             {"name": "11200 + 1120 · Paquete 12320", "price": 280.00},
             {"name": "16800 + 1680 · Paquete 18480", "price": 400.00},
         ],
         "details": [
-            "100 + 10 · Paquete 110 · S/ 3.00",
-            "310 + 31 · Paquete 341 · S/ 8.50",
-            "520 + 52 · Paquete 572 · S/ 15.00",
-            "1060 + 106 · Paquete 1166 · S/ 29.00",
-            "2180 + 218 · Paquete 2398 · S/ 47.63",
-            "3240 + 324 · Paquete 3564 · S/ 75.00",
-            "5600 + 560 · Paquete 6160 · S/ 118.96",
-            "11200 + 1120 · Paquete 12320 · S/ 280.00",
-            "16800 + 1680 · Paquete 18480 · S/ 400.00",
+            "100 + 10 — S/ 3.00 — Paquete 110.",
+            "310 + 31 — S/ 8.50 — Paquete 341.",
+            "520 + 52 — S/ 15.00 — Paquete 572.",
+            "1060 + 106 — S/ 29.00 — Paquete 1166.",
+            "2180 + 218 — S/ 47.63 — Paquete 2398.",
+            "3240 + 324 — S/ 75.00 — Paquete 3564.",
+            "5600 + 560 — S/ 150.00 — Paquete 6160.",
+            "11200 + 1120 — S/ 280.00 — Paquete 12320.",
+            "16800 + 1680 — S/ 400.00 — Paquete 18480.",
         ],
         "notes": [
-            "Precios configurados en soles peruanos (PEN).",
+            "Precios base configurados en soles peruanos (PEN).",
             "La disponibilidad y entrega se coordinan por WhatsApp."
         ],
         "logo_url": "",
@@ -2042,23 +2042,25 @@ PRODUCTS.extend([
         "display_name": "Free Fire Diamantes",
     },
     {
-        "id": "freefire-membresia-mensual",
-        "name": "Free Fire · Membresía mensual",
-        "icon": "lucide:badge-check",
+        "id": "freefire-membresias",
+        "name": "Free Fire · Membresías",
+        "icon": "lucide:badge",
         "accent": "#C65CFF",
         "category": "Free Fire",
         "badge": "MEMBRESÍA",
-        "description": "Membresía mensual de Free Fire.",
+        "description": "Membresías disponibles para Free Fire.",
         "plans": [
-            {"name": "Membresía mensual", "price": 30.00},
+            {"name": "Membresía básica · Paquete básica", "price": 1.39},
+            {"name": "Membresía mensual · Paquete mensual", "price": 30.00},
         ],
         "details": [
-            "Membresía mensual · S/ 30.00",
+            "Membresía básica — S/ 1.39 — Paquete: básica.",
+            "Membresía mensual — S/ 30.00 — Paquete: mensual.",
         ],
         "notes": ["Activación coordinada por WhatsApp."],
         "logo_url": "",
         "logo_class": "",
-        "display_name": "Membresía mensual",
+        "display_name": "Free Fire Membresías",
     },
     {
         "id": "freefire-pase-booyah",
@@ -2072,7 +2074,7 @@ PRODUCTS.extend([
             {"name": "Pase Booyah · Paquete 1", "price": 6.00},
         ],
         "details": [
-            "Pase Booyah · Paquete 1 · S/ 6.00",
+            "Pase Booyah — S/ 6.00 — Paquete 1."
         ],
         "notes": ["Entrega y activación coordinadas por WhatsApp."],
         "logo_url": "",
@@ -2083,21 +2085,21 @@ PRODUCTS.extend([
         "id": "freefire-cajas",
         "name": "Free Fire · Cajas",
         "icon": "lucide:package-open",
-        "accent": "#00C8FF",
+        "accent": "#28D7FF",
         "category": "Free Fire",
         "badge": "CAJAS",
-        "description": "Paquetes de cajas para Free Fire.",
+        "description": "Paquetes de cajas disponibles en distintas cantidades.",
         "plans": [
             {"name": "30 Cajas · Paquete 30", "price": 19.55},
             {"name": "60 Cajas · Paquete 60", "price": 34.53},
             {"name": "120 Cajas · Paquete 120", "price": 70.00},
         ],
         "details": [
-            "30 Cajas · Paquete 30 · S/ 19.55",
-            "60 Cajas · Paquete 60 · S/ 34.53",
-            "120 Cajas · Paquete 120 · S/ 70.00",
+            "30 Cajas — S/ 19.55 — Paquete 30.",
+            "60 Cajas — S/ 34.53 — Paquete 60.",
+            "120 Cajas — S/ 70.00 — Paquete 120.",
         ],
-        "notes": ["Selecciona la cantidad de cajas antes de continuar con el pedido."],
+        "notes": ["Disponibilidad coordinada por WhatsApp."],
         "logo_url": "",
         "logo_class": "",
         "display_name": "Free Fire Cajas",
@@ -2106,10 +2108,10 @@ PRODUCTS.extend([
         "id": "freefire-fragmentos",
         "name": "Free Fire · Fragmentos",
         "icon": "lucide:hexagon",
-        "accent": "#20D6D2",
+        "accent": "#4DE6FF",
         "category": "Free Fire",
         "badge": "FRAGMENTOS",
-        "description": "Paquetes de fragmentos disponibles para Free Fire.",
+        "description": "Paquetes de fragmentos disponibles en diferentes cantidades.",
         "plans": [
             {"name": "90 Fragmentos · Paquete 90", "price": 16.00},
             {"name": "150 Fragmentos · Paquete 150", "price": 20.00},
@@ -2118,13 +2120,13 @@ PRODUCTS.extend([
             {"name": "1200 Fragmentos · Paquete 1200", "price": 180.00},
         ],
         "details": [
-            "90 Fragmentos · Paquete 90 · S/ 16.00",
-            "150 Fragmentos · Paquete 150 · S/ 20.00",
-            "300 Fragmentos · Paquete 300 · S/ 38.00",
-            "600 Fragmentos · Paquete 600 · S/ 80.00",
-            "1200 Fragmentos · Paquete 1200 · S/ 180.00",
+            "90 Fragmentos — S/ 16.00 — Paquete 90.",
+            "150 Fragmentos — S/ 20.00 — Paquete 150.",
+            "300 Fragmentos — S/ 38.00 — Paquete 300.",
+            "600 Fragmentos — S/ 80.00 — Paquete 600.",
+            "1200 Fragmentos — S/ 180.00 — Paquete 1200.",
         ],
-        "notes": ["Selecciona el paquete de fragmentos antes de continuar con el pedido."],
+        "notes": ["Disponibilidad coordinada por WhatsApp."],
         "logo_url": "",
         "logo_class": "",
         "display_name": "Free Fire Fragmentos",
