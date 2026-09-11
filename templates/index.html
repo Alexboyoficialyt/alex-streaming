@@ -56,128 +56,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
 </head>
-<body class="access-locked theme-hacker-elite">
-  <div class="access-gate" id="accessGate" role="dialog" aria-modal="true" aria-labelledby="accessTitle">
-    <div class="access-gate-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="access-card access-card-apex">
-      <div class="access-visual-panel" aria-hidden="true">
-        <div class="access-visual-grid"></div>
-        <div class="access-visual-orb orb-a"></div>
-        <div class="access-visual-orb orb-b"></div>
-        <div class="access-visual-ring ring-a"></div>
-        <div class="access-visual-ring ring-b"></div>
-        <div class="access-visual-mark"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></div>
-        <div class="access-visual-copy">
-          <small>SYSTEM READY</small>
-          <strong>ALEX</strong>
-          <span>STREAMING</span>
-          <p>DATA · STREAMING · IA · ACCESS</p>
-        </div>
-        <div class="access-visual-cards">
-          <span><iconify-icon icon="lucide:play"></iconify-icon> STREAMING</span>
-          <span><iconify-icon icon="lucide:sparkles"></iconify-icon> IA</span>
-          <span><iconify-icon icon="lucide:blocks"></iconify-icon> SOFTWARE</span>
-        </div>
-      </div>
-      <div class="access-card-glow" aria-hidden="true"></div>
-      <div class="access-brand">
-        <span class="access-logo"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></span>
-        <div><small>ALEX STREAMING</small><strong id="accessPortalLabel">MATRIX ACCESS</strong></div>
-        <b><i></i> ONLINE</b>
-      </div>
-      <div class="access-copy">
-        <p class="access-kicker" id="accessKicker">// STREAMING · IA · SOFTWARE · REDES</p>
-        <h1 id="accessTitle">ENTRA A LA <span>MATRIX DIGITAL</span></h1>
-        <p id="accessDescription">Explora una interfaz tipo Matrix con streaming, IA, software y acceso premium por WhatsApp.</p>
-      </div>
-      <div class="access-input-wrap">
-        <label for="accessAlias" id="accessNameLabel">TU NOMBRE</label>
-        <div class="access-input-line">
-          <iconify-icon icon="lucide:user-round"></iconify-icon>
-          <input id="accessAlias" maxlength="24" minlength="2" autocomplete="name" placeholder="Ej.: Alex" value="" required aria-required="true">
-          <span id="accessReadyLabel">READY</span>
-        </div>
-      </div>
-      <div class="access-country-live" id="accessCountryLine">
-        <span class="access-country-dot"></span>
-        <small id="accessCountryLabel">PAÍS DETECTADO</small>
-        <strong id="accessCountryValue">DETECTANDO...</strong>
-      </div>
-      <label class="live-share-consent">
-        <input id="shareLiveIdentity" type="checkbox" required aria-required="true">
-        <span>
-          <strong>MOSTRAR MI NOMBRE Y PAÍS EN ACTIVIDAD EN VIVO</strong>
-          <small>OBLIGATORIO. Debes marcar esta casilla para poder ingresar al sitio.</small>
-        </span>
-      </label>
-      <div class="access-locale-live" id="accessLocaleLine">
-        <span><iconify-icon icon="lucide:languages"></iconify-icon><b id="accessLanguageValue">ESPAÑOL</b></span>
-        <span><iconify-icon icon="lucide:coins"></iconify-icon><b id="accessCurrencyValue">PEN · S/</b></span>
-      </div>
-      <button class="access-enter" id="accessEnter" type="button" disabled aria-disabled="true">
-        <span id="accessEnterText">INICIAR EXPERIENCIA</span><b>ENTER ↗</b>
-      </button>
-      <div class="access-features">
-        <span><iconify-icon icon="lucide:play-circle"></iconify-icon> <b data-i18n="feature_streaming">STREAMING</b></span>
-        <span><iconify-icon icon="lucide:bot"></iconify-icon> <b data-i18n="feature_ai">IA</b></span>
-        <span><iconify-icon icon="lucide:badge-check"></iconify-icon> <b data-i18n="feature_catalog">CATÁLOGO</b></span>
-        <span><iconify-icon icon="simple-icons:whatsapp"></iconify-icon> <b data-i18n="feature_support">SOPORTE</b></span>
-      </div>
-      <div class="access-name-error" id="accessNameError" role="alert" aria-live="polite"></div>
-      <div class="access-status"><i></i><span id="accessStatus">ACCESO OBLIGATORIO: ESCRIBE TU NOMBRE Y MARCA LA CASILLA PARA MOSTRAR TU NOMBRE Y PAÍS EN LA ACTIVIDAD EN VIVO.</span></div>
-    </div>
-  </div>
+<body class="theme-hacker-elite">
 
-  <div class="epic-entry epic-entry-v12" id="epicEntry" aria-hidden="true">
-    <div class="entry-aurora"></div>
-    <div class="epic-entry-grid"></div>
-    <div class="entry-scan-beam"></div>
-    <div class="entry-v12-stars" aria-hidden="true"></div>
-
-    <div class="entry-platform-ring" aria-hidden="true">
-      <span class="ring-node rn1"><iconify-icon icon="simple-icons:netflix"></iconify-icon></span>
-      <span class="ring-node rn2"><iconify-icon icon="simple-icons:disneyplus"></iconify-icon></span>
-      <span class="ring-node rn3"><iconify-icon icon="simple-icons:hbomax"></iconify-icon></span>
-      <span class="ring-node rn4"><iconify-icon icon="simple-icons:primevideo"></iconify-icon></span>
-      <span class="ring-node rn5"><iconify-icon icon="simple-icons:spotify"></iconify-icon></span>
-      <span class="ring-node rn6"><iconify-icon icon="simple-icons:canva"></iconify-icon></span>
-    </div>
-
-    <div class="epic-entry-core epic-entry-core-v12">
-      <div class="entry-v12-topline"><span>SECURE_GATEWAY</span><b>LIVE</b></div>
-      <div class="entry-brand-zone">
-        <div class="entry-orbit orbit-a"></div>
-        <div class="entry-orbit orbit-b"></div>
-        <div class="epic-logo-shell"><img src="{{ url_for('static', filename='img/brand-emblem.svg') }}" alt=""></div>
-      </div>
-      <p class="epic-kicker">{{ store.name }} // ELITE ACCESS</p>
-      <div class="epic-welcome-user">
-        <small>IDENTIDAD VERIFICADA // ACCESS GRANTED</small>
-        <span class="epic-welcome-label">ACCESO COMPLETADO</span>
-        <strong id="epicWelcomeName">USUARIO</strong>
-        <div class="epic-personal-line">
-          <iconify-icon icon="lucide:user-check"></iconify-icon>
-          <b id="epicWelcomePhrase">TU ACCESO PERSONAL ESTÁ LISTO</b>
-        </div>
-        <em id="epicWelcomeCountry">CONECTANDO...</em>
-      </div>
-
-      <div class="entry-v12-title">
-        <span>ACCESO A TODO TU</span>
-        <strong>UNIVERSO DIGITAL</strong>
-        <em>TU PANEL ESTÁ LISTO</em>
-      </div>
-      <p class="entry-subtitle">Streaming, inteligencia artificial, software, productividad y redes con atención directa por WhatsApp.</p>
-      <div class="entry-service-rail"><span>STREAMING</span><i></i><span>IA</span><i></i><span>SOFTWARE</span><i></i><span>REDES</span></div>
-      <div class="entry-country" id="entryCountry"><b></b><span>LOCALIZANDO USUARIO...</span></div>
-      <div class="epic-progress"><i id="entryProgressBar"></i></div>
-      <div class="entry-progress-meta"><span id="entryStatusText">INICIALIZANDO TU ACCESO</span><strong id="entryProgressText">0%</strong></div>
-      <button class="epic-skip-button" id="epicSkipButton" type="button">
-        ENTRAR AHORA <b>↗</b>
-      </button>
-      <small>{{ products|length }} SERVICIOS // {{ social_platforms|length }} REDES // 04 MÉTODOS DE PAGO</small>
-    </div>
-  </div>
   <canvas id="matrixCanvas" aria-hidden="true"></canvas>
   <div class="vignette" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
@@ -471,6 +351,11 @@
           <div><strong>PRODUCTIVIDAD</strong><small>Trabaja mejor</small></div>
           <span>VER PRODUCTOS ↗</span>
         </a>
+        <a href="#catalogo" class="anime-cat-card cat-freefire" data-category-jump="Free Fire">
+          <iconify-icon icon="lucide:gem"></iconify-icon>
+          <div><strong>FREE FIRE</strong><small>Diamantes, membresías y extras</small></div>
+          <span>VER RECARGAS ↗</span>
+        </a>
         <a href="#redes" class="anime-cat-card cat-social">
           <iconify-icon icon="lucide:radio-tower"></iconify-icon>
           <div><strong>REDES SOCIALES</strong><small>Conecta y destaca</small></div>
@@ -516,7 +401,7 @@
           </div>
           <div class="search-box">
             <iconify-icon icon="lucide:search"></iconify-icon>
-            <input id="searchInput" type="search" placeholder="Buscar HBO Max, Gamma, Canva, Office..." data-i18n-placeholder="search_placeholder" autocomplete="off">
+            <input id="searchInput" type="search" placeholder="Buscar HBO Max, Free Fire, Gamma, Canva, Office..." data-i18n-placeholder="search_placeholder" autocomplete="off">
                       </div>
         </div>
 
@@ -1049,24 +934,11 @@
     <i></i>
   </button>
 
-  <div class="welcome-live-toast" id="welcomeLiveToast" role="status" aria-live="polite" hidden>
-    <div class="welcome-live-scan"></div>
-    <span class="welcome-live-icon">
-      <iconify-icon icon="lucide:shield-check"></iconify-icon>
-    </span>
-    <div class="welcome-live-copy">
-      <small>ACCESO COMPLETADO · ALEX STREAMING</small>
-      <span>BIENVENIDO</span>
-      <strong id="welcomeLiveName">USUARIO</strong>
-      <em id="welcomeLiveMeta">TU EXPERIENCIA YA ESTÁ ACTIVA</em>
-    </div>
-  </div>
-
   <div class="visitor-toast visitor-entry-toast" id="visitorToast" role="status" aria-live="polite">
     <span class="visitor-toast-icon"><iconify-icon icon="lucide:log-in"></iconify-icon></span>
     <div>
-      <small>REGISTRO COMPLETADO · EN VIVO</small>
-      <strong id="visitorToastText">Un cliente terminó de registrarse</strong>
+      <small>NUEVA CONEXIÓN · EN VIVO</small>
+      <strong id="visitorToastText">Un visitante entró al sitio web</strong>
     </div>
   </div>
   <div class="purchase-toast" id="purchaseToast" role="status" aria-live="polite">

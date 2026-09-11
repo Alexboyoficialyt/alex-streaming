@@ -920,8 +920,7 @@
     const flag = countryFlag(event.country_code);
     const country = safeCountry(event.country, event.country_code);
 
-    visitorToastText.textContent =
-      `${name} terminó de registrarse${country && country !== 'País no disponible' ? ` · ${flag} ${country}` : ''}`;
+    visitorToastText.textContent = `Nuevo visitante entró al sitio web${country && country !== 'País no disponible' ? ` · ${flag} ${country}` : ''}`;
 
     visitorToast.hidden = false;
     visitorToast.style.display = 'flex';
@@ -1060,10 +1059,7 @@
   }
 
   primeCountry().catch(() => {});
-  window.addEventListener('alex:access-granted', (event) => {
-    const alias = event?.detail?.alias || localStorage.getItem('alex-alias') || '';
-    registerPresence(alias);
-  }, {once:true});
+  setTimeout(() => registerPresence('Visitante'), 450);
   setInterval(pollVisitorFeed, 12000);
 
   async function refreshStats(){
@@ -1364,8 +1360,8 @@
 
     purchaseToastIcon?.setAttribute('icon', recentOrderIcon(product));
     const purchaseSmall = purchaseToast?.querySelector('small');
-    if (purchaseSmall) purchaseSmall.textContent = 'COMPRA DE PLATAFORMA · EN VIVO';
-    if (purchaseToastTitle) purchaseToastTitle.textContent = `${customer} compró ${product}`;
+    if (purchaseSmall) purchaseSmall.textContent = 'PEDIDO DE PLATAFORMA · EN VIVO';
+    if (purchaseToastTitle) purchaseToastTitle.textContent = `${customer} realizó un pedido de ${product}`;
     if (purchaseToastMeta) {
       purchaseToastMeta.textContent = [place, plan.replace(/^ · /,''), time].filter(Boolean).join(' · ');
     }
@@ -1390,11 +1386,7 @@
   let lastRecentOrderId = 0;
 
   function buildLocalOrderNotification(order, payment){
-    const registeredName = String(
-      (typeof loadAlias === 'function' ? loadAlias() : '')
-      || document.getElementById('visitorSessionLabel')?.textContent
-      || 'Cliente'
-    ).trim();
+    const registeredName = 'Cliente';
 
     let country = String(
       currentVisitorCountry?.textContent
@@ -2580,6 +2572,13 @@
     }, 4700);
   }
 
+
+  // V108 — acceso directo: ya no se solicita nombre para entrar.
+  try {
+    localStorage.removeItem('alex-alias');
+    sessionStorage.removeItem('alex-welcome-pending');
+  } catch (_) {}
+
   // ---------- Access portal ----------
   // V21: totalmente independiente de la geolocalización para que el botón
   // de entrada nunca quede bloqueado si un proveedor externo falla.
@@ -3051,7 +3050,7 @@
   }
 
   function chatOwnName(){
-    try{return String(localStorage.getItem('alex-alias')||'').trim();}catch(_){return '';}
+    return 'Visitante';
   }
 
   function renderChatMessage(item, prepend=false){
@@ -3220,7 +3219,7 @@
         const error=data.error||'send_error';
         if(chatError){
           chatError.textContent =
-            error==='registration_required' ? t('chat_registration_required') :
+            error==='registration_required' ? 'El chat está disponible como Visitante.' :
             error==='private_contact_not_allowed' ? t('chat_private_contact') :
             error==='slow_down' ? t('chat_slow_down') :
             t('chat_send_error');

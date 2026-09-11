@@ -1103,11 +1103,10 @@ def product_review_submit():
         payload.get("name")
         or session.get("display_name")
         or context.get("display_name")
+        or "Visitante"
     )
-    if len(display_name) < 2 or display_name.lower() in {
-        "visitante", "visitor", "guest", "usuario", "user", "invitado"
-    }:
-        return jsonify({"ok": False, "error": "registration_required"}), 403
+    if len(display_name) < 2:
+        display_name = "Visitante"
 
     session["display_name"] = display_name
 
@@ -1247,15 +1246,14 @@ def chat_send():
 
     context = visitor_context(visitor_id)
 
-    # El nombre del chat SIEMPRE sale del registro de acceso.
-    # No se permite cambiarlo enviando otro nombre desde el navegador.
+    # V108: el sitio ya no exige registro con nombre.
     display_name = clean_required_name(
         session.get("display_name")
         or context.get("display_name")
+        or "Visitante"
     )
-
-    if len(display_name) < 2 or display_name.lower() in {"visitante", "visitor", "guest", "usuario", "user"}:
-        return jsonify({"ok": False, "error": "registration_required"}), 403
+    if len(display_name) < 2:
+        display_name = "Visitante"
 
     session["display_name"] = display_name
 
