@@ -10397,101 +10397,54 @@ body{
 
 
 /* ============================================================
-   V109 — GEO CON BANDERA
+   V109 — MÉTODO DE PAGO NO DISPONIBLE
    ============================================================ */
 
-.geo-live-chip{
-  min-width:112px;
-  height:40px;
-  padding:0 10px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  border:1px solid rgba(82,214,255,.16);
-  border-radius:8px;
-  background:rgba(2,10,8,.86);
-  box-shadow:inset 0 0 18px rgba(82,214,255,.025);
+.payment-card.payment-unavailable{
+  opacity:.52;
+  filter:grayscale(.68);
+  border-color:rgba(255,86,105,.20)!important;
+  background:
+    linear-gradient(135deg,rgba(255,75,94,.04),rgba(5,10,8,.96))!important;
 }
 
-.geo-live-flag{
-  width:27px;
-  height:27px;
+.payment-card.payment-unavailable .payment-ready{
+  color:#ff7b89!important;
+}
+
+.payment-card.payment-unavailable .payment-ready i{
+  background:#ff5568!important;
+  box-shadow:0 0 10px rgba(255,85,104,.40)!important;
+}
+
+.payment-ready.payment-offline span{
+  color:#ff7b89!important;
+  font-weight:900!important;
+  letter-spacing:.08em;
+}
+
+.modal-payment.unavailable,
+.modal-payment:disabled{
+  opacity:.38!important;
+  filter:grayscale(.75);
+  cursor:not-allowed!important;
+  border-color:rgba(255,84,102,.18)!important;
+  background:rgba(255,84,102,.025)!important;
+}
+
+.modal-payment.unavailable:hover,
+.modal-payment:disabled:hover{
+  transform:none!important;
+  box-shadow:none!important;
+}
+
+.modal-payment.unavailable strong{
   display:grid;
-  place-items:center;
-  flex:0 0 27px;
-  border:1px solid rgba(104,255,184,.13);
-  border-radius:7px;
-  background:#05120d;
-  font-size:18px;
-  line-height:1;
+  gap:2px;
 }
 
-.geo-live-copy{
-  min-width:0;
-  display:grid;
-  gap:1px;
-}
-
-.geo-live-copy small{
-  color:#4c7163;
-  font:800 5.5px var(--mono);
-  letter-spacing:.13em;
-}
-
-.geo-live-copy strong{
-  max-width:92px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  color:#d8fff0;
-  font:800 7px var(--mono);
-  letter-spacing:.035em;
-}
-
-.geo-live-chip[data-geo="ok"]{
-  border-color:rgba(104,255,184,.27);
-  box-shadow:0 0 20px rgba(104,255,184,.045);
-}
-
-.geo-live-chip[data-geo="fallback"]{
-  border-color:rgba(82,214,255,.27);
-}
-
-.geo-live-chip[data-geo="error"]{
-  border-color:rgba(255,195,77,.24);
-}
-
-.product-card[data-category="Free Fire"]{
-  border-color:rgba(47,213,255,.13);
-}
-
-.product-card[data-category="Free Fire"]:hover{
-  border-color:rgba(47,213,255,.34);
-  box-shadow:0 18px 48px rgba(0,0,0,.28),0 0 28px rgba(47,213,255,.06);
-}
-
-@media(max-width:1180px){
-  .geo-live-chip{
-    min-width:96px;
-  }
-}
-
-@media(max-width:760px){
-  .geo-live-chip{
-    height:34px;
-    padding:0 8px;
-    min-width:0;
-  }
-
-  .geo-live-flag{
-    width:24px;
-    height:24px;
-    flex-basis:24px;
-    font-size:16px;
-  }
-
-  .geo-live-copy strong{
-    max-width:72px;
-    font-size:6.5px;
-  }
+.modal-payment.unavailable strong small{
+  color:#ff7382;
+  font:800 6px var(--mono);
+  letter-spacing:.08em;
 }

@@ -33,8 +33,6 @@
   const epicWelcomePhrase = document.getElementById('epicWelcomePhrase');
   const epicSkipButton = document.getElementById('epicSkipButton');
   const currentVisitorCountry = document.getElementById('currentVisitorCountry');
-  const currentVisitorFlag = document.getElementById('currentVisitorFlag');
-  const geoLiveChip = document.getElementById('geoLiveChip');
   const visitorSessionLabel = document.getElementById('visitorSessionLabel');
   const visitorFeedMini = document.getElementById('visitorFeedMini');
   const visitorToast = document.getElementById('visitorToast');
@@ -873,47 +871,17 @@
   }
 
   function updateCountryUI(country, code, source='ip'){
-    const normalizedCode = String(code || '').trim().toUpperCase();
-    const resolved = safeCountry(country, normalizedCode);
-    const flag = countryFlag(normalizedCode);
-    const label = `${flag} ${resolved}`;
-
-    if (currentVisitorFlag) currentVisitorFlag.textContent = flag;
-    if (currentVisitorCountry) currentVisitorCountry.textContent = resolved.toUpperCase();
-
-    if (geoLiveChip) {
-      geoLiveChip.dataset.geo =
-        resolved === 'País no disponible'
-          ? 'error'
-          : (source === 'locale' ? 'fallback' : 'ok');
-      geoLiveChip.title = `${label} · ubicación aproximada por país`;
-    }
-
-    if (document.body && normalizedCode) {
-      document.body.dataset.countryCode = normalizedCode;
-    }
-
+    const resolved = safeCountry(country, code);
+    const label = `${countryFlag(code)} ${resolved}`;
+    if (currentVisitorCountry) currentVisitorCountry.textContent = label.toUpperCase();
     if (entryCountry) {
       entryCountry.dataset.geo = resolved === 'País no disponible' ? 'error' : (source === 'locale' ? 'fallback' : 'ok');
       const span = entryCountry.querySelector('span');
-      if (span) {
-        const prefix = activeLanguage === 'es' ? 'CONEXIÓN DESDE' : 'CONNECTED FROM';
-        const suffix = source === 'locale'
-          ? (activeLanguage === 'es' ? ' · REGIÓN DEL DISPOSITIVO' : ' · DEVICE REGION')
-          : '';
-        span.textContent = `${prefix} ${label.toUpperCase()}${suffix}`;
-      }
+      if (span) { const prefix = activeLanguage === 'es' ? 'CONEXIÓN DESDE' : 'CONNECTED FROM'; const suffix = source === 'locale' ? (activeLanguage === 'es' ? ' · REGIÓN DEL DISPOSITIVO' : ' · DEVICE REGION') : ''; span.textContent = `${prefix} ${label.toUpperCase()}${suffix}`; }
     }
-
     if (accessCountryValueMain) accessCountryValueMain.textContent = label.toUpperCase();
-    if (accessCountryLineMain) {
-      accessCountryLineMain.dataset.geo =
-        resolved === 'País no disponible'
-          ? 'error'
-          : (source === 'locale' ? 'fallback' : 'ok');
-    }
-
-    if (normalizedCode) autoLocaleFromCountry(normalizedCode);
+    if (accessCountryLineMain) accessCountryLineMain.dataset.geo = resolved === 'País no disponible' ? 'error' : (source === 'locale' ? 'fallback' : 'ok');
+    if (code) autoLocaleFromCountry(code);
   }
 
   function renderVisitorFeed(events){
@@ -1197,7 +1165,7 @@
 
       const avatar = document.createElement('span');
       avatar.className = 'live-activity-avatar';
-      avatar.textContent = item.country_code
+      avatar.textContent = item.share_identity && item.country_code
         ? countryFlag(item.country_code)
         : '●';
 
@@ -1768,11 +1736,18 @@
 
   paymentButtons.forEach(button => {
     button.addEventListener('click', async () => {
+      if (button.disabled || button.dataset.available === '0') return;
+
       selectedPayment = button.dataset.method;
       paymentButtons.forEach(btn => {
         const selected = btn === button;
         btn.classList.toggle('selected', selected);
-        btn.querySelector('i').textContent = selected ? '●' : '○';
+        const marker = btn.querySelector('i');
+        if (marker) {
+          marker.textContent = btn.dataset.available === '0'
+            ? '×'
+            : (selected ? '●' : '○');
+        }
       });
       await renderPaymentInstructions(button);
       updateCheckoutContinueState();

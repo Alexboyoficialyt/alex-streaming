@@ -144,14 +144,6 @@
           </select>
         </label>
       </div>
-      <div class="geo-live-chip" id="geoLiveChip" aria-label="País aproximado del visitante">
-        <span class="geo-live-flag" id="currentVisitorFlag">🌐</span>
-        <span class="geo-live-copy">
-          <small>GEO</small>
-          <strong id="currentVisitorCountry">DETECTANDO...</strong>
-        </span>
-      </div>
-
       <div class="realtime-site-stats" aria-label="Estadísticas en tiempo real">
         <div class="realtime-stat views">
           <iconify-icon icon="lucide:eye"></iconify-icon>
@@ -602,10 +594,15 @@
 
         <div class="payment-grid">
           {% for method in payment_methods %}
-          <div class="payment-card" data-method-id="{{ method.id }}" style="--payment: {{ method.brand_color }}">
+          {% set method_available = method.available if method.available is defined else true %}
+          <div class="payment-card{% if not method_available %} payment-unavailable{% endif %}" data-method-id="{{ method.id }}" data-available="{{ '1' if method_available else '0' }}" style="--payment: {{ method.brand_color }}">
             <div class="payment-icon-wrap {{ method.logo_class|default('') }}"><img src="{{ method.logo_url|default(url_for('static', filename=method.logo_fallback)) }}" data-fallback="{{ url_for('static', filename=method.logo_fallback) }}" alt="{{ method.name }}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){this.src=this.dataset.fallback}"></div>
-            <div class="payment-copy"><strong>{{ method.name }}</strong><span class="payment-detail-text" data-source-es="{{ method.detail|e }}">{{ method.detail }}</span>{% if method.holder %}<small>{{ method.holder }}</small>{% endif %}</div>
+            <div class="payment-copy"><strong>{{ method.name }}</strong><span class="payment-detail-text" data-source-es="{{ method.detail|e }}">{{ method.detail }}</span>{% if method.holder and method_available %}<small>{{ method.holder }}</small>{% endif %}</div>
+            {% if method_available %}
             <div class="payment-ready"><i></i> <span data-i18n="payment_ready">READY</span></div>
+            {% else %}
+            <div class="payment-ready payment-offline"><i></i> <span>NO DISPONIBLE</span></div>
+            {% endif %}
           </div>
           {% endfor %}
         </div>
@@ -620,7 +617,7 @@
         </div>
         <div class="steps-grid">
           <div class="step"><span>01</span><div class="step-icon"><iconify-icon icon="lucide:monitor-play"></iconify-icon></div><h3 data-i18n="step1_title">Elige plataforma</h3><p data-i18n="step1_text">Busca el servicio y selecciona el plan que quieres.</p></div>
-          <div class="step"><span>02</span><div class="step-icon"><iconify-icon icon="lucide:wallet-cards"></iconify-icon></div><h3 data-i18n="step2_title">Elige el pago</h3><p data-i18n="step2_text">Selecciona Yape, Plin, BCP o Binance.</p></div>
+          <div class="step"><span>02</span><div class="step-icon"><iconify-icon icon="lucide:wallet-cards"></iconify-icon></div><h3 data-i18n="step2_title">Elige el pago</h3><p data-i18n="step2_text">Selecciona Plin, BCP o Binance. Yape está temporalmente no disponible.</p></div>
           <div class="step"><span>03</span><div class="step-icon"><iconify-icon icon="simple-icons:whatsapp"></iconify-icon></div><h3 data-i18n="step3_title">Confirma por WhatsApp</h3><p data-i18n="step3_text">Tu pedido se arma automáticamente y queda listo para enviar.</p></div>
         </div>
       </div>
@@ -666,10 +663,19 @@
       <p class="modal-label" data-i18n="select_payment">SELECCIONA MÉTODO DE PAGO</p>
       <div class="modal-payments" id="modalPayments">
         {% for method in payment_methods %}
-        <button class="modal-payment" data-method="{{ method.name }}" data-method-id="{{ method.id }}" data-instructions="{{ method.instructions|default('')|e }}" data-account="{{ method.account|default('')|e }}" data-holder="{{ method.holder|default('')|e }}" style="--payment: {{ method.brand_color }}">
+        {% set method_available = method.available if method.available is defined else true %}
+        <button class="modal-payment{% if not method_available %} unavailable{% endif %}"
+                data-method="{{ method.name }}"
+                data-method-id="{{ method.id }}"
+                data-available="{{ '1' if method_available else '0' }}"
+                data-instructions="{{ method.instructions|default('')|e }}"
+                data-account="{{ method.account|default('')|e }}"
+                data-holder="{{ method.holder|default('')|e }}"
+                style="--payment: {{ method.brand_color }}"
+                {% if not method_available %}disabled aria-disabled="true"{% endif %}>
           <span class="modal-payment-logo {{ method.logo_class|default('') }}"><img src="{{ method.logo_url|default(url_for('static', filename=method.logo_fallback)) }}" data-fallback="{{ url_for('static', filename=method.logo_fallback) }}" alt="{{ method.name }}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){this.src=this.dataset.fallback}"></span>
-          <strong>{{ method.name }}</strong>
-          <i>○</i>
+          <strong>{{ method.name }}{% if not method_available %}<small>NO DISPONIBLE</small>{% endif %}</strong>
+          <i>{% if method_available %}○{% else %}×{% endif %}</i>
         </button>
         {% endfor %}
       </div>

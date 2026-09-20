@@ -1,9 +1,11 @@
-# ALEX STREAMING V109 — FREE FIRE + BANDERA GEO
+# ALEX STREAMING V109 — FREE FIRE ACTUALIZADO + YAPE NO DISPONIBLE
 
 Cambios:
-- Se agregó la bandera del país detectado del visitante en el encabezado GEO.
-- El chip muestra: bandera + país aproximado.
-- La bandera se genera desde el código ISO del país.
-- La actividad en vivo también puede mostrar la bandera del país de forma anónima.
-- No se muestra IP, ciudad ni ubicación exacta.
-- Se actualizaron los precios de Free Fire con la lista más reciente enviada por el usuario.
+- Se actualizaron los precios de Free Fire con la lista más reciente.
+- Se agregaron los paquetes 3240+324, 11200+1120 y 16800+1680.
+- Se agregaron Cajas y Fragmentos.
+- Membresía mensual actualizada a S/ 30.00.
+- Pase Booyah actualizado a S/ 6.00.
+- Yape ahora aparece como NO DISPONIBLE.
+- Yape queda deshabilitado dentro del checkout.
+- Plin, BCP y Binance continúan disponibles.
