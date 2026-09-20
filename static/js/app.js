@@ -1736,18 +1736,11 @@
 
   paymentButtons.forEach(button => {
     button.addEventListener('click', async () => {
-      if (button.disabled || button.dataset.available === '0') return;
-
       selectedPayment = button.dataset.method;
       paymentButtons.forEach(btn => {
         const selected = btn === button;
         btn.classList.toggle('selected', selected);
-        const marker = btn.querySelector('i');
-        if (marker) {
-          marker.textContent = btn.dataset.available === '0'
-            ? '×'
-            : (selected ? '●' : '○');
-        }
+        btn.querySelector('i').textContent = selected ? '●' : '○';
       });
       await renderPaymentInstructions(button);
       updateCheckoutContinueState();
